@@ -1,0 +1,48 @@
+{
+  "project_version": "0.2.0",
+  "validation": {
+    "tests": {
+      "passed": 139,
+      "failed": 0,
+      "command": "bash scripts/check.sh"
+    },
+    "lint": "passed",
+    "format": "passed",
+    "cpu_pipeline": "passed",
+    "wheel_build": "passed",
+    "isolated_wheel_demo": "passed"
+  },
+  "controlled_fixtures": {
+    "examples": 20,
+    "oracle_correct": 20,
+    "corrupted_correct": 18,
+    "model_results": false
+  },
+  "candidate_dataset": {
+    "split_counts": {
+      "train": 1000,
+      "validation": 125,
+      "test": 125
+    },
+    "status": "synthetic_unreviewed_unfrozen",
+    "files_sha256": {
+      "train.jsonl": "f814105d6c225fb34924126aa6e14db1282e2b6a14c8351a43583f4bd43893eb",
+      "validation.jsonl": "e9055dc970c53ace64c5c8fafeb8d011f118327d785929e6a47f44ba42f50fcd",
+      "test.jsonl": "79febb1a5caf0a393cea713605351e291bd246edf81a4256051274fdd9d94453"
+    },
+    "difficulty_quotas_met": false
+  },
+  "training_export": {
+    "train": 1000,
+    "validation": 125,
+    "test_included": false
+  },
+  "model_inference": "not_run_network_access_denied",
+  "training": "not_run_no_cuda_gpu_or_model_access",
+  "environment_configuration_persistence": "unconfirmed_backend_INVALID_ARGUMENT",
+  "repository_pushed_at_validation_time": false,
+  "notes": [
+    "Validation is of reconstructed implementation, not the inaccessible Codespace.",
+    "This file records observed checks; rerun scripts/check.sh after subsequent edits."
+  ]
+}

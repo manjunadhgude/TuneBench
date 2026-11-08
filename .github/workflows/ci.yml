@@ -1,0 +1,14 @@
+name: CPU validation
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the locked development environment
+        run: bash scripts/setup.sh
+      - name: Validate without model downloads or GPU
+        run: bash scripts/check.sh

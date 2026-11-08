@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tunebench.local/schemas/prediction.schema.json",
+  "title": "TuneBench Prediction v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "example_id",
+    "outcome"
+  ],
+  "properties": {
+    "example_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outcome": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "tool_name",
+            "arguments"
+          ],
+          "properties": {
+            "type": {
+              "const": "tool_call"
+            },
+            "tool_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "arguments": {
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "target_tool_name",
+            "missing_fields",
+            "reason_code",
+            "question"
+          ],
+          "properties": {
+            "type": {
+              "const": "clarification"
+            },
+            "target_tool_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "missing_fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "reason_code": {
+              "enum": [
+                "missing_required_information",
+                "ambiguous_reference",
+                "ambiguous_intent"
+              ]
+            },
+            "question": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "target_tool_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "target_tool_name"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "missing_fields": {
+                    "minItems": 1
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "missing_fields": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "reason_code"
+          ],
+          "properties": {
+            "type": {
+              "const": "no_tool"
+            },
+            "reason_code": {
+              "enum": [
+                "informational_request",
+                "unsupported_request",
+                "no_action_requested"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "raw_output": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "latency_ms": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

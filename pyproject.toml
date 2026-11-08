@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tunebench"
+version = "0.2.0"
+description = "Reproducible evaluation and fine-tuning experiments for tool calling."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["jsonschema>=4.23,<5"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "ruff>=0.14,<1"]
+model = ["torch>=2.4,<3", "transformers>=4.46,<5", "accelerate>=1,<2"]
+training = ["torch>=2.4,<3", "transformers>=4.46,<5", "accelerate>=1,<2", "peft>=0.14,<1"]
+qlora = ["torch>=2.4,<3", "transformers>=4.46,<5", "accelerate>=1,<2", "peft>=0.14,<1", "bitsandbytes>=0.45,<1"]
+
+[project.scripts]
+tunebench = "tunebench.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+tunebench = ["resources/schemas/*.json", "resources/configs/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

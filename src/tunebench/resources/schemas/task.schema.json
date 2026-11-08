@@ -1,0 +1,260 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tunebench.local/schemas/task.schema.json",
+  "title": "TuneBench Task v3",
+  "description": "One user request with available tools and one expected outcome.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "example_id",
+    "family_id",
+    "split",
+    "difficulty",
+    "prompt",
+    "tools",
+    "expected_outcome",
+    "scenario_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "3.0.0"
+    },
+    "example_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "family_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "split": {
+      "enum": [
+        "train",
+        "validation",
+        "test",
+        "smoke"
+      ]
+    },
+    "difficulty": {
+      "enum": [
+        "easy",
+        "medium",
+        "hard"
+      ]
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tools": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "description",
+          "parameters"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parameters": {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "const": "object"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "expected_outcome": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "tool_name",
+            "arguments"
+          ],
+          "properties": {
+            "type": {
+              "const": "tool_call"
+            },
+            "tool_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "arguments": {
+              "type": "object"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "target_tool_name",
+            "missing_fields",
+            "reason_code"
+          ],
+          "properties": {
+            "type": {
+              "const": "clarification"
+            },
+            "target_tool_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "missing_fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "reason_code": {
+              "enum": [
+                "missing_required_information",
+                "ambiguous_reference",
+                "ambiguous_intent"
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "target_tool_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "target_tool_name"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "missing_fields": {
+                    "minItems": 1
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "target_tool_name": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "target_tool_name"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "missing_fields": {
+                    "maxItems": 0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "reason_code"
+          ],
+          "properties": {
+            "type": {
+              "const": "no_tool"
+            },
+            "reason_code": {
+              "enum": [
+                "informational_request",
+                "unsupported_request",
+                "no_action_requested"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_type"
+      ],
+      "properties": {
+        "source_type": {
+          "enum": [
+            "synthetic",
+            "manual",
+            "public_dataset"
+          ]
+        },
+        "generator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generator_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewed_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "parent_example_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "template_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "scenario_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Underlying business situation; paraphrases retain the same scenario_id."
+    }
+  }
+}

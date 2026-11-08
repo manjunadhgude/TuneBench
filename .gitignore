@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Reproducible local candidates and experiment outputs (regenerate via CLI).
+/data/generated/
+/artifacts/runs/

@@ -1,0 +1,31 @@
+{
+  "evaluation_version": "0.2.0",
+  "task_schema_version": "3.0.0",
+  "outcome_labels": [
+    "tool_call",
+    "clarification",
+    "no_tool"
+  ],
+  "metrics": [
+    "outcome_accuracy",
+    "outcome_per_class_precision_recall_f1",
+    "outcome_macro_f1",
+    "outcome_confusion_matrix",
+    "tool_selection_accuracy_on_tool_call_gold",
+    "argument_exact_accuracy_given_correct_tool",
+    "tool_call_joint_exact_match_accuracy",
+    "clarification_intended_tool_accuracy_when_known",
+    "clarification_missing_fields_exact_accuracy",
+    "clarification_missing_fields_micro_precision_recall_f1",
+    "clarification_reason_code_accuracy",
+    "no_tool_recall",
+    "no_tool_reason_code_accuracy"
+  ],
+  "argument_comparison": "exact_json_object_equality",
+  "clarification_question_comparison": "not_scored_natural_language",
+  "missing_prediction_policy": "count_as_incorrect",
+  "invalid_prediction_policy": "retain_diagnostics_and_score_independent_dimensions",
+  "extra_prediction_policy": "raise_error",
+  "family_analysis_required": true,
+  "per_example_outputs_required": true
+}

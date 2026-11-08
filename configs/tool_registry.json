@@ -1,0 +1,82 @@
+{
+  "registry_version": "1.0.0",
+  "description": "Canonical mock tool definitions embedded into TuneBench task records.",
+  "tools": [
+    {
+      "name": "get_order_status",
+      "description": "Retrieve the current status of a simulated customer order.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "order_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "check_refund_eligibility",
+      "description": "Check whether a simulated order may qualify for a refund.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "damaged_item",
+              "wrong_item",
+              "not_received",
+              "changed_mind"
+            ]
+          }
+        },
+        "required": [
+          "order_id",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "propose_refund",
+      "description": "Create a simulated refund proposal for evaluation only; this tool never executes a real refund.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "refund_amount": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "damaged_item",
+              "wrong_item",
+              "not_received",
+              "changed_mind"
+            ]
+          }
+        },
+        "required": [
+          "order_id",
+          "refund_amount",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}
