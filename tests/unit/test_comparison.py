@@ -2,7 +2,7 @@ from copy import deepcopy
 
 import pytest
 
-from tunebench.comparison import compare_reports
+from tunebench.comparison import assert_prompt_comparison_conditions, compare_reports
 
 
 def report(success):
@@ -71,3 +71,55 @@ def test_inference_settings_require_explicit_unmatched_override():
     assert compare_reports(left, right, allow_unmatched=True)["inference_setting_mismatches"] == [
         "decoding"
     ]
+
+
+def paired_metadata():
+    return {
+        "backend": "transformers",
+        "model_id": "base",
+        "resolved_model_revision": "abc",
+        "weights_sha256": "weights",
+        "support_file_hashes": {"tokenizer.json": "tokenizer"},
+        "adapter": None,
+        "device": "cpu",
+        "model_dtype": "float32",
+        "cpu_threads": 4,
+        "cpu_interop_threads": 1,
+        "torch_version": "2.8.0",
+        "transformers_version": "4.57.6",
+        "retry_policy": "none",
+        "tasks_sha256": "same-tasks",
+        "effective_generation_config": {"repetition_penalty": 1.1, "do_sample": False},
+        "prompt_style": "strong",
+    }
+
+
+def test_prompt_ablation_allows_only_prompt_changes():
+    original = paired_metadata()
+    improved = {**original, "prompt_style": "strong-v2", "prompt_version": "v2"}
+    assert_prompt_comparison_conditions(original, improved)
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("effective_generation_config", {"repetition_penalty": 1.0, "do_sample": False}),
+        ("weights_sha256", "different-weights"),
+        ("tasks_sha256", "different-data"),
+        ("cpu_threads", 8),
+        ("support_file_hashes", {"tokenizer.json": "other-tokenizer"}),
+    ],
+)
+def test_prompt_ablation_rejects_other_conditions(field, value):
+    original = paired_metadata()
+    improved = {**original, "prompt_style": "strong-v2", field: value}
+    with pytest.raises(ValueError, match=field):
+        assert_prompt_comparison_conditions(original, improved)
+
+
+def test_prompt_ablation_refuses_missing_metadata():
+    original = paired_metadata()
+    improved = {**original, "prompt_style": "strong-v2"}
+    del improved["effective_generation_config"]
+    with pytest.raises(ValueError, match="lacks required metadata"):
+        assert_prompt_comparison_conditions(original, improved)

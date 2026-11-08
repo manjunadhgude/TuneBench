@@ -81,6 +81,14 @@ See the [first real-model results](artifacts/baseline-smoke/README.md) for raw o
 the measured score, and the tested CPU installation/download commands. Model downloads
 use `huggingface.co` and `us.aws.cdn.hf.co`; no credentials are required for this public model.
 
+An explicit `--prompt-style strong-v2` development candidate adds clear reason-code
+definitions and concrete JSON examples. On 12 fresh paired development questions,
+full success changed from 2/12 with legacy `strong` to 5/12 with `strong-v2`, with
+four improvements and one regression. This small result does not establish general
+quality; JSON parsing regressed on one case. See the
+[paired development evidence](artifacts/prompt-development-v2/README.md).
+Legacy `minimal`/`strong` prompts and defaults remain unchanged for reproducibility.
+
 ## Experimental safeguards
 
 - Task schema **3.0.0**, prediction capture schema v2, evaluation protocol **0.2.0**.

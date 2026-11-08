@@ -5,6 +5,32 @@ from statistics import mean
 from typing import Any
 
 
+def assert_prompt_comparison_conditions(left: dict[str, Any], right: dict[str, Any]) -> None:
+    """Require matched non-prompt conditions before an intentional prompt ablation."""
+    fields = (
+        "backend",
+        "model_id",
+        "resolved_model_revision",
+        "weights_sha256",
+        "support_file_hashes",
+        "adapter",
+        "device",
+        "model_dtype",
+        "cpu_threads",
+        "cpu_interop_threads",
+        "torch_version",
+        "transformers_version",
+        "retry_policy",
+        "tasks_sha256",
+        "effective_generation_config",
+    )
+    for field in fields:
+        if field not in left or field not in right:
+            raise ValueError(f"Prompt comparison lacks required metadata: {field}")
+        if left[field] != right[field]:
+            raise ValueError(f"Prompt comparison has unmatched non-prompt condition: {field}")
+
+
 def compare_reports(
     baseline: dict[str, Any],
     candidate: dict[str, Any],

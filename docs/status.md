@@ -35,6 +35,11 @@ access to or recovery of the old Codespace itself.
 4. Improve the instructions using reviewed development data, then measure minimal/strong
    baselines. The initial strong-prompt smoke run completed at 7/20 strict task success;
    its format/decision/reason errors require investigation before training.
+   A first versioned revision, `strong-v2`, has now been paired with legacy `strong`
+   on 12 fresh reviewed validation cases: 2/12 to 5/12 strict success, four gains and
+   one regression. JSON parsing fell from 11/12 to 10/12, and seven cases still fail
+   fully. The final research baseline remains unresolved; keep developing it on
+   development data. See `artifacts/prompt-development-v2/` for the frozen protocol.
 5. Obtain a CUDA GPU, test the real training stack, train an adapter, and evaluate with
    the matched strong-prompt and inference policy.
 6. Run the final paired comparison once, inspect regressions, and report quality,
@@ -46,6 +51,10 @@ actual Hugging Face/Qwen CPU smoke run has now completed; its raw outputs and me
 are retained in `artifacts/baseline-smoke/`. No model fine-tuning or GPU training was
 performed, and no adapter was produced. The earlier `artifacts/validation.json`
 records the initial framework checks before model access became available.
+
+The prompt-revision work adds legacy-message hash regressions, prompt leakage checks,
+validated examples, callback failure/mutation checks, complete generation-setting
+metadata, and paired-condition guards. The current full offline suite passes 155 tests.
 
 ## Continuing development
 

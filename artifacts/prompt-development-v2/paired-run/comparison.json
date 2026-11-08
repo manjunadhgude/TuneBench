@@ -1,0 +1,29 @@
+{
+  "examples": 12,
+  "families": 12,
+  "baseline_accuracy": 0.16666666666666666,
+  "candidate_accuracy": 0.4166666666666667,
+  "accuracy_delta": 0.25,
+  "cluster_bootstrap_95_percent_interval": [
+    -0.08333333333333333,
+    0.5833333333333334
+  ],
+  "seed": 42,
+  "resamples": 2000,
+  "regressions": [
+    "dv2-02"
+  ],
+  "improvements": [
+    "dv2-04",
+    "dv2-06",
+    "dv2-07",
+    "dv2-12"
+  ],
+  "inference_setting_mismatches": [
+    "prompt_style"
+  ],
+  "warnings": [],
+  "limitations": "Descriptive uncertainty; few or synthetic families limit generalization.",
+  "protocol_sha256": "0112e69f12ecf766b8429218a55993c05146ed5a0c03357fe7f9fc183d8ef79d",
+  "non_prompt_conditions_verified_equal": true
+}

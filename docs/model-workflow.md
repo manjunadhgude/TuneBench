@@ -17,6 +17,12 @@ parsed as JSON. This is an initial instruction-following diagnostic, not a stron
 research baseline or a reason to begin training. See
 [the retained evidence](../artifacts/baseline-smoke/README.md). GPU training remains unrun.
 
+The later [paired prompt-development run](../artifacts/prompt-development-v2/README.md)
+compares legacy `strong` and explicit `strong-v2` on the same 12 fresh validation records.
+Full success is 2/12 versus 5/12; four cases improve and one regresses. The revised
+prompt still has two prose/JSON failures. It is a development candidate, with legacy
+defaults unchanged, rather than a final baseline or a reason to begin training.
+
 `tunebench infer` supports minimal and strong prompts. Both use the same tool
 definitions, output contract, greedy decoding, token budget, and single-attempt
 policy. Inputs contain the user's request and tools; benchmark labels, split,
@@ -24,6 +30,9 @@ family, difficulty and provenance are excluded. Raw responses, parse/validation
 errors, latency and run metadata are retained. Markdown fences, duplicate JSON
 keys, non-finite numbers and trailing text fail parsing instead of being repaired.
 Inference backend failures abort the run instead of being counted as model errors.
+Versioned inference metadata now includes full effective generation settings and
+prompt/template/message hashes. The optional per-prediction callback enables progress
+and durable checkpoint journals; callback failures propagate without retries.
 
 Develop prompts on validation data. Select the prompt before inspecting final
 test results. Use the same prompt, model revision, token budget, tool validation
@@ -50,6 +59,10 @@ It saves the adapter, tokenizer, validation loss, training metrics, data sizes,
 seed, runtime, peak GPU allocation and model revision. Training loss may fluctuate;
 successful training is not evidence that tool calling improved. Measure it with
 the same deterministic evaluator and untouched final test set.
+
+Training/export currently uses legacy `strong` prompts. Select the research prompt
+and align training/export and base/adapter inference before any actual GPU training;
+the `strong-v2` development experiment did not change training or export behavior.
 
 CPU tests cover prompt isolation, output capture, data preparation and loss-mask
 boundaries. Real CPU model loading and smoke inference have now also been exercised.
