@@ -29,19 +29,23 @@ access to or recovery of the old Codespace itself.
    family definitions; the generator reports actual labels rather than fabricating compliance.
 2. Review/version the final benchmark and freeze a test snapshot with hashes. Current
    manifests explicitly say candidate/unreviewed/unfrozen and do not enforce a freeze.
-3. Enable public Hugging Face model access and verify model revision/license/runtime.
-   The actual network probe was denied by the cloud proxy; secret credentials were
-   neither requested nor needed for the public model.
-4. Run and inspect minimal/strong baselines using train/validation during development.
+3. Public model access, revision, Apache-2.0 license, file hashes, and CPU loading are
+   now verified for the candidate. Preserve the pinned revision for later comparisons;
+   GPU training feasibility remains unverified.
+4. Improve the instructions using reviewed development data, then measure minimal/strong
+   baselines. The initial strong-prompt smoke run completed at 7/20 strict task success;
+   its format/decision/reason errors require investigation before training.
 5. Obtain a CUDA GPU, test the real training stack, train an adapter, and evaluate with
    the matched strong-prompt and inference policy.
 6. Run the final paired comparison once, inspect regressions, and report quality,
    latency, memory, and measured training cost. No positive or negative training
    conclusion can be drawn from synthetic fixture scores.
 
-The offline tests verify code paths with controlled generation and tokenizer test
-doubles. They do not establish that the optional Hugging Face backend or a real GPU
-training run succeeds. No model or adapter was downloaded, trained, or fabricated.
+The 139 offline tests use controlled generation and tokenizer test doubles. A separate
+actual Hugging Face/Qwen CPU smoke run has now completed; its raw outputs and metadata
+are retained in `artifacts/baseline-smoke/`. No model fine-tuning or GPU training was
+performed, and no adapter was produced. The earlier `artifacts/validation.json`
+records the initial framework checks before model access became available.
 
 ## Continuing development
 

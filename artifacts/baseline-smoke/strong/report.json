@@ -1,0 +1,613 @@
+{
+  "evaluation_version": "0.2.0",
+  "task_schema_version": "3.0.0",
+  "total_examples": 20,
+  "prediction_records": 20,
+  "missing_predictions": 0,
+  "invalid_predictions": 7,
+  "task_success": {
+    "correct": 7,
+    "total": 20,
+    "accuracy": 0.35
+  },
+  "outcome_accuracy": {
+    "correct": 11,
+    "total": 20,
+    "accuracy": 0.55
+  },
+  "outcome_classification": {
+    "labels": [
+      "tool_call",
+      "clarification",
+      "no_tool"
+    ],
+    "confusion_matrix": {
+      "tool_call": {
+        "tool_call": 7,
+        "clarification": 0,
+        "no_tool": 0,
+        "invalid": 3
+      },
+      "clarification": {
+        "tool_call": 3,
+        "clarification": 2,
+        "no_tool": 0,
+        "invalid": 0
+      },
+      "no_tool": {
+        "tool_call": 0,
+        "clarification": 3,
+        "no_tool": 2,
+        "invalid": 0
+      }
+    },
+    "per_class": {
+      "tool_call": {
+        "support": 10,
+        "precision": 0.7,
+        "recall": 0.7,
+        "f1": 0.7
+      },
+      "clarification": {
+        "support": 5,
+        "precision": 0.4,
+        "recall": 0.4,
+        "f1": 0.4000000000000001
+      },
+      "no_tool": {
+        "support": 5,
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714285714285715
+      }
+    },
+    "macro_f1": 0.5571428571428572
+  },
+  "tool_call": {
+    "total": 10,
+    "tool_selection": {
+      "correct": 7,
+      "denominator": 10,
+      "accuracy": 0.7
+    },
+    "arguments_given_correct_tool": {
+      "correct": 7,
+      "denominator": 7,
+      "accuracy": 1.0
+    },
+    "joint_exact_match": {
+      "correct": 7,
+      "denominator": 10,
+      "accuracy": 0.7
+    }
+  },
+  "clarification": {
+    "total": 5,
+    "intended_tool_accuracy": {
+      "correct": 2,
+      "denominator": 5,
+      "accuracy": 0.4
+    },
+    "missing_fields_exact_accuracy": {
+      "correct": 2,
+      "denominator": 2,
+      "accuracy": 1.0
+    },
+    "missing_fields_micro": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "denominator": 2
+    },
+    "joint_exact_match": {
+      "correct": 0,
+      "denominator": 5,
+      "accuracy": 0.0
+    },
+    "reason_code_accuracy": {
+      "correct": 0,
+      "denominator": 5,
+      "accuracy": 0.0
+    }
+  },
+  "no_tool": {
+    "total": 5,
+    "recall": 0.4,
+    "reason_code_accuracy": {
+      "correct": 0,
+      "denominator": 5,
+      "accuracy": 0.0
+    }
+  },
+  "error_categories": {
+    "invalid_prediction": 7,
+    "wrong_outcome": 9
+  },
+  "breakdown": {
+    "family_id": {
+      "SM_DELIVERY_ETA": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "SM_ELIGIBILITY_EXPLICIT": {
+        "total": 3,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "SM_ELIGIBILITY_MISSING_REASON": {
+        "total": 2,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "SM_POLICY_EXPLANATION": {
+        "total": 2,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 2
+      },
+      "SM_PRODUCT_QUESTION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "SM_REFUND_EXPLICIT": {
+        "total": 3,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 3
+      },
+      "SM_REFUND_MISSING_AMOUNT": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "SM_STATUS_EXPLICIT": {
+        "total": 4,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "SM_STATUS_MISSING_ID": {
+        "total": 2,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "SM_UNSUPPORTED_CANCEL": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      }
+    },
+    "difficulty": {
+      "easy": {
+        "total": 14,
+        "outcome_accuracy": 0.5714285714285714,
+        "task_success_accuracy": 0.5,
+        "invalid_predictions": 7
+      },
+      "medium": {
+        "total": 6,
+        "outcome_accuracy": 0.5,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      }
+    },
+    "gold_outcome": {
+      "clarification": {
+        "total": 5,
+        "outcome_accuracy": 0.4,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "no_tool": {
+        "total": 5,
+        "outcome_accuracy": 0.4,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 4
+      },
+      "tool_call": {
+        "total": 10,
+        "outcome_accuracy": 0.7,
+        "task_success_accuracy": 0.7,
+        "invalid_predictions": 3
+      }
+    },
+    "split": {
+      "smoke": {
+        "total": 20,
+        "outcome_accuracy": 0.55,
+        "task_success_accuracy": 0.35,
+        "invalid_predictions": 7
+      }
+    }
+  },
+  "per_example": [
+    {
+      "example_id": "SM_STATUS_EXPLICIT-0000",
+      "family_id": "SM_STATUS_EXPLICIT",
+      "scenario_id": "scenario-16f1f2d2adf3043c0e45b80f",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "SM_STATUS_EXPLICIT-0001",
+      "family_id": "SM_STATUS_EXPLICIT",
+      "scenario_id": "scenario-c290e00440852aebb74a51ce",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "SM_STATUS_EXPLICIT-0002",
+      "family_id": "SM_STATUS_EXPLICIT",
+      "scenario_id": "scenario-4824e80db42c1e68a1c19b92",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "SM_STATUS_EXPLICIT-0003",
+      "family_id": "SM_STATUS_EXPLICIT",
+      "scenario_id": "scenario-346d438540c396c5a3b0011f",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "SM_ELIGIBILITY_EXPLICIT-0000",
+      "family_id": "SM_ELIGIBILITY_EXPLICIT",
+      "scenario_id": "scenario-c0bd0410ab102e0012bec24d",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "SM_ELIGIBILITY_EXPLICIT-0001",
+      "family_id": "SM_ELIGIBILITY_EXPLICIT",
+      "scenario_id": "scenario-407fbb92292fc52b008eef7a",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "SM_ELIGIBILITY_EXPLICIT-0002",
+      "family_id": "SM_ELIGIBILITY_EXPLICIT",
+      "scenario_id": "scenario-5c9902bd134a72de799db183",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "SM_REFUND_EXPLICIT-0000",
+      "family_id": "SM_REFUND_EXPLICIT",
+      "scenario_id": "scenario-954643f494ba71362230915a",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome: {'type': 'propose_refund', 'tool_name': 'propose_refund', 'arguments': {'order_id': 'C811867', 'reason': 'damaged_item', 'refund_amount': 112.78}} is not valid under any of the given schemas"
+      ],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_REFUND_EXPLICIT-0001",
+      "family_id": "SM_REFUND_EXPLICIT",
+      "scenario_id": "scenario-51777a914fab79b6b56e999a",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome: {'type': 'propose_refund', 'tool_name': 'propose_refund', 'arguments': {'order_id': 'J489700', 'reason': 'damaged_item', 'refund_amount': 55.26}} is not valid under any of the given schemas"
+      ],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_REFUND_EXPLICIT-0002",
+      "family_id": "SM_REFUND_EXPLICIT",
+      "scenario_id": "scenario-ce88649344a9379621b58a48",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome: {'type': 'propose_refund', 'tool_name': 'propose_refund', 'arguments': {'order_id': 'J765508', 'reason': 'damaged_item', 'refund_amount': 35.74}} is not valid under any of the given schemas"
+      ],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_STATUS_MISSING_ID-0000",
+      "family_id": "SM_STATUS_MISSING_ID",
+      "scenario_id": "scenario-c572d2f768604f6198569861",
+      "split": "smoke",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": false,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_STATUS_MISSING_ID-0001",
+      "family_id": "SM_STATUS_MISSING_ID",
+      "scenario_id": "scenario-bcb9949247792a41467478b2",
+      "split": "smoke",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": false,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_ELIGIBILITY_MISSING_REASON-0000",
+      "family_id": "SM_ELIGIBILITY_MISSING_REASON",
+      "scenario_id": "scenario-865d2c7e290a807490131951",
+      "split": "smoke",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_ELIGIBILITY_MISSING_REASON-0001",
+      "family_id": "SM_ELIGIBILITY_MISSING_REASON",
+      "scenario_id": "scenario-e253f5c74f4a9aae30036ac7",
+      "split": "smoke",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_REFUND_MISSING_AMOUNT-0000",
+      "family_id": "SM_REFUND_MISSING_AMOUNT",
+      "scenario_id": "scenario-d3cfee2c9596dd4c4eb1afcf",
+      "split": "smoke",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": false,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_POLICY_EXPLANATION-0000",
+      "family_id": "SM_POLICY_EXPLANATION",
+      "scenario_id": "scenario-a97360ef9c61470380a45bbf",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome: {'type': 'clarification', 'target_tool_name': 'null', 'missing_fields': [], 'reason_code': 'ambiguous_intent', 'question': 'What aspects does a typical refund policy cover?'} is not valid under any of the given schemas"
+      ],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_POLICY_EXPLANATION-0001",
+      "family_id": "SM_POLICY_EXPLANATION",
+      "scenario_id": "scenario-9a2c3dd6de27593d14a6ebe2",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome: {'type': 'clarification', 'target_tool_name': 'null', 'missing_fields': [], 'reason_code': 'ambiguous_intent', 'question': 'What does a typical refund policy cover?'} is not valid under any of the given schemas"
+      ],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_DELIVERY_ETA-0000",
+      "family_id": "SM_DELIVERY_ETA",
+      "scenario_id": "scenario-d7fe2a6b987bc487d7c54200",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome: {'type': 'clarification', 'target_tool_name': 'get_order_status', 'missing_fields': [], 'reason_code': 'ambiguous_intent', 'question': 'Could you provide more details on the expected delivery time range for your desk lamp order with reference number Z777758?'} is not valid under any of the given schemas"
+      ],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_UNSUPPORTED_CANCEL-0000",
+      "family_id": "SM_UNSUPPORTED_CANCEL",
+      "scenario_id": "scenario-d7c1ba324bd0d0d5224cfc6b",
+      "split": "smoke",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "SM_PRODUCT_QUESTION-0000",
+      "family_id": "SM_PRODUCT_QUESTION",
+      "scenario_id": "scenario-ea9a76084fb82e45729aa1b1",
+      "split": "smoke",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome: {'type': 'no_tool', 'reason_code': 'ambiguous_intent'} is not valid under any of the given schemas"
+      ],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    }
+  ],
+  "gold_sha256": "96b50a75f8b2ea84affd92438faff87f87ef097b8ec50cc3a76d8cd907a4b634",
+  "inference_metadata": {
+    "backend": "transformers",
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "resolved_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "adapter": null,
+    "prompt_style": "strong",
+    "device": "cpu",
+    "decoding": {
+      "do_sample": false,
+      "num_beams": 1,
+      "max_new_tokens": 256
+    },
+    "retry_policy": "none",
+    "torch_version": "2.8.0+cpu",
+    "transformers_version": "4.57.6",
+    "examples": 20,
+    "peak_gpu_memory_bytes": null,
+    "local_snapshot_directory": "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+    "weights_sha256": "dd924a11b4c220f385b51ffa522daea7c9f3d850e31b162bb5661df483c6d3ee",
+    "artifact_verification": "Upstream weight SHA-256 and support-file Git blob hashes",
+    "tasks_sha256": "5479f44da1507f1377eec31e1e162eb59d1c00c2dd23e78770d7515c9c9ce22c",
+    "source_commit": "add888a5c532bc1c3fe1334cddf9f67e6983c164",
+    "started_at_utc": "2026-11-08T21:12:33.496749+00:00",
+    "completed_at_utc": "2026-11-08T21:21:01.139893+00:00",
+    "elapsed_seconds": 507.6431813250001,
+    "cpu_peak_rss_bytes": 9658732544,
+    "cpu_threads": 4,
+    "cpu_interop_threads": 1,
+    "model_dtype": "float32",
+    "seed": 42,
+    "model_fine_tuned": false,
+    "engineering_smoke_only": true,
+    "runner_sha256": "5d9b09afc9c43cd7f423d049c59faaedeec83589f8aecf8889853dde33f42200"
+  }
+}

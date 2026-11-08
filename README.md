@@ -74,12 +74,12 @@ tunebench train --data-dir data/generated/candidates --output artifacts/runs/lor
 Use `[qlora]` and `train --quantize` for optional four-bit QLoRA. Baselines A (`minimal`)
 and B (`strong`) use the same greedy decoding, output validation, and zero-retry policy.
 Use `infer --adapter artifacts/runs/lora/adapter --prompt-style strong` for the matched
-fine-tuned comparison. Train/validation preparation and token-masking tests run offline;
-real training requires CUDA. Full model installation and actual inference/training
-have **not** been validated in this session: no GPU is exposed and the environment's
-proxy denies `huggingface.co`. Enable that destination in environment settings before
-downloading; model artifact redirects may identify additional hosts to permit.
-No credentials are required for the public candidate model.
+fine-tuned comparison. Train/validation preparation and token-masking tests run offline.
+CPU model loading and the first 20-example smoke run are now verified. GPU fine-tuning
+remains unrun; no GPU is exposed here.
+See the [first real-model results](artifacts/baseline-smoke/README.md) for raw outputs,
+the measured score, and the tested CPU installation/download commands. Model downloads
+use `huggingface.co` and `us.aws.cdn.hf.co`; no credentials are required for this public model.
 
 ## Experimental safeguards
 

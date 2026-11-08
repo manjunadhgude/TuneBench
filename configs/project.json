@@ -3,14 +3,16 @@
   "project_version": "0.2.0",
   "research_question": "Can fine-tuning a small instruction model improve tool selection and argument generation over a strong prompting baseline enough to justify its added cost and complexity?",
   "candidate_model": "Qwen/Qwen2.5-1.5B-Instruct",
-  "candidate_status": "unverified_candidate",
+  "candidate_status": "smoke_verified_not_research_locked",
   "training_enabled": false,
   "test_set_freeze_required": true,
   "split_strategy": "family_aware",
   "seed": 42,
   "notes": [
-    "The candidate model is not locked.",
-    "Verify model revision, license, availability and compute feasibility before training.",
-    "Do not interpret smoke tests as model-performance evidence."
-  ]
+    "The candidate model is not locked for the final research comparison.",
+    "Public artifacts, Apache-2.0 license, upstream hashes and CPU smoke inference verified.",
+    "GPU fine-tuning feasibility and trained-model quality remain unverified.",
+    "Do not interpret smoke tests as representative model-performance evidence."
+  ],
+  "last_verified_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306"
 }
