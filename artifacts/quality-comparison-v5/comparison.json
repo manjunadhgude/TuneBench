@@ -1,0 +1,87 @@
+{
+  "comparison_type": "system_version_comparison_not_model_or_prompt_ablation",
+  "examples": 40,
+  "protocol_sha256": "ebbbcc2cba36caa39d1cb4ec28a9f33c6063cc504d4435834b144203468bd45a",
+  "results": {
+    "raw-first": {
+      "legacy": {
+        "correct": 21,
+        "total": 40,
+        "accuracy": 0.525
+      },
+      "candidate": {
+        "correct": 37,
+        "total": 40,
+        "accuracy": 0.925
+      },
+      "improvements": [
+        "portfolio-v3-holdout-01",
+        "portfolio-v3-holdout-05",
+        "portfolio-v3-holdout-07",
+        "portfolio-v3-holdout-08",
+        "portfolio-v3-holdout-09",
+        "portfolio-v3-holdout-11",
+        "portfolio-v3-holdout-14",
+        "portfolio-v3-holdout-17",
+        "portfolio-v3-holdout-20",
+        "portfolio-v3-holdout-21",
+        "portfolio-v3-holdout-22",
+        "portfolio-v3-holdout-24",
+        "portfolio-v3-holdout-25",
+        "portfolio-v3-holdout-26",
+        "portfolio-v3-holdout-35",
+        "portfolio-v3-holdout-37",
+        "portfolio-v3-holdout-38"
+      ],
+      "regressions": [
+        "portfolio-v3-holdout-32"
+      ],
+      "schema_valid_decisions": {
+        "legacy": 37,
+        "candidate": 40
+      }
+    },
+    "final": {
+      "legacy": {
+        "correct": 16,
+        "total": 40,
+        "accuracy": 0.4
+      },
+      "candidate": {
+        "correct": 32,
+        "total": 40,
+        "accuracy": 0.8
+      },
+      "improvements": [
+        "portfolio-v3-holdout-02",
+        "portfolio-v3-holdout-07",
+        "portfolio-v3-holdout-08",
+        "portfolio-v3-holdout-09",
+        "portfolio-v3-holdout-11",
+        "portfolio-v3-holdout-14",
+        "portfolio-v3-holdout-16",
+        "portfolio-v3-holdout-17",
+        "portfolio-v3-holdout-19",
+        "portfolio-v3-holdout-20",
+        "portfolio-v3-holdout-24",
+        "portfolio-v3-holdout-25",
+        "portfolio-v3-holdout-26",
+        "portfolio-v3-holdout-29",
+        "portfolio-v3-holdout-35",
+        "portfolio-v3-holdout-38"
+      ],
+      "regressions": [],
+      "schema_valid_decisions": {
+        "legacy": 19,
+        "candidate": 39
+      }
+    }
+  },
+  "limitations": [
+    "Prompt, constraints and grounding changed; not a prompt ablation.",
+    "Different weights, quantization and runtimes; effects are combined.",
+    "Small assistant-authored holdout; no production reliability claim.",
+    "Execution disabled; execution safety checked separately."
+  ],
+  "quality_claims_validated": true
+}

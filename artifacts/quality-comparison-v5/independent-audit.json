@@ -1,0 +1,4586 @@
+{
+  "audit_status": "pass",
+  "audited_at_utc": "2026-11-09T16:28:41.710591+00:00",
+  "method": "Reparse original generated text, independently implement strict-match checks, and recompute canonical evaluator reports for all 40 cases. Saved parsed predictions are not the score source.",
+  "generation_reruns": 0,
+  "source_edits": 0,
+  "labels_changed": 0,
+  "examples_per_version": 40,
+  "runtime_errors_present": false,
+  "quality_claims_validated": true,
+  "canonical_parser_functions_identical": [
+    "parse_output",
+    "_unique_object",
+    "_reject_constant",
+    "_finite_float"
+  ],
+  "protocol_sha256": "ebbbcc2cba36caa39d1cb4ec28a9f33c6063cc504d4435834b144203468bd45a",
+  "tasks_sha256": "eb0dd97d0a15308415a9537e33020d387801b8b426d78192f6cf2a81fcd900a9",
+  "verified_source_file_counts": {
+    "legacy": 24,
+    "candidate": 26
+  },
+  "candidate_source_commit_verified": "5d52dc8b5dcc3a55c83449583ee72e351834ad62",
+  "legacy_source_commit_verified": "7498d781d9cbaf61607f1c1bd50df5bd32ad142a",
+  "model_assets_verified": 11,
+  "selected_runtime_libraries_verified": {
+    "python": "3.12.14",
+    "tunebench": "0.5.0",
+    "torch": "2.8.0+cpu",
+    "transformers": "4.57.6",
+    "accelerate": "1.15.0",
+    "jsonschema": "4.26.0",
+    "tokenizers": "0.22.2",
+    "numpy": "2.5.4",
+    "lm-format-enforcer": "0.11.3",
+    "interegular": "0.3.3",
+    "llama-cpp-python": "0.3.36",
+    "pydantic": "2.14.3",
+    "pydantic_core": "2.50.4"
+  },
+  "supplementary_package_inventory": {
+    "captured_at_utc": "2026-11-09T15:43:51.176465+00:00",
+    "basis": "Supplementary inventory captured during candidate generation; protocol froze selected libraries before generation. This is not a pre-generation full-transitive freeze.",
+    "distribution_entries": 69,
+    "unique_name_version_pairs": 68,
+    "packages": [
+      {
+        "name": "accelerate",
+        "version": "1.15.0"
+      },
+      {
+        "name": "altair",
+        "version": "6.3.0"
+      },
+      {
+        "name": "annotated-types",
+        "version": "0.8.0"
+      },
+      {
+        "name": "anyio",
+        "version": "4.16.0"
+      },
+      {
+        "name": "attrs",
+        "version": "26.1.0"
+      },
+      {
+        "name": "certifi",
+        "version": "2026.10.23"
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.5.2"
+      },
+      {
+        "name": "click",
+        "version": "8.5.1"
+      },
+      {
+        "name": "diskcache",
+        "version": "5.6.3"
+      },
+      {
+        "name": "filelock",
+        "version": "4.2.9"
+      },
+      {
+        "name": "fsspec",
+        "version": "2026.9.0"
+      },
+      {
+        "name": "greenlet",
+        "version": "3.5.6"
+      },
+      {
+        "name": "h11",
+        "version": "0.16.0"
+      },
+      {
+        "name": "hf-xet",
+        "version": "1.8.0"
+      },
+      {
+        "name": "huggingface-hub",
+        "version": "0.36.2"
+      },
+      {
+        "name": "idna",
+        "version": "3.20"
+      },
+      {
+        "name": "iniconfig",
+        "version": "2.3.1"
+      },
+      {
+        "name": "interegular",
+        "version": "0.3.3"
+      },
+      {
+        "name": "itsdangerous",
+        "version": "2.2.0"
+      },
+      {
+        "name": "jinja2",
+        "version": "3.1.6"
+      },
+      {
+        "name": "jsonschema",
+        "version": "4.26.0"
+      },
+      {
+        "name": "jsonschema-specifications",
+        "version": "2025.9.1"
+      },
+      {
+        "name": "llama-cpp-python",
+        "version": "0.3.36"
+      },
+      {
+        "name": "lm-format-enforcer",
+        "version": "0.11.3"
+      },
+      {
+        "name": "markupsafe",
+        "version": "3.0.4"
+      },
+      {
+        "name": "mpmath",
+        "version": "1.3.0"
+      },
+      {
+        "name": "narwhals",
+        "version": "2.28.0"
+      },
+      {
+        "name": "networkx",
+        "version": "3.7"
+      },
+      {
+        "name": "numpy",
+        "version": "2.5.4"
+      },
+      {
+        "name": "packaging",
+        "version": "26.3"
+      },
+      {
+        "name": "pandas",
+        "version": "3.1.1"
+      },
+      {
+        "name": "pillow",
+        "version": "13.0.0"
+      },
+      {
+        "name": "playwright",
+        "version": "1.64.1"
+      },
+      {
+        "name": "pluggy",
+        "version": "1.7.0"
+      },
+      {
+        "name": "protobuf",
+        "version": "7.36.2"
+      },
+      {
+        "name": "psutil",
+        "version": "7.2.2"
+      },
+      {
+        "name": "pyarrow",
+        "version": "26.0.1"
+      },
+      {
+        "name": "pydantic",
+        "version": "2.14.3"
+      },
+      {
+        "name": "pydantic-core",
+        "version": "2.50.4"
+      },
+      {
+        "name": "pydeck",
+        "version": "0.9.3"
+      },
+      {
+        "name": "pyee",
+        "version": "14.0.0"
+      },
+      {
+        "name": "pygments",
+        "version": "2.21.0"
+      },
+      {
+        "name": "pytest",
+        "version": "9.2.0"
+      },
+      {
+        "name": "python-dateutil",
+        "version": "4.0.0"
+      },
+      {
+        "name": "python-multipart",
+        "version": "0.0.33"
+      },
+      {
+        "name": "pyyaml",
+        "version": "6.0.3"
+      },
+      {
+        "name": "referencing",
+        "version": "0.37.0"
+      },
+      {
+        "name": "regex",
+        "version": "2026.11.8"
+      },
+      {
+        "name": "requests",
+        "version": "2.34.2"
+      },
+      {
+        "name": "rpds-py",
+        "version": "2026.9.1"
+      },
+      {
+        "name": "ruff",
+        "version": "0.17.4"
+      },
+      {
+        "name": "safetensors",
+        "version": "0.8.0"
+      },
+      {
+        "name": "setuptools",
+        "version": "84.2.1"
+      },
+      {
+        "name": "starlette",
+        "version": "1.10.0"
+      },
+      {
+        "name": "streamlit",
+        "version": "1.67.0"
+      },
+      {
+        "name": "sympy",
+        "version": "1.14.0"
+      },
+      {
+        "name": "tokenizers",
+        "version": "0.22.2"
+      },
+      {
+        "name": "torch",
+        "version": "2.8.0+cpu"
+      },
+      {
+        "name": "tqdm",
+        "version": "4.70.1"
+      },
+      {
+        "name": "transformers",
+        "version": "4.57.6"
+      },
+      {
+        "name": "tunebench",
+        "version": "0.5.0"
+      },
+      {
+        "name": "typing-extensions",
+        "version": "4.16.0"
+      },
+      {
+        "name": "typing-inspection",
+        "version": "0.4.5"
+      },
+      {
+        "name": "tzdata",
+        "version": "2026.6"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.8.0"
+      },
+      {
+        "name": "uvicorn",
+        "version": "0.54.0"
+      },
+      {
+        "name": "watchdog",
+        "version": "7.1.0"
+      },
+      {
+        "name": "websockets",
+        "version": "17.4"
+      }
+    ],
+    "verified_unchanged_at_final": true
+  },
+  "systems": {
+    "legacy": {
+      "metrics": {
+        "raw-first": {
+          "strict_correct": 21,
+          "outcome_correct": 27,
+          "schema_valid": 37
+        },
+        "last-original": {
+          "strict_correct": 22,
+          "outcome_correct": 27,
+          "schema_valid": 40
+        },
+        "final": {
+          "strict_correct": 16,
+          "outcome_correct": 18,
+          "schema_valid": 19
+        }
+      },
+      "first_parseable_json_objects": 40,
+      "generations": 67,
+      "repairs": 27,
+      "active_case_seconds": 2460.0401727210265,
+      "status_counts": {
+        "validated": 10,
+        "blocked": 21,
+        "no_tool": 6,
+        "clarification": 3
+      },
+      "runtime_errors": 0,
+      "journal_sha256": "df5e5046589535ce07d9042fdff805d50505f3b49dea5a6240ebc0231993f4b4",
+      "source_package_version": "0.4.0",
+      "pipeline_effects": {
+        "correct_first_answers_lost": [
+          "portfolio-v3-holdout-06",
+          "portfolio-v3-holdout-16",
+          "portfolio-v3-holdout-19",
+          "portfolio-v3-holdout-23",
+          "portfolio-v3-holdout-29",
+          "portfolio-v3-holdout-30",
+          "portfolio-v3-holdout-32",
+          "portfolio-v3-holdout-33",
+          "portfolio-v3-holdout-34"
+        ],
+        "initial_errors_repaired": [
+          "portfolio-v3-holdout-01",
+          "portfolio-v3-holdout-05",
+          "portfolio-v3-holdout-21",
+          "portfolio-v3-holdout-22"
+        ],
+        "correct_last_answers_blocked": [
+          "portfolio-v3-holdout-06",
+          "portfolio-v3-holdout-23",
+          "portfolio-v3-holdout-30",
+          "portfolio-v3-holdout-32",
+          "portfolio-v3-holdout-33",
+          "portfolio-v3-holdout-34"
+        ],
+        "incorrect_accepted_decisions": [
+          "portfolio-v3-holdout-11",
+          "portfolio-v3-holdout-16",
+          "portfolio-v3-holdout-37"
+        ],
+        "incorrect_accepted_tool_calls": [
+          "portfolio-v3-holdout-37"
+        ]
+      },
+      "correct_by_gold_type": {
+        "tool_call": {
+          "total": 16,
+          "raw_correct": 14,
+          "final_correct": 9
+        },
+        "clarification": {
+          "total": 12,
+          "raw_correct": 4,
+          "final_correct": 3
+        },
+        "no_tool": {
+          "total": 12,
+          "raw_correct": 3,
+          "final_correct": 4
+        }
+      },
+      "model_runtime": {
+        "loaded": true,
+        "local_path": "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+        "resolved_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "weights_sha256": "dd924a11b4c220f385b51ffa522daea7c9f3d850e31b162bb5661df483c6d3ee",
+        "verification": "Local assets checked against retained upstream-download manifest",
+        "device": "cpu",
+        "dtype": "float32",
+        "cpu_threads": 4,
+        "cpu_interop_threads": 1,
+        "torch_version": "2.8.0+cpu",
+        "transformers_version": "4.57.6",
+        "effective_generation_config": {
+          "max_length": 20,
+          "max_new_tokens": 256,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "early_stopping": false,
+          "max_time": null,
+          "stop_strings": null,
+          "do_sample": false,
+          "num_beams": 1,
+          "use_cache": true,
+          "cache_implementation": null,
+          "cache_config": null,
+          "return_legacy_cache": null,
+          "prefill_chunk_size": null,
+          "temperature": 0.7,
+          "top_k": 20,
+          "top_p": 0.8,
+          "min_p": null,
+          "typical_p": 1.0,
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "repetition_penalty": 1.1,
+          "encoder_repetition_penalty": 1.0,
+          "length_penalty": 1.0,
+          "no_repeat_ngram_size": 0,
+          "bad_words_ids": null,
+          "renormalize_logits": false,
+          "forced_bos_token_id": null,
+          "forced_eos_token_id": null,
+          "remove_invalid_values": false,
+          "exponential_decay_length_penalty": null,
+          "suppress_tokens": null,
+          "begin_suppress_tokens": null,
+          "sequence_bias": null,
+          "token_healing": false,
+          "guidance_scale": null,
+          "watermarking_config": null,
+          "num_return_sequences": 1,
+          "output_attentions": false,
+          "output_hidden_states": false,
+          "output_scores": false,
+          "output_logits": null,
+          "return_dict_in_generate": false,
+          "pad_token_id": 151643,
+          "bos_token_id": 151643,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "encoder_no_repeat_ngram_size": 0,
+          "decoder_start_token_id": null,
+          "is_assistant": false,
+          "num_assistant_tokens": 20,
+          "num_assistant_tokens_schedule": "constant",
+          "assistant_confidence_threshold": 0.4,
+          "prompt_lookup_num_tokens": null,
+          "max_matching_ngram_size": null,
+          "assistant_early_exit": null,
+          "assistant_lookbehind": 10,
+          "target_lookbehind": 10,
+          "disable_compile": false,
+          "low_memory": null,
+          "penalty_alpha": null,
+          "dola_layers": null,
+          "diversity_penalty": 0.0,
+          "num_beam_groups": 1,
+          "constraints": null,
+          "force_words_ids": null,
+          "_from_model_config": false,
+          "transformers_version": "4.57.6"
+        },
+        "downloads": false,
+        "seed": 42,
+        "prompt_version": "strong-v3",
+        "structured_output": {
+          "enabled": true,
+          "library": "lm-format-enforcer",
+          "library_version": "0.11.3",
+          "schema_sha256": "2a96cd21705628d6121d4eaf503a5270282a69193abc52787a776cec0b692da1",
+          "post_validation_required": true
+        }
+      },
+      "per_example": [
+        {
+          "example_id": "portfolio-v3-holdout-01",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "These fields are already resolved by the request: order_id, reason",
+                "Clarification reason does not distinguish absent from conflicting values"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id",
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Is there another way to specify the order ID and reason for checking eligibility?"
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "OR-2950",
+              "reason": "wrong_item"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "OR-2950",
+              "reason": "wrong_item"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-02",
+          "gold_type": "clarification",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "Requested action does not support this tool; no action substitution",
+            "reason is not supported by the resolved request evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution",
+                "reason is not supported by the resolved request evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution",
+                "reason is not supported by the resolved request evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "RP-3157",
+              "refund_amount": 23.6,
+              "reason": "wrong_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "RP-3157",
+              "refund_amount": 23.6,
+              "reason": "wrong_item"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-03",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-04",
+          "gold_type": "clarification",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "The action is unresolved; a particular target tool is not supported",
+            "Unresolved action choice requires the ambiguous_intent reason"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The action is unresolved; a particular target tool is not supported",
+                "Unresolved action choice requires the ambiguous_intent reason"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The action is unresolved; a particular target tool is not supported",
+                "Unresolved action choice requires the ambiguous_intent reason"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Could you please specify if you need tracking of the delivery or checking the refund eligibility for order DS-1011?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Could you please specify if you need tracking of the delivery or checking the refund eligibility for order DS-1011?"
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-05",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "These fields are already resolved by the request: order_id",
+                "These required fields remain unresolved: reason",
+                "Clarification reason does not distinguish absent from conflicting values"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order ID?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Which specific reason would you like to check for the order AJ-9302?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Which specific reason would you like to check for the order AJ-9302?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-06",
+          "gold_type": "tool_call",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "SM-412",
+              "refund_amount": 47.2,
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "SM-412",
+              "refund_amount": 47.2,
+              "reason": "changed_mind"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-07",
+          "gold_type": "no_tool",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "Requested action does not support this tool; no action substitution"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "AD-5678"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "AD-5678"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-08",
+          "gold_type": "no_tool",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "Requested action does not support this tool; no action substitution"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "PY-3679",
+              "refund_amount": 35.0,
+              "reason": "damaged_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "PY-3679",
+              "refund_amount": 35.0,
+              "reason": "damaged_item"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-09",
+          "gold_type": "clarification",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": false,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [
+                "outcome.arguments/refund_amount: 0 is less than or equal to the minimum of 0"
+              ],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "HE-8836",
+              "reason": "damaged_item",
+              "refund_amount": 0
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "HE-8836",
+              "reason": "damaged_item",
+              "refund_amount": 50.0
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-10",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-11",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-12",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "NX-7506",
+              "reason": "not_received"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "NX-7506",
+              "reason": "not_received"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "NX-7506",
+              "reason": "not_received"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-13",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "JAR-6904",
+              "reason": "damaged_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "JAR-6904",
+              "reason": "damaged_item"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "JAR-6904",
+              "reason": "damaged_item"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-14",
+          "gold_type": "no_tool",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "Requested action does not support this tool; no action substitution"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "BK-7097"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "BK-7097"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-15",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "BL-6308",
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "BL-6308",
+              "reason": "changed_mind"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "BL-6308",
+              "reason": "changed_mind"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-16",
+          "gold_type": "clarification",
+          "status": "no_tool",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The request is informational, unsupported, or withdrawn; no action to clarify"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order number that was shipped to you?"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-17",
+          "gold_type": "no_tool",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "The request is informational, unsupported, or withdrawn; no action to clarify"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The request is informational, unsupported, or withdrawn; no action to clarify"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The request is informational, unsupported, or withdrawn; no action to clarify"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id",
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "What specific details about the order and reason for potential refund would you like to check?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id",
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Could you please specify the order ID and the reason for potential refund?"
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-18",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "DM-5529",
+              "refund_amount": 16.75,
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "DM-5529",
+              "refund_amount": 16.75,
+              "reason": "changed_mind"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "DM-5529",
+              "refund_amount": 16.75,
+              "reason": "changed_mind"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-19",
+          "gold_type": "clarification",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "The action is unresolved; a particular target tool is not supported",
+            "Unresolved action choice requires the ambiguous_intent reason"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The action is unresolved; a particular target tool is not supported",
+                "Unresolved action choice requires the ambiguous_intent reason"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The action is unresolved; a particular target tool is not supported",
+                "Unresolved action choice requires the ambiguous_intent reason"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order reference?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Could you please provide more details about your order so that we can locate the correct order reference? This will help us determine the status of your delivery."
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-20",
+          "gold_type": "no_tool",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "Requested action does not support this tool; no action substitution",
+            "order_id must match the resolved literal order reference"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution",
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution",
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "plate:1",
+              "refund_amount": 12.8,
+              "reason": "damaged_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "plate:1",
+              "refund_amount": 12.8,
+              "reason": "damaged_item"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-21",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The request is informational, unsupported, or withdrawn; no action to clarify"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "What is the order reference for the refund proposal?"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-22",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The request is informational, unsupported, or withdrawn; no action to clarify"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Is there another way to find out about the processing status without checking it again?"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-23",
+          "gold_type": "tool_call",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "reason is not supported by the resolved request evidence",
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence",
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence",
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "PK-3864",
+              "refund_amount": 60.0,
+              "reason": "not_received"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "PK-3864",
+              "refund_amount": 60.0,
+              "reason": "not_received"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-24",
+          "gold_type": "clarification",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "reason is not supported by the resolved request evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "These fields are already resolved by the request: order_id",
+                "These required fields remain unresolved: reason"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order ID?"
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "EL-5063",
+              "reason": "not_received"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-25",
+          "gold_type": "clarification",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": false,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "reason is not supported by the resolved request evidence",
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [
+                "outcome.arguments/refund_amount: 0 is less than or equal to the minimum of 0"
+              ],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence",
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "FD-7741",
+              "refund_amount": 0,
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "FD-7741",
+              "refund_amount": 50.0,
+              "reason": "changed_mind"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-26",
+          "gold_type": "no_tool",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": false,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "Requested action does not support this tool; no action substitution",
+            "reason is not supported by the resolved request evidence",
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [
+                "outcome.arguments/refund_amount: 0 is less than or equal to the minimum of 0"
+              ],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution",
+                "reason is not supported by the resolved request evidence",
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "CN-2046",
+              "refund_amount": 0,
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "CN-2046",
+              "refund_amount": 50.0,
+              "reason": "changed_mind"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-27",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "REC-801"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "REC-801"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "REC-801"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-28",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "FC/2751"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "FC/2751"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "FC/2751"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-29",
+          "gold_type": "no_tool",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "The action is unresolved; a particular target tool is not supported",
+            "Unresolved action choice requires the ambiguous_intent reason"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The request seeks a supported action or clarification, not no_tool"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "The action is unresolved; a particular target tool is not supported",
+                "Unresolved action choice requires the ambiguous_intent reason"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Which order number would you like to check?"
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-30",
+          "gold_type": "tool_call",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "reason is not supported by the resolved request evidence",
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence",
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence",
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "FL-8642",
+              "refund_amount": 43.8,
+              "reason": "wrong_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "FL-8642",
+              "refund_amount": 43.8,
+              "reason": "wrong_item"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-31",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Could you please specify which of the two potential refund amounts (18.50 and 21.75) you would like to proceed with?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Could you please specify which of the two potential refund amounts (18.50 and 21.75) you would like to proceed with?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Could you please specify which of the two potential refund amounts (18.50 and 21.75) you would like to proceed with?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-32",
+          "gold_type": "tool_call",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "order_id must match the resolved literal order reference"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "web/876A"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "web/876A"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-33",
+          "gold_type": "tool_call",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "order_id must match the resolved literal order reference"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "CL-4812"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "CL-4812"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-34",
+          "gold_type": "tool_call",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "reason is not supported by the resolved request evidence"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "BK-9416",
+              "refund_amount": 28.4,
+              "reason": "damaged_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "BK-9416",
+              "refund_amount": 28.4,
+              "reason": "damaged_item"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-35",
+          "gold_type": "clarification",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "order_id must match the resolved literal order reference"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "unknown",
+              "refund_amount": 51.25,
+              "reason": "wrong_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "unknown",
+              "refund_amount": 51.25,
+              "reason": "wrong_item"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-36",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Is the order reference PC-6501 or PC-6507?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Is the order reference PC-6501 or PC-6507?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Is the order reference PC-6501 or PC-6507?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-37",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "CU-1837",
+              "refund_amount": 9.75,
+              "reason": "damaged_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "CU-1837",
+              "refund_amount": 48.75,
+              "reason": "damaged_item"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "CU-1837",
+              "refund_amount": 48.75,
+              "reason": "damaged_item"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-38",
+          "gold_type": "clarification",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "Clarification reason does not distinguish absent from conflicting values"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Clarification reason does not distinguish absent from conflicting values"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Clarification reason does not distinguish absent from conflicting values"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id",
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Please provide the purchase reference and the reason for the refund."
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id",
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Could you please provide the purchase reference and the reason for the refund?"
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-39",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "AP-2703",
+              "refund_amount": 44.9,
+              "reason": "wrong_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "AP-2703",
+              "refund_amount": 44.9,
+              "reason": "wrong_item"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "AP-2703",
+              "refund_amount": 44.9,
+              "reason": "wrong_item"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-40",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "NP-8426",
+              "refund_amount": 72.0,
+              "reason": "not_received"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "NP-8426",
+              "refund_amount": 72.0,
+              "reason": "not_received"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "NP-8426",
+              "refund_amount": 72.0,
+              "reason": "not_received"
+            }
+          }
+        }
+      ]
+    },
+    "candidate": {
+      "metrics": {
+        "raw-first": {
+          "strict_correct": 37,
+          "outcome_correct": 38,
+          "schema_valid": 40
+        },
+        "last-original": {
+          "strict_correct": 33,
+          "outcome_correct": 34,
+          "schema_valid": 40
+        },
+        "final": {
+          "strict_correct": 32,
+          "outcome_correct": 33,
+          "schema_valid": 39
+        }
+      },
+      "first_parseable_json_objects": 40,
+      "generations": 47,
+      "repairs": 7,
+      "active_case_seconds": 290.36546219402226,
+      "status_counts": {
+        "validated": 9,
+        "clarification": 18,
+        "no_tool": 12,
+        "blocked": 1
+      },
+      "runtime_errors": 0,
+      "journal_sha256": "0d1fd272c67e1fcd972157a0355a616782558ae57f6a7176baf6e2316e91f8e0",
+      "source_package_version": "0.5.0",
+      "pipeline_effects": {
+        "correct_first_answers_lost": [
+          "portfolio-v3-holdout-06",
+          "portfolio-v3-holdout-23",
+          "portfolio-v3-holdout-30",
+          "portfolio-v3-holdout-33",
+          "portfolio-v3-holdout-34",
+          "portfolio-v3-holdout-37"
+        ],
+        "initial_errors_repaired": [
+          "portfolio-v3-holdout-02"
+        ],
+        "correct_last_answers_blocked": [
+          "portfolio-v3-holdout-33"
+        ],
+        "incorrect_accepted_decisions": [
+          "portfolio-v3-holdout-04",
+          "portfolio-v3-holdout-06",
+          "portfolio-v3-holdout-23",
+          "portfolio-v3-holdout-30",
+          "portfolio-v3-holdout-32",
+          "portfolio-v3-holdout-34",
+          "portfolio-v3-holdout-37"
+        ],
+        "incorrect_accepted_tool_calls": []
+      },
+      "correct_by_gold_type": {
+        "tool_call": {
+          "total": 16,
+          "raw_correct": 15,
+          "final_correct": 9
+        },
+        "clarification": {
+          "total": 12,
+          "raw_correct": 10,
+          "final_correct": 11
+        },
+        "no_tool": {
+          "total": 12,
+          "raw_correct": 12,
+          "final_correct": 12
+        }
+      },
+      "model_runtime": {
+        "loaded": true,
+        "local_path": "/workspace/models/Qwen3-4B-Instruct-2507-GGUF/a06e946bb6b655725eafa393f4a9745d460374c9/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+        "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+        "base_model_id": "Qwen/Qwen3-4B-Instruct-2507",
+        "resolved_model_revision": "a06e946bb6b655725eafa393f4a9745d460374c9",
+        "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+        "weights_bytes": 2497281120,
+        "publisher": "Unsloth; third-party quantization of the official Qwen model",
+        "verification": "Pinned upstream SHA-256 and file size checked locally before loading",
+        "backend": "llama.cpp",
+        "llama_cpp_python_version": "0.3.36",
+        "device": "cpu",
+        "dtype": "Q4_K_M",
+        "quantization": "Q4_K_M",
+        "cpu_threads": 4,
+        "cpu_batch_threads": 4,
+        "context_tokens": 8192,
+        "max_new_tokens": 256,
+        "seed": 42,
+        "chat_format": "chatml",
+        "thinking": false,
+        "prompt_version": "strong-v4",
+        "downloads": false,
+        "effective_generation_config": {
+          "temperature": 0.0,
+          "top_p": 1.0,
+          "top_k": 0,
+          "min_p": 0.0,
+          "typical_p": 1.0,
+          "repeat_penalty": 1.1,
+          "frequency_penalty": 0.0,
+          "presence_penalty": 0.0,
+          "max_tokens": 256,
+          "seed": 42,
+          "stream": false,
+          "do_sample": false,
+          "num_beams": 1,
+          "max_new_tokens": 256,
+          "repetition_penalty": 1.1
+        },
+        "structured_output": {
+          "enabled": true,
+          "library": "llama.cpp JSON-schema grammar",
+          "schema_sha256": "2a96cd21705628d6121d4eaf503a5270282a69193abc52787a776cec0b692da1",
+          "post_validation_required": true
+        },
+        "last_generation": {
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 1149,
+            "completion_tokens": 39,
+            "total_tokens": 1188
+          }
+        }
+      },
+      "per_example": [
+        {
+          "example_id": "portfolio-v3-holdout-01",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "OR-2950",
+              "reason": "wrong_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "OR-2950",
+              "reason": "wrong_item"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "OR-2950",
+              "reason": "wrong_item"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-02",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 2,
+          "raw_strict": false,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "Requested action does not support this tool; no action substitution",
+                "reason is not supported by the resolved request evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "The request is informational, unsupported, or withdrawn; no action to clarify"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "The request is informational, unsupported, or withdrawn; no action to clarify"
+          ],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "RP-3157",
+              "refund_amount": 23.6,
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the reason for the refund?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the reason for the refund?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-03",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-04",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "The action is unresolved; a particular target tool is not supported",
+                "Unresolved action choice requires the ambiguous_intent reason"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "The action is unresolved; a particular target tool is not supported",
+            "Unresolved action choice requires the ambiguous_intent reason"
+          ],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Would you like to track the delivery or check refund eligibility for order DS-1011?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Would you like to track the delivery or check refund eligibility for order DS-1011?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Would you like to track the delivery or check refund eligibility for order DS-1011?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-05",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Should the refund be due to a damaged item or a changed mind?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Should the refund be due to a damaged item or a changed mind?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Should the refund be due to a damaged item or a changed mind?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-06",
+          "gold_type": "tool_call",
+          "status": "clarification",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "These fields are already resolved by the request: refund_amount"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "These fields are already resolved by the request: refund_amount"
+          ],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "SM-412",
+              "refund_amount": 47.2,
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "The requested refund amount of 47.20 does not match the original order price of 52.80. Is this amount correct, or should it be based on the original purchase value?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "The requested refund amount of 47.20 does not match the original order price of 52.80. Is this amount correct, or should it be based on the original purchase value?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-07",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-08",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-09",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What amount should I use for the refund?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What amount should I use for the refund?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What amount should I use for the refund?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-10",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-11",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-12",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "NX-7506",
+              "reason": "not_received"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "NX-7506",
+              "reason": "not_received"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "NX-7506",
+              "reason": "not_received"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-13",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "JAR-6904",
+              "reason": "damaged_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "JAR-6904",
+              "reason": "damaged_item"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "JAR-6904",
+              "reason": "damaged_item"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-14",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "No-tool reason does not match the requested action evidence"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "No-tool reason does not match the requested action evidence"
+          ],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-15",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "BL-6308",
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "BL-6308",
+              "reason": "changed_mind"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "check_refund_eligibility",
+            "arguments": {
+              "order_id": "BL-6308",
+              "reason": "changed_mind"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-16",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "The request is informational, unsupported, or withdrawn; no action to clarify"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "The request is informational, unsupported, or withdrawn; no action to clarify"
+          ],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order number for the parcel that never reached you?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order number for the parcel that never reached you?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order number for the parcel that never reached you?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-17",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-18",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "DM-5529",
+              "refund_amount": 16.75,
+              "reason": "changed_mind"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "DM-5529",
+              "refund_amount": 16.75,
+              "reason": "changed_mind"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "DM-5529",
+              "refund_amount": 16.75,
+              "reason": "changed_mind"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-19",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "The action is unresolved; a particular target tool is not supported",
+                "Unresolved action choice requires the ambiguous_intent reason"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "The action is unresolved; a particular target tool is not supported",
+            "Unresolved action choice requires the ambiguous_intent reason"
+          ],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is your order reference?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is your order reference?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is your order reference?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-20",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-21",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-22",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "informational_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-23",
+          "gold_type": "tool_call",
+          "status": "clarification",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence",
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "These required fields remain unresolved: reason",
+                "Clarification reason does not distinguish absent from conflicting values"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "These required fields remain unresolved: reason",
+            "Clarification reason does not distinguish absent from conflicting values"
+          ],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "PK-3864",
+              "refund_amount": 60,
+              "reason": "not_received"
+            }
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What specific amount should the refund be, based on 25 percent of the original item price of 240.00?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What specific amount should the refund be, based on 25 percent of the original item price of 240.00?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-24",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "Why do you want to return the order?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "Why do you want to return the order?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "Why do you want to return the order?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-25",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount",
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What refund reason (e.g., damaged_item, wrong_item, not_received, changed_mind) and amount should I use?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount",
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What refund reason (e.g., damaged_item, wrong_item, not_received, changed_mind) and amount should I use?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount",
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What refund reason (e.g., damaged_item, wrong_item, not_received, changed_mind) and amount should I use?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-26",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-27",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "REC-801"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "REC-801"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "REC-801"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-28",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "FC/2751"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "FC/2751"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "FC/2751"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-29",
+          "gold_type": "no_tool",
+          "status": "no_tool",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "no_tool",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "last_original_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          },
+          "accepted_outcome": {
+            "type": "no_tool",
+            "reason_code": "no_action_requested"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-30",
+          "gold_type": "tool_call",
+          "status": "clarification",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence",
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "These required fields remain unresolved: reason"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "These required fields remain unresolved: reason"
+          ],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "FL-8642",
+              "refund_amount": 43.8,
+              "reason": "wrong_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What should the refund amount be based on the full price of three folders at $14.60 each?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What should the refund amount be based on the full price of three folders at $14.60 each?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-31",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Should the refund amount be 18.50 or 21.75?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Should the refund amount be 18.50 or 21.75?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Should the refund amount be 18.50 or 21.75?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-32",
+          "gold_type": "tool_call",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": false,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "Clarification reason does not distinguish absent from conflicting values"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "Clarification reason does not distinguish absent from conflicting values"
+          ],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the correct order ID to track?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the correct order ID to track?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the correct order ID to track?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-33",
+          "gold_type": "tool_call",
+          "status": "blocked",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": null,
+          "validation_errors": [
+            "order_id must match the resolved literal order reference"
+          ],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [
+                "order_id must match the resolved literal order reference"
+              ],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "CL-4812"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "get_order_status",
+            "arguments": {
+              "order_id": "CL-4812"
+            }
+          },
+          "accepted_outcome": null
+        },
+        {
+          "example_id": "portfolio-v3-holdout-34",
+          "gold_type": "tool_call",
+          "status": "clarification",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "reason is not supported by the resolved request evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "BK-9416",
+              "refund_amount": 28.4,
+              "reason": "damaged_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the reason for the refund?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the reason for the refund?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-35",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order ID for the incorrect item you received?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order ID for the incorrect item you received?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order ID for the incorrect item you received?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-36",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Which order reference is correct, PC-6501 or PC-6507?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Which order reference is correct, PC-6501 or PC-6507?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Which order reference is correct, PC-6501 or PC-6507?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-37",
+          "gold_type": "tool_call",
+          "status": "clarification",
+          "attempts": 2,
+          "raw_strict": true,
+          "last_original_strict": false,
+          "final_strict": false,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [
+                "refund_amount must match explicit or exactly derived monetary evidence"
+              ],
+              "advisory_grounding_warnings": []
+            },
+            {
+              "attempt": 2,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": [
+                "Clarification reason does not distinguish absent from conflicting values"
+              ]
+            }
+          ],
+          "advisory_grounding_warnings": [
+            "Clarification reason does not distinguish absent from conflicting values"
+          ],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "CU-1837",
+              "refund_amount": 19.5,
+              "reason": "damaged_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What should the refund amount be for the two damaged cups, based on the original price of 9.75 each?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What should the refund amount be for the two damaged cups, based on the original price of 9.75 each?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-38",
+          "gold_type": "clarification",
+          "status": "clarification",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "clarification",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id",
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "Could you please provide your purchase reference and the reason for the refund?"
+          },
+          "last_original_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id",
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "Could you please provide your purchase reference and the reason for the refund?"
+          },
+          "accepted_outcome": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id",
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "Could you please provide your purchase reference and the reason for the refund?"
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-39",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "AP-2703",
+              "refund_amount": 44.9,
+              "reason": "wrong_item"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "AP-2703",
+              "refund_amount": 44.9,
+              "reason": "wrong_item"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "AP-2703",
+              "refund_amount": 44.9,
+              "reason": "wrong_item"
+            }
+          }
+        },
+        {
+          "example_id": "portfolio-v3-holdout-40",
+          "gold_type": "tool_call",
+          "status": "validated",
+          "attempts": 1,
+          "raw_strict": true,
+          "last_original_strict": true,
+          "final_strict": true,
+          "first_schema_valid": true,
+          "first_json_object": true,
+          "accepted_type": "tool_call",
+          "validation_errors": [],
+          "attempt_diagnostics": [
+            {
+              "attempt": 1,
+              "schema_errors": [],
+              "grounding_errors": [],
+              "advisory_grounding_warnings": []
+            }
+          ],
+          "advisory_grounding_warnings": [],
+          "raw_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "NP-8426",
+              "refund_amount": 72.0,
+              "reason": "not_received"
+            }
+          },
+          "last_original_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "NP-8426",
+              "refund_amount": 72.0,
+              "reason": "not_received"
+            }
+          },
+          "accepted_outcome": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "NP-8426",
+              "refund_amount": 72.0,
+              "reason": "not_received"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "paired": {
+    "raw-first": {
+      "improvements": [
+        "portfolio-v3-holdout-01",
+        "portfolio-v3-holdout-05",
+        "portfolio-v3-holdout-07",
+        "portfolio-v3-holdout-08",
+        "portfolio-v3-holdout-09",
+        "portfolio-v3-holdout-11",
+        "portfolio-v3-holdout-14",
+        "portfolio-v3-holdout-17",
+        "portfolio-v3-holdout-20",
+        "portfolio-v3-holdout-21",
+        "portfolio-v3-holdout-22",
+        "portfolio-v3-holdout-24",
+        "portfolio-v3-holdout-25",
+        "portfolio-v3-holdout-26",
+        "portfolio-v3-holdout-35",
+        "portfolio-v3-holdout-37",
+        "portfolio-v3-holdout-38"
+      ],
+      "regressions": [
+        "portfolio-v3-holdout-32"
+      ]
+    },
+    "final": {
+      "improvements": [
+        "portfolio-v3-holdout-02",
+        "portfolio-v3-holdout-07",
+        "portfolio-v3-holdout-08",
+        "portfolio-v3-holdout-09",
+        "portfolio-v3-holdout-11",
+        "portfolio-v3-holdout-14",
+        "portfolio-v3-holdout-16",
+        "portfolio-v3-holdout-17",
+        "portfolio-v3-holdout-19",
+        "portfolio-v3-holdout-20",
+        "portfolio-v3-holdout-24",
+        "portfolio-v3-holdout-25",
+        "portfolio-v3-holdout-26",
+        "portfolio-v3-holdout-29",
+        "portfolio-v3-holdout-35",
+        "portfolio-v3-holdout-38"
+      ],
+      "regressions": []
+    }
+  },
+  "post_generation_assistant_semantic_review": {
+    "method": "Separate assistant started without inherited parent context reviewed the eight candidate final failures against frozen requests, golds, and original attempts after generation. This is not independent human annotation.",
+    "reviewed_case_ids": [
+      "portfolio-v3-holdout-04",
+      "portfolio-v3-holdout-06",
+      "portfolio-v3-holdout-23",
+      "portfolio-v3-holdout-30",
+      "portfolio-v3-holdout-32",
+      "portfolio-v3-holdout-33",
+      "portfolio-v3-holdout-34",
+      "portfolio-v3-holdout-37"
+    ],
+    "material_gold_ambiguities_found": [],
+    "labels_changed": 0,
+    "generation_reruns": 0,
+    "notes": {
+      "portfolio-v3-holdout-04": "Original model clarification metadata is wrong although the natural-language question asks the useful service-choice question. The action is undecided, while the output specifies a status target, missing order ID and ambiguous-reference reason. Advisory diagnostics retain this non-executing error.",
+      "portfolio-v3-holdout-06": "Guard reverses correction precedence for amounts: current 47.20 is treated as background and superseded 52.80 as requested. Repair turns a correct proposal into unnecessary clarification.",
+      "portfolio-v3-holdout-23": "Guard misses the nonreceipt paraphrase received none and cross-sentence percentage evidence: 25 percent of item price 240 is 60. Repair asks redundantly for an amount.",
+      "portfolio-v3-holdout-30": "Guard misses the paid-for versus delivered-product contrast and full-unit multiplication: 3 times 14.60 is 43.80. Repair asks redundantly for an amount.",
+      "portfolio-v3-holdout-32": "Original model asks for the already-provided purchase reference web/876A; guard also conflates purchase and support-case identifiers. Advisory policy retains the unnecessary clarification.",
+      "portfolio-v3-holdout-33": "Guard treats explicitly superseded prior reference CL-4182 as current alongside corrected CL-4812. Both model attempts correctly select CL-4812, but the final decision is blocked.",
+      "portfolio-v3-holdout-34": "Guard misses the damage paraphrase that a book binding arrived torn. Repair asks redundantly for the supplied reason.",
+      "portfolio-v3-holdout-37": "Guard misses selected-subset arithmetic: two damaged cups at 9.75 each total 19.50, with other charges excluded. Repair asks redundantly for an amount."
+    }
+  },
+  "limitations": [
+    "Same assistant family authored/reviewed data and ran this computational audit; no independent human annotation.",
+    "40 curated synthetic questions do not establish representative production reliability or semantic independence.",
+    "Different models, quantization, runtimes, prompts and guard policies change together; not a model/prompt ablation or fine-tuning result.",
+    "Execution disabled: this measures canonical decisions, not real transactions or proof of execution safety.",
+    "Clarification question prose is checked for contract validity, not independently human-graded helpfulness.",
+    "Timing is observed request wall time, including model loading and retries; not process CPU-seconds or a controlled hardware benchmark."
+  ]
+}

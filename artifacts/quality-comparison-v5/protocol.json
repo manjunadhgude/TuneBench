@@ -1,0 +1,302 @@
+{
+  "protocol_version": "quality-system-comparison-v1",
+  "comparison_type": "system_version_comparison_not_model_or_prompt_ablation",
+  "created_at_utc": "2026-11-09T15:42:32.048258+00:00",
+  "execution_order": [
+    "candidate",
+    "legacy"
+  ],
+  "roots": {
+    "legacy": "/tmp/tunebench-legacy-7498d78",
+    "candidate": "/workspace/TuneBench"
+  },
+  "sources": {
+    "legacy": {
+      "pyproject.toml": "b857162bf1f5a781dea5bc57d5aba86b8267b2ced141646235c12f2cb22b0817",
+      "src/tunebench/__init__.py": "ddf507897073d4feec0a31716e05a5b6a3747650496eb61f35c25abbd51c1984",
+      "src/tunebench/__main__.py": "9a9898be7ee76a6eaf065d94e64a7d6a97ae0f27923688637f244d0b2354f1e4",
+      "src/tunebench/assistant.py": "6b6eec3b975d297bf4dbeac14864c9733dd1468ae26bcfe43b79dbd38cf8ee8d",
+      "src/tunebench/cli.py": "24584e993a539c81d86b7285dce0b37b2b2e231153b29fadfed0857954377efb",
+      "src/tunebench/comparison.py": "e689d983cfa7411481473f6cc415bd555a04eff1741a07d5923d25fdd436094e",
+      "src/tunebench/contracts.py": "4246d9b002a8d948482e3849072487a588c687f23f73bc3101f5bedcbfe2f462",
+      "src/tunebench/dashboard.py": "619323ed37152ef471132ff499b978f66131f5420b2468cbb87755b8da1b8553",
+      "src/tunebench/dataset.py": "846872dd6771b8c872ad5930d2e3aec9239c86f3a59b42259b4666a02d940c8e",
+      "src/tunebench/evaluator.py": "a289a596fd2db60e1431e3533b28daaf7386c1a4e8f4c3774d09d6ec6fc6aa54",
+      "src/tunebench/grounding.py": "317674b61568abf04f1e0a5c33340d66d5b232a8dc6093ea2ed0fbccc758a6c9",
+      "src/tunebench/inference.py": "debbcd338e23d4a32f663fb106726b5e25a7bd8064085a8ee0cd5829ebef15e8",
+      "src/tunebench/io.py": "580c7a3365256368afc1fc2e377a342e9d887d97ff4d10b614128ba0c30a7156",
+      "src/tunebench/live_model.py": "ec7d07043c2e63d279c719269c998263917d0d1605d79713f7649adecba66b9b",
+      "src/tunebench/mock_tools.py": "278e35d29ab403d04a066166e84cc0195508cbd8871156411e376a37a4ed1031",
+      "src/tunebench/prompts_v3.py": "6f9e67eb3652e8cf7b06aa0141f753f3cef186c6dcd854f220ef6b052e806afe",
+      "src/tunebench/resources/configs/demo_orders.json": "2ca6a9e7851782b0619f0700ac14addeed12417e3984c72d138ffe2364e949e2",
+      "src/tunebench/resources/configs/evaluation.json": "52f0d8e1399a083e484de596dc05fb6855ca139647bb73591816bc82c6ab36ca",
+      "src/tunebench/resources/configs/project.json": "54af52664bcda007fd440a300d0d38a98b59dbaf6d3c1c683860679822675765",
+      "src/tunebench/resources/configs/tool_registry.json": "e4bd11b05b19290b4026019c77b8301e667e49e6a106f733d233c3326e723d43",
+      "src/tunebench/resources/schemas/prediction.schema.json": "a79d81cd112e3b62709fd123539426c6d6f9975a375d064a20d7b622073e21c6",
+      "src/tunebench/resources/schemas/task.schema.json": "ca1e1e4b35ebfd2201cda89d0c3dde824de7f972686327ffaecff78c0b7a3176",
+      "src/tunebench/structured.py": "f3ffc28de80610a0c03ef33bdbf71746349d6d3c39026ea8b0df2b4b0f318810",
+      "src/tunebench/training.py": "389accbef18526fce4ffe9b2febc25cd7fe6e6ac9108327b9c7489a825856a98"
+    },
+    "candidate": {
+      "pyproject.toml": "88309a94800fe1ff968ea263985d626a7d4352ec99f3e2b0ba25e9e9dcf1c2d8",
+      "src/tunebench/__init__.py": "f81c6dff28692147b0370c1fa1ddfaee761d47f1ddf4a0f7e5b95839a8064f80",
+      "src/tunebench/__main__.py": "9a9898be7ee76a6eaf065d94e64a7d6a97ae0f27923688637f244d0b2354f1e4",
+      "src/tunebench/assistant.py": "608a6dcf246d0dcd682c9997950927da20fc60642a26e65a361fb0debd4ba833",
+      "src/tunebench/cli.py": "0a9c3c46d6a1de1ed29476f80e29e9fb4d1a7937a3d9e74894f155e5066c416b",
+      "src/tunebench/comparison.py": "e689d983cfa7411481473f6cc415bd555a04eff1741a07d5923d25fdd436094e",
+      "src/tunebench/contracts.py": "4246d9b002a8d948482e3849072487a588c687f23f73bc3101f5bedcbfe2f462",
+      "src/tunebench/dashboard.py": "dc5e42b32814ebf9c21ce0c61a0443a804532136fde60f272a8aeac559163868",
+      "src/tunebench/dataset.py": "846872dd6771b8c872ad5930d2e3aec9239c86f3a59b42259b4666a02d940c8e",
+      "src/tunebench/evaluator.py": "a289a596fd2db60e1431e3533b28daaf7386c1a4e8f4c3774d09d6ec6fc6aa54",
+      "src/tunebench/gguf_model.py": "74d7bad0d63a2b5a2b55800a670e7ea5b589b12121cd5a28d486237cbd9daede",
+      "src/tunebench/grounding.py": "a7afca76b7809cfa59ee00e45a8c57e01444c123f0fad2cd9de7fdb10ac01542",
+      "src/tunebench/inference.py": "72ee11e00dd631bd9cf95e929c898357254dac0f04e9f2bafdc83162d2c5b843",
+      "src/tunebench/io.py": "580c7a3365256368afc1fc2e377a342e9d887d97ff4d10b614128ba0c30a7156",
+      "src/tunebench/live_model.py": "ec7d07043c2e63d279c719269c998263917d0d1605d79713f7649adecba66b9b",
+      "src/tunebench/mock_tools.py": "278e35d29ab403d04a066166e84cc0195508cbd8871156411e376a37a4ed1031",
+      "src/tunebench/prompts_v3.py": "6f9e67eb3652e8cf7b06aa0141f753f3cef186c6dcd854f220ef6b052e806afe",
+      "src/tunebench/prompts_v4.py": "0597fb26087175e23c28e1194d07a494413c109d06343eb076ee05dd9d64f009",
+      "src/tunebench/resources/configs/demo_orders.json": "2ca6a9e7851782b0619f0700ac14addeed12417e3984c72d138ffe2364e949e2",
+      "src/tunebench/resources/configs/evaluation.json": "52f0d8e1399a083e484de596dc05fb6855ca139647bb73591816bc82c6ab36ca",
+      "src/tunebench/resources/configs/project.json": "08cc90a6e57abf96046a274f6d36b091169d9242a9f5dd1760d09425e08c40ac",
+      "src/tunebench/resources/configs/tool_registry.json": "e4bd11b05b19290b4026019c77b8301e667e49e6a106f733d233c3326e723d43",
+      "src/tunebench/resources/schemas/prediction.schema.json": "a79d81cd112e3b62709fd123539426c6d6f9975a375d064a20d7b622073e21c6",
+      "src/tunebench/resources/schemas/task.schema.json": "ca1e1e4b35ebfd2201cda89d0c3dde824de7f972686327ffaecff78c0b7a3176",
+      "src/tunebench/structured.py": "f3ffc28de80610a0c03ef33bdbf71746349d6d3c39026ea8b0df2b4b0f318810",
+      "src/tunebench/training.py": "389accbef18526fce4ffe9b2febc25cd7fe6e6ac9108327b9c7489a825856a98"
+    }
+  },
+  "legacy_commit": "7498d78",
+  "data_source": "/workspace/TuneBench/datasets/portfolio-v3/holdout.jsonl",
+  "dataset_id": "tunebench-portfolio-v3",
+  "manifest_source": "/workspace/TuneBench/datasets/portfolio-v3/manifest.json",
+  "tasks_sha256": "eb0dd97d0a15308415a9537e33020d387801b8b426d78192f6cf2a81fcd900a9",
+  "dataset_manifest_sha256": "c8a232e2f0aa07ea1c244f6eb352ddaecf38493e0ca4ba21f582a69f214f2046",
+  "examples": 40,
+  "example_ids": [
+    "portfolio-v3-holdout-01",
+    "portfolio-v3-holdout-02",
+    "portfolio-v3-holdout-03",
+    "portfolio-v3-holdout-04",
+    "portfolio-v3-holdout-05",
+    "portfolio-v3-holdout-06",
+    "portfolio-v3-holdout-07",
+    "portfolio-v3-holdout-08",
+    "portfolio-v3-holdout-09",
+    "portfolio-v3-holdout-10",
+    "portfolio-v3-holdout-11",
+    "portfolio-v3-holdout-12",
+    "portfolio-v3-holdout-13",
+    "portfolio-v3-holdout-14",
+    "portfolio-v3-holdout-15",
+    "portfolio-v3-holdout-16",
+    "portfolio-v3-holdout-17",
+    "portfolio-v3-holdout-18",
+    "portfolio-v3-holdout-19",
+    "portfolio-v3-holdout-20",
+    "portfolio-v3-holdout-21",
+    "portfolio-v3-holdout-22",
+    "portfolio-v3-holdout-23",
+    "portfolio-v3-holdout-24",
+    "portfolio-v3-holdout-25",
+    "portfolio-v3-holdout-26",
+    "portfolio-v3-holdout-27",
+    "portfolio-v3-holdout-28",
+    "portfolio-v3-holdout-29",
+    "portfolio-v3-holdout-30",
+    "portfolio-v3-holdout-31",
+    "portfolio-v3-holdout-32",
+    "portfolio-v3-holdout-33",
+    "portfolio-v3-holdout-34",
+    "portfolio-v3-holdout-35",
+    "portfolio-v3-holdout-36",
+    "portfolio-v3-holdout-37",
+    "portfolio-v3-holdout-38",
+    "portfolio-v3-holdout-39",
+    "portfolio-v3-holdout-40"
+  ],
+  "models": {
+    "legacy": {
+      "path": "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "format": "safetensors",
+      "dtype": "float32",
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "weights_sha256": "dd924a11b4c220f385b51ffa522daea7c9f3d850e31b162bb5661df483c6d3ee",
+      "download_manifest": {
+        "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+        "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+        "license": "apache-2.0",
+        "files": {
+          "LICENSE": {
+            "size": 11343,
+            "upstream_hash": "6634c8cc3133b3848ec74b9f275acaaa1ea618ab",
+            "hash_algorithm": "git-blob-sha1",
+            "verified": true
+          },
+          "README.md": {
+            "size": 4917,
+            "upstream_hash": "b3327a17e2ffa52e0fd941a2810b18a9fd0e7d94",
+            "hash_algorithm": "git-blob-sha1",
+            "verified": true
+          },
+          "config.json": {
+            "size": 660,
+            "upstream_hash": "f81ead14ab072d65a07817f83a3ee0e5a1890d10",
+            "hash_algorithm": "git-blob-sha1",
+            "verified": true
+          },
+          "generation_config.json": {
+            "size": 242,
+            "upstream_hash": "dfc11073787daf1b0f9c0f1499487ab5f4c93738",
+            "hash_algorithm": "git-blob-sha1",
+            "verified": true
+          },
+          "merges.txt": {
+            "size": 1671839,
+            "upstream_hash": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0",
+            "hash_algorithm": "git-blob-sha1",
+            "verified": true
+          },
+          "model.safetensors": {
+            "size": 3087467144,
+            "upstream_hash": "dd924a11b4c220f385b51ffa522daea7c9f3d850e31b162bb5661df483c6d3ee",
+            "hash_algorithm": "sha256",
+            "verified": true
+          },
+          "tokenizer.json": {
+            "size": 7031645,
+            "upstream_hash": "443909a61d429dff23010e5bddd28ff530edda00",
+            "hash_algorithm": "git-blob-sha1",
+            "verified": true
+          },
+          "tokenizer_config.json": {
+            "size": 7305,
+            "upstream_hash": "07bfe0640cb5a0037f9322287fbfc682806cf672",
+            "hash_algorithm": "git-blob-sha1",
+            "verified": true
+          },
+          "vocab.json": {
+            "size": 2776833,
+            "upstream_hash": "4783fe10ac3adce15ac8f358ef5462739852c569",
+            "hash_algorithm": "git-blob-sha1",
+            "verified": true
+          }
+        },
+        "download_seconds": 212.77815088499983
+      },
+      "assets": {
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/download-manifest.json": {
+          "bytes": 1855,
+          "mtime_ns": 1794172340507294097,
+          "sha256": "0dcb4709864089b4e8fdfc6f5dd1db28d98dca7a41f8baed5ba9cfcde4d46463"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/LICENSE": {
+          "bytes": 11343,
+          "mtime_ns": 1794172128213173281,
+          "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/README.md": {
+          "bytes": 4917,
+          "mtime_ns": 1794172128813865253,
+          "sha256": "2e1bcd8bd964728a820be709fa0f7b9dd54817a94fd2254c535df70c5e67fada"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/config.json": {
+          "bytes": 660,
+          "mtime_ns": 1794172129204001460,
+          "sha256": "98d2ff8cc47488d08a2b0b3acf4eb99ef210779b42bd48605f6b8e36acdbf670"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/generation_config.json": {
+          "bytes": 242,
+          "mtime_ns": 1794172129531001516,
+          "sha256": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/merges.txt": {
+          "bytes": 1671839,
+          "mtime_ns": 1794172130042365417,
+          "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/model.safetensors": {
+          "bytes": 3087467144,
+          "mtime_ns": 1794172337830570847,
+          "sha256": "dd924a11b4c220f385b51ffa522daea7c9f3d850e31b162bb5661df483c6d3ee"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/tokenizer.json": {
+          "bytes": 7031645,
+          "mtime_ns": 1794172339106596699,
+          "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/tokenizer_config.json": {
+          "bytes": 7305,
+          "mtime_ns": 1794172339652967124,
+          "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583"
+        },
+        "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/vocab.json": {
+          "bytes": 2776833,
+          "mtime_ns": 1794172340498624873,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        }
+      }
+    },
+    "candidate": {
+      "path": "/workspace/models/Qwen3-4B-Instruct-2507-GGUF/a06e946bb6b655725eafa393f4a9745d460374c9/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+      "format": "gguf",
+      "dtype": "Q4_K_M",
+      "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+      "base_model_id": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": "a06e946bb6b655725eafa393f4a9745d460374c9",
+      "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+      "upstream_file": "Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+      "verification": "Pinned Hugging Face LFS SHA-256; third-party Unsloth conversion",
+      "assets": {
+        "/workspace/models/Qwen3-4B-Instruct-2507-GGUF/a06e946bb6b655725eafa393f4a9745d460374c9/Qwen3-4B-Instruct-2507-Q4_K_M.gguf": {
+          "bytes": 2497281120,
+          "mtime_ns": 1794223268706399906,
+          "sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597"
+        }
+      }
+    }
+  },
+  "runner_sha256": "404f055d4b61c3a661febfe6504babbe7115b22ddacdd7213abc5ec3bcbffdcd",
+  "libraries": {
+    "python": "3.12.14",
+    "tunebench": "0.5.0",
+    "torch": "2.8.0+cpu",
+    "transformers": "4.57.6",
+    "accelerate": "1.15.0",
+    "jsonschema": "4.26.0",
+    "tokenizers": "0.22.2",
+    "numpy": "2.5.4",
+    "lm-format-enforcer": "0.11.3",
+    "interegular": "0.3.3",
+    "llama-cpp-python": "0.3.36",
+    "pydantic": "2.14.3",
+    "pydantic_core": "2.50.4"
+  },
+  "settings": {
+    "seed": 42,
+    "cpu_threads": 4,
+    "do_sample": false,
+    "num_beams": 1,
+    "max_new_tokens": 256,
+    "repetition_penalty": 1.1,
+    "max_repairs": 1,
+    "execute_tools": false
+  },
+  "runtime_differences": {
+    "legacy": "Qwen2.5-1.5B float32 safetensors; Torch/Transformers + LMFE",
+    "candidate": "Qwen3-4B-Instruct-2507 Q4_K_M GGUF; llama.cpp grammar",
+    "interpretation": "Model, quantization, backend, prompt and guard change together"
+  },
+  "system_changes": [
+    "model weights",
+    "quantization",
+    "inference runtime",
+    "prompt",
+    "structured decoding",
+    "grounding",
+    "repair feedback"
+  ],
+  "holdout_policy": "No tuning, relabeling, exclusions or reruns after generation",
+  "scoring_limits": "Canonical decisions only; helpfulness and execution safety ungraded"
+}

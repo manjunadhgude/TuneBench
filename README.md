@@ -1,21 +1,24 @@
 # TuneBench
 
-**A CPU-friendly GenAI tool-calling workbench with validation, simulated tools, and evaluation.**
+**A CPU tool-calling workbench with a local language model, validated mock tools and reproducible evaluation.**
 
-TuneBench turns a simulated customer-support request into a tool call, a clarification,
-or a no-tool decision. The Streamlit app shows the request, structured output,
-validation, execution trace, and result. A separate evaluation framework records
-model failures and compares versions without hiding raw outputs.
+TuneBench turns a fictional customer-support request into a tool call, a
+clarification, or a no-tool decision. Its Streamlit app shows the original model
+answer, validation, any repair and the simulated result. The evaluation framework
+keeps wrong, invalid and blocked answers in its reports.
 
 ![TuneBench Playground: backend choice, request and inspectable result](docs/assets/tunebench-playground.png)
 
-[Watch the short demo](docs/assets/tunebench-demo.webm) ·
+[Demo recording](docs/assets/tunebench-demo.webm) ·
 [Architecture](docs/architecture.md) · [Interview guide](docs/interview-guide.md)
+
+The screenshot and recording currently show the retained v0.4 demo; v0.5 browser
+verification and replacement media are pending.
 
 ## Start the app
 
-Use Python 3.12 for the tested, hash-locked app setup. These commands were verified
-on Linux; Windows users can use WSL. Codespaces and a GPU are not required:
+Use Python 3.12 for the tested, hash-locked Linux setup. Windows users can use WSL.
+Codespaces, a GPU and an API key are not required for the quick demo:
 
 ```bash
 git clone https://github.com/manjunadhgude/TuneBench.git
@@ -25,133 +28,139 @@ bash scripts/start_demo.sh
 ```
 
 Use the existing checkout if you already have the repository. Setup creates `.venv`
-and installs hash-locked application/development dependencies using uv or pip.
-The app starts on port 8501; open it in your development environment's browser.
-**Quick demo works without downloading a model or providing an API key.**
-
-In **Playground**, choose **Quick demo**, enter a request, and click **Run request →**.
-Try these fictional examples:
+and installs the locked app/development dependencies. The app starts on port 8501.
+In **Playground**, choose **Quick demo**, enter a request and click **Run request →**.
 
 - `Check the status of order TB-1001.`
 - `Check the status of my order.`
 - `Propose a refund of 200 for order TB-1002 because the item arrived damaged.`
 - `Execute a refund payment of 200 for order TB-1002 now. Do not create a proposal.`
 
-Requests are stateless. After a clarification, submit the complete request with the
-missing information. The **Evaluation** tab presents retained results; **Project**
-explains the design and limitations.
+Requests are stateless. After a clarification, submit the complete request with
+its missing details. **Evaluation** shows saved experiments; **Project** explains
+the design and limitations.
 
-## Three modes, clearly labeled
+## Three modes
 
 | Mode | What runs |
 | --- | --- |
-| **Quick demo** | Deterministic Python rules and the guarded execution path. This is not an LLM. |
-| **Live local Qwen** | Actual Qwen2.5-1.5B-Instruct generation from an existing verified local snapshot. |
-| **Saved model replay** | Previously recorded smoke responses. No new generation or tool execution. |
+| **Quick demo** | Deterministic Python rules and mock execution. This is not an LLM. |
+| **Live local Qwen** | Actual CPU generation, preferably Qwen3-4B-Instruct-2507 Q4_K_M through llama.cpp; the verified legacy Qwen2.5 snapshot is also supported. |
+| **Saved model replay** | Historical Qwen2.5 smoke responses. No new generation or tool execution. |
 
-Live mode can fail or be slow. Replay uses its saved questions, not arbitrary new
-input. A fast rules result or recorded response must not be presented as live model
-performance.
+The live backend never downloads a model implicitly or falls back to rules.
+Replay uses only its recorded questions. A rules result or replay must not be
+presented as current model accuracy or live generation.
 
-## What the assistant executes
+## Decision and execution
 
 | Mock tool | Purpose |
 | --- | --- |
 | `get_order_status` | Read a fictional order's status |
 | `check_refund_eligibility` | Check the versioned mock refund policy |
-| `propose_refund` | Return an immutable simulated proposal |
+| `propose_refund` | Return a nonmutating simulated refund proposal |
 
 Five fictional orders use INR balances and a fixed policy date, **9 November 2026**.
-The policy checks a 30-day refund window, nonreceipt conditions, remaining balance
-and monetary precision. No tool changes an order, reserves money, contacts a real
-customer system, or transfers a payment.
+The policy checks a 30-day refund window, delivery conditions, remaining balance
+and monetary precision. No tool contacts a customer system, changes an order or
+transfers money.
 
-The flow is **request → rules/model → strict parse → schema validation → grounding
-checks → clarification, no tool, or mock execution → visible trace**. It checks
-supported actions and request-grounded arguments before execution. Model mode uses
-`strong-v3` with token-level JSON constraints and permits at most one visible
-repair for a parse/schema or request-evidence failure. A failed repair is blocked.
-The first output, validation feedback and repair remain visible; no model answer
-is silently replaced with the rules baseline.
+The live v0.5 path is **request → Qwen3/strong-v4 → constrained JSON → complete
+schema validation → tool-call grounding → mock execution or non-executing result**.
+The guard checks the requested action, references, reasons and monetary evidence,
+including exact calculations from supplied quantity/price or percentage/base facts.
+A tool call can use at most one visible schema or evidence repair. Failed calls
+are blocked; mock store and business-policy checks remain separate execution gates.
 
-The guard extracts literal references, explicit corrections, reasons and monetary
-evidence. It can derive a requested quantity × unit price or percentage using
-Decimal arithmetic. Its language rules remain limited and may reject correct
-answers or miss mistakes. JSON constraints also require full postvalidation.
-A repaired application result is separate from raw first-attempt model accuracy.
+For a **schema-valid clarification or no-tool answer**, language-rule disagreements
+are advisory. They cannot trigger an evidence retry that turns the answer into an
+action. Schema errors can still use the bounded repair. The model generates every
+attempt; application code never replaces its answer with a rules result. Advisory
+notes and original outputs remain visible in the trace. These policies reduce
+unnecessary intervention but do not prove that the model's decision is correct.
 
-## Measured results
+## Quality evaluation
 
-Both versions answered the **same 20 new, frozen fictional questions**, using
-unchanged Qwen2.5-1.5B-Instruct weights on CPU. The prompt, JSON constraints,
-grounding and repair feedback changed together. This measures complete systems;
-it does not isolate a prompt change or show a fine-tuning benefit.
+The v0.5 system was selected using development data. Its first Qwen3 run scored
+37/40 strict successes; after revising public prompt examples it scored 40/40 on
+those **same practice cases**, with no repairs. This is tuned development coverage,
+not unseen accuracy. [Practice captures](artifacts/quality-development-v5/)
+retain the observed result.
+
+The separate comparison runs frozen v0.4 and v0.5 on the **same 40 new fictional
+questions**. Its sources, data and model assets were frozen before either run.
+The full comparison and independent score audit are in progress; no new held-out
+score is claimed at this documentation checkpoint. See the
+[comparison protocol](docs/quality-comparison-protocol.md).
+
+Model weights, quantization, runtime, prompt and guard change together. This is a
+comparison of complete systems, not a prompt/model ablation or evidence of
+fine-tuning. Raw first answers and accepted final decisions must both be reported.
+All questions remain in the denominator, including failures. The stratified data
+was authored and reviewed by assistants, with separate reviews blinded to the
+implementation; it has no independent human annotation. Scoring disables tool
+execution, so it does not measure real transaction success or establish production
+reliability. Further tuning after test results requires a new final test set.
+
+Report tool-call, clarification and no-tool performance separately. A high overall
+score can hide correct tool calls being blocked. Accepted-call correctness, false
+blocks and incorrect accepted calls matter alongside the total score.
+
+### Earlier measured result: why v0.5 was needed
+
+On the earlier matched 20-question test, the same Qwen2.5 weights produced:
 
 | Decision evaluation | v0.3 | v0.4 |
 | --- | ---: | ---: |
-| Strictly correct original first answer | 8/20 | 9/20 |
-| Schema-valid original first answer | 13/20 | 19/20 |
-| Strictly correct accepted final decision | 2/20 | 7/20 |
+| Strictly correct first answer | 8/20 | 9/20 |
+| Schema-valid first answer | 13/20 | 19/20 |
+| Strictly correct accepted final decision | 2/20 | **7/20** |
 
-All 20 questions remain in every denominator, including invalid and blocked
-answers. Final decisions include validation and at most one repair; they are
-separate from original model accuracy. The final comparison has seven gains and
-two regressions. The revised guard accepted no incorrect decisions on these 20
-cases, but rejected correct answers too: five correct first answers were lost,
-and three errors were repaired. Final success still falls below the revised
-model's own raw 9/20 result.
+v0.4 lost five correct first answers through guard/repair intervention and repaired
+three errors. That weak 7/20 final result motivated the stronger CPU model and
+revised guard policy. It remains visible in the
+[historical comparison and audit](artifacts/portfolio-version-comparison/README.md).
+It must not be compared directly with a score from different questions.
 
-v0.4 used 36 generations, including 16 repairs, versus 27 generations and seven
-repairs for v0.3. Active case elapsed time was 1,143.2 versus 877.1 seconds on the
-tested CPU. Both runs had zero runtime errors. These are small assistant-authored,
-assistant-reviewed data, without independent human annotation. Accuracy remains
-limited; this is a portfolio prototype, not a production support assistant.
+Other historical evidence is separate: the original v0.3 portfolio holdout scored
+7/20 raw and 3/20 final; the first smoke scored 7/20; a paired 12-case development
+prompt experiment changed 2/12 to 5/12. See the
+[portfolio results](artifacts/portfolio-evaluation/README.md),
+[smoke evidence](artifacts/baseline-smoke/README.md) and
+[paired prompt experiment](artifacts/prompt-development-v2/README.md).
 
-See the [matched results and raw evidence](artifacts/portfolio-version-comparison/README.md),
-[failure analysis](artifacts/portfolio-version-comparison/error-analysis.md),
-[computational audit](artifacts/portfolio-version-comparison/independent-audit.json)
-and [frozen protocol](docs/version-comparison-protocol.md). Scoring disables tool
-execution, so these scores do not measure real transactions or establish that the
-execution guard blocks every unsafe request. Further tuning requires development
-data and a new final test set.
+## Optional: run the actual CPU model
 
-Earlier results use different questions and remain separate. The original v0.3
-portfolio holdout scored 7/20 raw and 3/20 accepted final decisions; its conservative
-guard rejected four correct contextual/derived answers. See the
-[historical results](artifacts/portfolio-evaluation/README.md) and
-[data review](docs/portfolio-data-review.md). The initial real-model smoke scored
-7/20; a paired 12-case development prompt experiment changed 2/12 to 5/12, with
-four gains and one regression. See the [smoke evidence](artifacts/baseline-smoke/README.md)
-and [paired prompt evidence](artifacts/prompt-development-v2/README.md).
-Different datasets cannot support a direct before/after accuracy claim.
+The preferred model is the public **Unsloth Q4_K_M GGUF conversion** of the official
+`Qwen/Qwen3-4B-Instruct-2507`, licensed Apache-2.0. The GGUF publisher is Unsloth;
+this is not an official Qwen GGUF release or a model trained in this project.
+The pinned file is about 2.5 GB. The downloader and loader verify its exact size
+and SHA-256 before use.
 
-## Optional: run the actual model
-
-Quick demo needs none of this. The verified CPU model stack uses PyTorch 2.8.0 CPU,
-Transformers 4.57.6, Accelerate 1.15.0 and lm-format-enforcer 0.11.3. With uv installed:
+A Linux GCC C/C++ compiler is needed to build the optional CPU binding. With uv:
 
 ```bash
-uv pip install --python .venv/bin/python --torch-backend cpu \
-  'torch==2.8.0' 'transformers==4.57.6' 'accelerate==1.15.0' 'lm-format-enforcer==0.11.3'
-.venv/bin/python scripts/download_smoke_model.py \
-  --output ../models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+CC=/usr/bin/gcc CXX=/usr/bin/g++ CMAKE_BUILD_PARALLEL_LEVEL=4 \
+  CMAKE_ARGS='-DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DGGML_CUDA=OFF -DGGML_NATIVE=ON -DLLAMA_CURL=OFF' \
+  uv pip install --python .venv/bin/python 'llama-cpp-python==0.3.36'
+.venv/bin/python scripts/download_gguf_model.py \
+  --output ../models/Qwen3-4B-Instruct-2507-GGUF/a06e946bb6b655725eafa393f4a9745d460374c9
 ```
 
-The downloader verifies pinned upstream file hashes. In **Live local Qwen**, enter
-that directory in **Local model directory**. The app verifies existing assets and
-never downloads weights implicitly. The public model does not require a paid API.
-Allow roughly 3 GB for weights and 10 GB of process memory. Generation can take
-roughly 25–60 seconds per attempt on a CPU, plus initial loading. A repair adds
-another attempt; hardware, request and output length affect timing. Retained runs provide actual measurements.
+In **Live local Qwen**, enter the downloaded GGUF file or its containing directory
+in **Local model path**. The first native-library build can take a few minutes.
+Allow additional RAM for context and runtime beyond the weight file; timing and
+memory depend on hardware and request length. The backend uses zero GPU layers,
+four generation threads, an 8192-token context and at most 256 new tokens per
+attempt. It uses `strong-v4`, ChatML and llama.cpp JSON-schema grammar, followed by
+complete application validation. No Hugging Face token or paid API is required.
 
-See [model setup and evidence](artifacts/baseline-smoke/README.md) for reproduction
-and network requirements. No GPU training or trained-adapter evaluation has been
-performed. LoRA/QLoRA runners are optional future experiment support, not a completed
-fine-tuning result.
+The legacy PyTorch/Qwen2.5 setup remains in the
+[original model evidence](artifacts/baseline-smoke/README.md). No GPU training or
+trained-adapter evaluation has been performed. Optional LoRA/QLoRA code is future
+experiment support.
 
 ## CLI and checks
-
-After setup, run the same application logic without the browser:
 
 ```bash
 .venv/bin/tunebench orders
@@ -161,31 +170,31 @@ After setup, run the same application logic without the browser:
 bash scripts/check.sh
 ```
 
-The v0.4 full local suite passes **401 tests**, including contracts,
-metrics, grounding, mock tools, CLI and Streamlit behavior. A fresh app-only
-installation passes 398 tests with three optional model checks skipped; core-only
-passes 392 with four skips. CI installs the app
-requirements and runs the CPU checks without model downloads or a GPU. Controlled
-gold-derived fixtures test the evaluator; their perfect score is not model accuracy.
+The current v0.5 local suite passes **469 tests**, lint, formatting and CLI/data
+workflows. Core-only checks pass 459 with five optional modules/checks skipped.
+Fresh app setup passes 465 tests with four optional checks skipped; its documented
+launch serves the app. A standalone v0.5 wheel also runs outside the checkout.
+Current browser verification remains pending. See the
+[v0.5 release record](docs/assets/release-checks-v0.5.json); historical v0.4 checks
+remain in [their retained record](docs/assets/release-checks-v0.4.json).
+CI runs CPU checks without model downloads or a GPU. Gold-derived fixtures test
+the evaluator; their perfect score is not model accuracy.
 
-## Explore and present the project
+## Explore and present
 
 | Path | What to inspect |
 | --- | --- |
-| `app.py` | Streamlit Playground, Evaluation and Project tabs |
-| `src/tunebench/` | Assistant, guard, mock tools, inference, contracts and scoring |
-| `datasets/portfolio-v1/` | Frozen 40-development / 20-holdout case files and hashes |
-| `datasets/portfolio-v2/` | Frozen 20-case matched system comparison, now evaluated |
+| `app.py` | Playground, Evaluation and Project tabs |
+| `src/tunebench/` | Shared assistant, grounding, mock tools, local backends and scoring |
+| `datasets/portfolio-v1/` | Earlier 40-development / 20-holdout data |
+| `datasets/portfolio-v2/` | Evaluated earlier 20-case matched comparison |
+| `datasets/portfolio-v3/` | Frozen, separately reviewed 40-case comparison |
 | `tests/` | Offline unit, integration and UI checks |
-| `artifacts/` | Retained inputs, raw outputs, protocols, metrics and error analyses |
-| `docs/` | Architecture, walkthrough, interview preparation and research notes |
+| `artifacts/` | Original outputs, protocols, metrics and failures |
+| `docs/` | Architecture, walkthrough and interview preparation |
 
-Use the [2–3 minute walkthrough](docs/demo-script.md),
-[interview guide](docs/interview-guide.md), [resume wording](docs/resume-bullets.md),
-and [completion/evidence checklist](docs/portfolio-completion.md). Describe only
-contributions you understand and can demonstrate, including development assistance.
-
-The original research framework also generates 1,250 synthetic candidate records
-and prepares completion-only training data. Those candidates remain unreviewed and
-unfrozen, separate from the small portfolio dataset. Human data review, a stronger
-baseline, GPU training and a broader evaluation are future research work.
+Use the [walkthrough](docs/demo-script.md), [interview guide](docs/interview-guide.md),
+[resume wording](docs/resume-bullets.md) and [completion checklist](docs/portfolio-completion.md).
+Describe contributions you understand and can demonstrate, including assistance
+used during development. The original 1,250-record synthetic research benchmark
+remains candidate/unreviewed; it is separate from these portfolio datasets.

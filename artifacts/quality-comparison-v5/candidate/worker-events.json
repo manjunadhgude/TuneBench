@@ -1,0 +1,16 @@
+[
+  {
+    "started_at_utc": "2026-11-09T15:42:32.192311+00:00",
+    "pid": 94399,
+    "version": "candidate",
+    "protocol_sha256": "ebbbcc2cba36caa39d1cb4ec28a9f33c6063cc504d4435834b144203468bd45a",
+    "preserved_cases": 0,
+    "prefix_bytes": 0,
+    "prefix_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": "completed",
+    "completed_at_utc": "2026-11-09T15:47:26.874816+00:00",
+    "preserved_prefix_verified": true,
+    "final_journal_sha256": "0d1fd272c67e1fcd972157a0355a616782558ae57f6a7176baf6e2316e91f8e0",
+    "completed_cases": 40
+  }
+]

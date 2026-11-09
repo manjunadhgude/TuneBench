@@ -1,193 +1,186 @@
 # Interview guide
 
-Use this guide to understand and explain the implementation. Replace the example
-wording with your own explanation after running the project and tracing the code.
-Be clear about assistance used during development and which parts you personally
-implemented, reviewed, tested or changed. Do not present generated code as work you
-can explain until you have studied it.
+Study and run the implementation before presenting it. Describe your actual
+contribution, including assistance used during development. Use the examples below
+as prompts for an explanation in your own words.
 
 ## A short introduction
 
-> TuneBench is a Python tool-calling assistant demo and evaluation framework. It
-> handles a simulated customer-support request by choosing a tool, asking for
-> missing information, or declining an unsupported action. It keeps raw model
-> output and evaluates decisions separately from the application's final response.
-> I used it to study prompting, validation, failure analysis and reproducible tests.
+> TuneBench is a Python tool-calling workbench and evaluation framework. A local
+> CPU language model chooses a mock support tool, requests missing information or
+> decides that no tool should run. The application validates decisions and keeps
+> original answers separate from repairs and simulated execution. I used measured
+> failures to improve model selection and validation behavior.
 
-For an AI/ML role, follow with the real experiments. For a Python/backend role,
-follow with contracts, dispatch, validation and tests. For a full-stack role,
-show the Streamlit request-to-result flow and then explain the underlying package.
+For a GenAI role, explain the model, constraints and evaluation. For a Python role,
+trace the shared package, contracts and dispatch. Show the working flow before
+listing infrastructure.
+
+## How should I explain the earlier 7/20 result?
+
+Keep it visible and explain what it revealed. On the earlier matched 20-case
+experiment, v0.4 had 9 correct first answers but only 7 correct accepted finals.
+The small model made decision errors, and the guard/repair path also lost five
+correct first answers while repairing three mistakes. Valid JSON alone did not
+solve the problem. See the
+[original outputs and error analysis](../artifacts/portfolio-version-comparison/README.md).
+
+v0.5 addresses both components: a newer Qwen3-4B model running as a CPU Q4_K_M
+GGUF, a revised prompt, and a guard that no longer uses heuristic disagreement to
+retry schema-valid non-executing answers into actions. Actual tool calls still
+need evidence. Those are engineering changes, not an excuse for the weak result.
+They must earn a better result on a fresh test.
+
+The revised model scored 37/40, then 40/40 after prompt examples changed, on the
+same development questions. That is tuned practice coverage and must not be
+quoted as unseen accuracy. Both systems were then frozen for a separate 40-case
+comparison. The full comparison and independent audit are still running at this
+checkpoint; quote new test numbers only after the completed audited report exists.
 
 ## Questions to be ready for
 
-### Why use tools instead of asking the model to write an answer?
+### Why use tools instead of asking the model for a status sentence?
 
-A generated status sentence is not a database lookup. A tool call gives the
-application an explicit operation and typed arguments that it can validate and
-execute. Here those operations use mock data. In a real system, the application
-would also need authorization and transaction-specific controls.
+A generated sentence is not a database lookup. A tool call names an operation and
+provides typed arguments that application code can validate and dispatch. Here
+those operations read fictional data or return simulated proposals. The model
+cannot directly execute payments or access customer accounts.
 
-Show `get_order_status` in the tool registry. Trace a request containing an order ID
-through parsing, validation, grounding and dispatch. Then remove the ID and explain
-why a clarification is preferable to inventing one.
+Trace `Check the status of order TB-1001.` through the registry, parser, evidence
+checks and dispatcher. Remove the ID and explain why clarification is appropriate.
 
-### Does valid JSON mean a correct answer?
+### Does valid JSON mean a correct decision?
 
-No. A response can be parseable JSON but have the wrong outcome type. It can satisfy
-the schema but select the wrong tool or invent a valid-looking order ID. It can
-choose the right tool but use an incorrect amount. These failures need separate
-metrics and semantic checks. A perfect parser score is not a tool-calling accuracy
-score.
+No. JSON can be parseable but violate a schema. A schema-valid call can still use
+the wrong tool, reference, reason or amount. The evaluator measures those failures
+separately and also reports strict success. A perfect formatting result is not a
+model-accuracy result.
 
-### What does the grounding guard add?
+### What does the guard check, and why are some checks advisory?
 
-A schema can require an ID to be a string, but cannot establish that the user
-provided that ID. The guard checks supported references and values before tool
-execution. Explain the actual implemented checks and their limitations: a small
-rule set is not a general natural-language proof system. In v0.4 it can follow
-explicit corrections and derive an amount from supplied factors with `Decimal`.
-Missing factors still require clarification. Show a blocked example and the
-stated reason rather than claiming all hallucinations are prevented.
+For an actual tool call, it checks the requested action and argument evidence in
+the request. It can follow explicit corrections, product-role contrasts and exact
+calculations from supplied factors using `Decimal`. These are bounded language
+rules; they cannot prove that every utterance was understood.
+
+A schema-valid no-tool or clarification answer executes nothing. In v0.5, heuristic
+disagreement with such an answer is advisory and cannot trigger an evidence retry
+into an action. That avoids the earlier failure where a correct non-action answer
+was changed into a wrong decision. It can still accept a wrong refusal or
+clarification, so the evaluator must count those as quality errors. Schema errors
+can still use the bounded repair.
 
 ### What does constrained generation do?
 
-The live v0.4 path uses `strong-v3` plus `lm-format-enforcer` to restrict which
-tokens can follow the current JSON prefix. This helps produce the expected decision
-shape while keeping model weights unchanged. The library does not enforce every
-schema restriction, so full validation still follows generation. Valid structure
-also cannot establish that an order ID, action or amount is correct.
+The preferred backend uses `strong-v4` and llama.cpp JSON-schema grammar to restrict
+possible next tokens. Complete parsing and validation still follow generation.
+Constraints guide structure; they do not establish that the model selected the
+right action or facts. The legacy Qwen2.5 profile instead uses `strong-v3` and
+lm-format-enforcer; its results retain their own version and runtime identity.
 
-### Why provide a rules backend if this is an AI project?
+### Why use a quantized CPU model?
 
-It gives reviewers a fast CPU demo of the application flow and makes deterministic
-execution tests possible. It is explicitly labeled as rules, not model inference.
-The live Qwen path measures a different component. A high rules-demo success rate
-must not be reported as Qwen's model accuracy.
+The selected file is Unsloth's Q4_K_M conversion of official
+Qwen3-4B-Instruct-2507. It uses roughly four-bit blocks, with some tensors at higher
+precision, reducing weight storage relative to float32. Its actual file is about
+2.5 GB. Total process memory also includes context and runtime allocations.
 
-### What are the measured model results?
+Quantization does not guarantee unchanged accuracy or a fixed speedup. The model,
+quantization and runtime must be measured together. This project uses the existing
+conversion; it did not train or fine-tune those weights. The loader verifies the
+pinned revision, file size and SHA-256 before loading, with zero GPU layers.
 
-The latest comparison ran v0.3 and v0.4 on the same 20 fresh, frozen fictional
-questions with unchanged Qwen weights and matched CPU generation budgets:
+### Why provide a rules backend?
 
-| Metric | v0.3 | v0.4 |
-| --- | ---: | ---: |
-| Strictly correct first answer | 8/20 | 9/20 |
-| Schema-valid first answer | 13/20 | 19/20 |
-| Strictly correct accepted final decision | 2/20 | 7/20 |
+It demonstrates the application quickly without a model download and makes
+execution tests deterministic. The UI labels it as rules, not an LLM. Saved replay
+is also distinct: it shows an immutable historical response without generating a
+new answer. Neither is a substitute for measuring actual model decisions.
 
-Explain the distinction: constrained generation improves structure on this set,
-but valid JSON can still make the wrong decision. The final application improves
-against v0.3, yet v0.4 still falls from 9 correct raw answers to 7 accepted finals.
-The guard and repairs can harm correct answers. There are three raw gains and two
-raw regressions; seven final gains and two final regressions. Open the
-[matched report](../artifacts/portfolio-version-comparison/README.md),
-[error analysis](../artifacts/portfolio-version-comparison/error-analysis.md) and
-[independent computational audit](../artifacts/portfolio-version-comparison/independent-audit.json).
+### What is the current quality evidence?
 
-v0.4 used 36 generations including 16 repairs, versus 27 including seven repairs
-for v0.3. Active case wall time was 1143.2 versus 877.1 seconds on the tested CPU;
-this is an observation, not a controlled hardware speed comparison. All 20 cases
-remain in each denominator. The data is assistant-authored/reviewed, not independently
-human annotated. Tool execution was disabled for scoring. These results do not
-establish production accuracy, general improvement or a fine-tuning benefit.
+The 40-case v0.4/v0.5 comparison and independent computational audit are in
+progress at this checkpoint. The same new cases are used for both versions, with
+CPU execution, four generation threads, seed 42, greedy decoding, at most 256 new
+tokens and at most one repair. Model, quantization, runtime, prompt and guard change
+together. This is a system comparison, not an isolated model/prompt ablation.
 
-Keep older evidence separate. The initial smoke run scored 7/20. A different
-12-case prompt-development comparison changed 2/12 to 5/12, with four gains and one
-regression; its uncertainty interval includes zero. The historical v0.3 portfolio
-holdout scored 7/20 raw and 3/20 final and motivated the guard changes. Its
-[retained results](../artifacts/portfolio-evaluation/README.md) use different cases.
-Do not compare scores across these sets as a matched before/after result.
+The cases are fictional and stratified, authored/reviewed by assistants, including
+separate reviews blinded to implementation. They have no independent human
+annotation. All cases remain in each denominator, including invalid, blocked and
+failed outputs. Scoring disables tool execution. Clarification wording is checked
+for contract validity, not human-graded helpfulness. Small results cannot establish
+production reliability or real execution safety.
+
+The older 20-case table remains visible: raw strict 8/20 → 9/20, schema-valid
+13/20 → 19/20, final strict 2/20 → 7/20 for v0.3/v0.4. Other historical data include
+an initial 7/20 smoke and a separate 12-case prompt-development comparison of 2/12
+and 5/12. Different question sets cannot support a direct before/after claim.
+See the [quality protocol](quality-comparison-protocol.md) and
+[historical comparison](../artifacts/portfolio-version-comparison/README.md).
+
+### Why report performance by decision type?
+
+A total score can look good when no-tool and clarification cases pass while valid
+requested tool calls are blocked. Report raw and accepted-final correctness for
+each expected outcome separately, plus false blocks and incorrect accepted calls.
+A functioning support assistant needs useful tool execution as well as safe
+non-execution; overall accuracy alone can hide this weakness.
+
+### How do you prevent leakage or misleading repair scores?
+
+Prompt builders expose only the request and tool definitions, never the gold,
+case ID, split or difficulty. Development examples can guide changes; a final
+comparison freezes code, model assets, data and budgets before generation. New
+results make that test seen, so later tuning requires a new final test set.
+Structural non-overlap checks do not prove semantic independence.
+
+The original first answer is saved before any feedback. A repair can use validation
+errors and facts extracted from the request, never the answer key. The model must
+generate again; code does not rewrite its output into a rules answer. Raw-first
+and accepted-final scores are separate. Durable journals preserve completed cases,
+and ambiguous interrupted generations are not silently rerun.
 
 ### Why not fine-tune immediately?
 
-Fine-tuning needs trustworthy labels, a meaningful baseline and an evaluator. If
-formatting, task definitions or scoring are wrong, training can optimize the wrong
-behavior. TuneBench first measures prompts and failures. It includes training-data
-preparation and optional LoRA/QLoRA code, but no training run or trained adapter is
-claimed.
+Reliable labels, a baseline and a sound evaluator come first. Training can optimize
+the wrong behavior if task definitions or scoring are wrong. TuneBench includes
+completion-only training export and optional LoRA/QLoRA runners, but no training
+run or trained adapter is claimed.
 
-LoRA learns a small set of adapter parameters while keeping base weights fixed.
-QLoRA combines adapters with a quantized base model to reduce training memory.
-Neither guarantees better tool selection. Explain these concepts without saying
-this project has demonstrated an improvement from training.
+LoRA learns a small set of adapters while keeping base weights fixed. QLoRA combines
+adapters with a quantized base to reduce training memory. Completion-only loss
+masks prompt and padding tokens with `-100`, so only expected output contributes
+to supervised loss. Read the preparation code and tests before explaining it.
 
-### What is completion-only loss?
+### Why is there no RAG or vector database?
 
-The model sees the user request and tool descriptions as context. Only the expected
-assistant output should contribute supervised loss. The preparation code masks the
-prompt with `-100`, includes the assistant completion, masks padding, and rejects
-unsafe template boundaries or truncation. Read `tokenize_completion` and its tests
-before explaining this in an interview.
+This task chooses actions against a small tool registry and reads structured mock
+orders. Retrieval of policy documents would be a different component to measure.
+Adding RAG would not by itself fix wrong tool selection or invented arguments.
 
-### How do you prevent data leakage?
+### What do the software checks prove?
 
-Do not put gold labels, scenario IDs, split names or difficulty labels in prompts.
-Keep related scenario families in one split. Use validation data for prompt changes
-and preserve the final test for a frozen comparison. Training preparation rejects
-test/smoke inputs and cross-partition family leakage. Structural checks cannot prove
-semantic independence: different IDs or wording can still express the same template.
-The 1,250 generated records remain synthetic candidates, not a reviewed final benchmark.
+The full local v0.5 suite passes 469 checks; fresh app setup passes 465 with four
+optional checks skipped, and core-only passes 459 with five skips. These verify
+contracts, scoring, parsing, guards, mock tools, CLI and UI behavior under tested
+conditions. They are not 469 successful real-model conversations. Standalone-wheel
+and launch checks are recorded; current v0.5 browser evidence is still pending.
 
-### Why do retries and output repair matter?
+## Learn the code before presenting
 
-A second generation, JSON repair or rules fallback can change the result and cost.
-The early baseline experiments use one attempt, no repair and matched decoding.
-The live v0.4 assistant allows at most one repair after schema or explicit
-request-evidence validation fails. It supplies errors and extracted request facts,
-then asks the model to generate again; it never rewrites the answer into a rules
-result. Both attempts stay in the trace. Report raw first-attempt metrics separately
-from accepted final success, total generations and latency. A final block does not
-make the initial answer correct.
+1. Run one successful tool request, one clarification, one unsupported request and
+   one blocked unknown demo order. Explain the backend label in each result.
+2. Read the tool registry and explain every required argument and allowed reason.
+3. Trace a live request through `assistant.py`, the selected local backend,
+   validation, grounding and mock dispatch.
+4. Inspect a real failed output and classify its error before opening the score.
+5. Trace one visible repair and explain why the original score remains unchanged.
+6. Read a no-tool advisory test and explain why it does not trigger an action.
+7. Run a meaningful test, make a small change you understand and explain your own
+   contribution clearly, including development assistance.
+8. Show how packaged resources load when the wheel runs outside the source checkout.
 
-### How do you compare two versions fairly?
-
-Use the same reviewed examples, tool definitions, model revision, decoding budget,
-validation and retry policy. For a prompt ablation, intentionally vary the prompt
-while holding other conditions fixed. Preserve both prompt versions and their raw
-responses. Use paired outcomes to identify improvements and regressions. The report
-comparison checks data and protocol metadata and uses family-cluster resampling;
-small synthetic families still limit the inference you can draw.
-
-The v0.3/v0.4 comparison deliberately changes several components: prompt,
-constraints, evidence checks and repair trigger. Call it a system-version
-comparison. Keep the same fresh cases, model weights, CPU settings, maximum token
-budget and maximum repair count; document the intentional differences. It cannot
-isolate which component caused a gain or show a fine-tuning benefit.
-
-### Why is live inference slow on a CPU?
-
-A 1.5B-parameter model still performs substantial work to process a prompt and
-generate tokens. The recorded first smoke run averaged about 25 seconds of generation
-per request on its tested CPU configuration; model loading adds startup time. This
-is an observation from that run, not a latency promise for every machine. Rules
-mode is fast; replay avoids generation but is labeled as recorded. A GPU could
-change throughput, but that needs an actual measured run.
-
-### What would you improve next?
-
-Choose one concrete next experiment: broaden and review development cases; improve
-an identified decision failure; add a more capable baseline under matched conditions;
-or verify a small GPU adapter-training run after the baseline is credible. Explain
-how you would measure success and regressions. Avoid listing infrastructure unrelated
-to the demonstrated problem.
-
-## Learn the code before presenting it
-
-Work through these exercises and keep your own notes:
-
-1. Run the rules demo and inspect one successful tool result, one clarification,
-   one unsupported request and one blocked invalid call.
-2. Read the canonical registry and explain every required argument and allowed reason.
-3. Follow one request from the UI into the assistant and back into its trace.
-4. Read one unit test for a malformed response and predict the expected result before
-   running it. Explain why a missing prediction stays in the evaluator denominator.
-5. Read one actual failed Qwen response. Identify whether the problem is parsing,
-   schema, action selection, an argument, or a reason code.
-6. Trace a visible repair: identify the first error, the feedback, the second raw
-   output and the accepted or blocked final decision.
-7. Make a small change you understand, add a meaningful test, run the checks and
-   describe that specific contribution in your own words.
-8. Explain how a wheel loads packaged schemas when run outside the source checkout.
-
-Being able to diagnose a limitation and propose a measured next step is more useful
-than repeating a high accuracy claim that the evidence does not support.
+A useful interview explanation connects a measured failure, a concrete change and
+a fair verification. It does not hide failures or claim results from training that
+never happened.

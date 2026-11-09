@@ -1,118 +1,119 @@
 # Implementation and research status
 
-## Portfolio v0.4 checkpoint
+## Portfolio v0.5 quality revision
 
-The current source extends the CPU tool-calling workbench with `strong-v3`,
-optional `lm-format-enforcer` JSON-constrained generation, evidence checks for
-references/corrections and exact derived amounts, and at most one visible repair
-for a schema or explicit request-evidence failure. Complete post-generation
-validation remains required. The model generates every attempt; application code
-never rewrites its answer into a rules result.
+The preferred live profile now uses Qwen3-4B-Instruct-2507 through llama.cpp on
+CPU. Its pinned Q4_K_M GGUF is Unsloth's conversion of the official Apache-2.0
+model. The loader checks the exact file size and SHA-256. It uses `strong-v4`,
+ChatML and JSON-schema grammar, with complete post-generation validation. The
+verified legacy Qwen2.5/PyTorch profile remains supported.
 
-The app still offers clearly labeled deterministic rules, actual local Qwen and
-saved replay modes. Three nonmutating mock tools provide fictional order lookup,
-refund eligibility and refund proposals. No real payment or customer system is
-connected, and no GPU or paid API is needed for the fast rules demo.
+Tool calls still require action and argument evidence before mock execution.
+Schema-valid no-tool and clarification decisions receive advisory diagnostics;
+heuristic disagreement cannot trigger an evidence retry into an action. Schema
+errors and tool-call evidence errors can use at most one visible repair. The model
+generates every attempt, and application code never replaces it with a rules answer.
 
-The frozen v0.4 source checkpoint is `b775890`. Its full check workflow passes
-**401 tests**, lint, formatting and the CLI/data workflows. A fresh app setup passes
-398 tests with three optional checks skipped; a core-only setup passes 392 with
-four skips. The documented launch and a standalone wheel installed outside the
-source checkout also pass. See the [release checks](assets/release-checks-v0.4.json).
+All three app modes remain explicit: deterministic rules, actual local model and
+saved historical replay. Three nonmutating mock tools use fictional orders and
+INR balances. No real customer system or payment is connected. Quick demo requires
+no model, GPU or API key; the preferred live profile also runs without a GPU.
 
-The completed v0.3/v0.4 comparison uses the same 20 fresh, frozen fictional cases:
+## Current verification
+
+The v0.5 inference source is frozen at `5d52dc8`. The full local check workflow
+passes **469 tests**, lint, formatting and CLI/data workflows. Core-only checks pass
+459 with five optional modules/checks skipped. A fresh app-only setup passes
+465 with four optional checks skipped, and the documented launch serves a healthy
+app. The standalone v0.5 wheel imports and executes simulated tools outside the
+source checkout. See [release checks](assets/release-checks-v0.5.json).
+
+The first new-model development run scored 37/40 raw and final strict successes.
+After revising public prompt examples, it scored 40/40 on those same practice
+cases, with 40 generations and no repairs. These are tuned development results,
+not unseen accuracy. Both runs remain in
+[first-run evidence](../artifacts/quality-development-v5/qwen3-first/summary.json) and
+[final development capture](../artifacts/quality-development-v5/qwen3-final/summary.json).
+
+The separate 40-question comparison and computational audit are still running at
+this documentation checkpoint. Both v0.4 and v0.5 sources, data, model assets and
+budgets were frozen before either test run. The fixed order is candidate first,
+then archived baseline. New held-out scores are not claimed until both reports
+and their audit are complete. See the
+[comparison protocol](quality-comparison-protocol.md).
+
+Model weights, quantization, runtime, prompt, JSON constraints, grounding and
+repair behavior change together. This is a complete-system comparison, not a
+model/prompt ablation or fine-tuning result. All 40 cases remain in both raw-first
+and accepted-final denominators. Tool execution is disabled for scoring.
+
+Current v0.5 browser/media verification remains pending. Earlier browser evidence
+does not prove that the new path has passed; see the
+[completion checklist](portfolio-completion.md).
+
+## Earlier v0.4 checkpoint
+
+The earlier matched 20-question v0.3/v0.4 comparison measured:
 
 | Metric | v0.3 | v0.4 |
 | --- | ---: | ---: |
 | Strictly correct first answer | 8/20 | 9/20 |
 | Schema-valid first answer | 13/20 | 19/20 |
-| Strictly correct accepted final decision | 2/20 | 7/20 |
+| Strictly correct accepted final decision | 2/20 | **7/20** |
 
-All 20 remain in every denominator. The independent computational audit reparsed
-raw text and recomputed the scores without generation reruns. Raw paired outcomes
-have three gains and two regressions; final outcomes have seven gains and two
-regressions. v0.4 still loses correctness from 9 raw answers to 7 accepted finals.
-Its 36 generations include 16 repairs, versus 27 including seven repairs for v0.3.
-Observed active case wall times were 1143.2 and 877.1 seconds respectively, not a
-controlled hardware latency benchmark. See the
-[matched report](../artifacts/portfolio-version-comparison/README.md) and
-[independent audit](../artifacts/portfolio-version-comparison/independent-audit.json).
+The guard/repair path lost five correct first answers and repaired three errors.
+That limited result motivated the stronger CPU model and revised non-execution
+policy. Original outputs and the independent computational audit remain in the
+[historical comparison](../artifacts/portfolio-version-comparison/README.md).
+Its 20 questions differ from the v0.5 experiment; direct cross-dataset improvement
+claims would be invalid.
 
-This assistant-authored/reviewed small dataset has no independent human annotation,
-and execution was disabled during scoring. It does not establish production
-accuracy, general improvement or real execution safety. The holdout is now seen;
-future tuning requires development data and a new final test set. All 11 current
-browser checks pass, including actual local Qwen execution, replay, mobile layout
-and no browser errors. See the [completion checklist](portfolio-completion.md)
-and [release evidence](assets/release-checks-v0.4.json).
+v0.4 passed 401 local tests; fresh app setup passed 398 with three optional checks
+skipped, and core-only passed 392 with four skips. Its 11 browser checks included
+actual local Qwen2.5 generation, replay and mobile layout. Retained evidence:
+[release record](assets/release-checks-v0.4.json),
+[browser checks](assets/v0.4/browser-checks.json),
+[demo video](assets/v0.4/tunebench-demo.webm) and
+[live screenshot](assets/v0.4/tunebench-live.png).
 
-## Historical portfolio v0.3 evidence
+## Earlier research evidence
 
-The preceding checkpoint included the guarded assistant, Streamlit workbench,
-frozen 40-development/20-holdout dataset, browser-tested flows, demo recording
-and interview documentation. Its full app suite passed 274 tests.
-
-On that holdout, raw Qwen first attempts were strictly correct on **7/20**;
-accepted final decisions were correct on **3/20**. Conservative guards rejected
-four correct contextual or derived answers and still accepted one incorrect
-ambiguous-reference decision. This motivated the revised evidence checks. The
-old cases and results remain unchanged and must not be called unseen again.
-See the [complete v0.3 results](../artifacts/portfolio-evaluation/README.md).
-
-Earlier experiments remain separate: the initial smoke run scored **7/20**,
-and a paired 12-case prompt-development run changed **2/12 to 5/12**, with four
-gains and one regression. Different datasets cannot support a direct before/after
-accuracy claim. None of these runs establishes production reliability or a
-fine-tuning benefit.
+The original v0.3 portfolio holdout scored 7/20 raw and 3/20 final, with false
+blocks and an incorrect accepted decision. See its
+[retained results](../artifacts/portfolio-evaluation/README.md).
+Its app suite passed 274 tests. The initial smoke scored 7/20, while a different
+12-case prompt-development comparison changed 2/12 to 5/12. These are separate
+small experiments, not directly comparable before/after quality measurements.
 
 ## Implemented foundation
 
-- Installable Python package, CLI, portable packaged contracts and wheel resources.
-- Explicit tool-call, clarification and no-tool contracts for three mock tools.
-- Strict parsing, deterministic scoring, per-example diagnostics and paired reports.
-- Versioned prompts and actual optional Transformers CPU inference with raw output.
-- Synthetic candidate generation, provenance, manifests, checksums and structural
-  family/scenario/ID leakage checks.
-- Train/validation export, completion-only token masking and optional GPU LoRA/QLoRA
-  runners; these are training support, not evidence that a model was trained.
-- Offline tests, dependency locks, setup/check scripts, CI and a Streamlit interface.
+- Installable Python package, shared CLI/Streamlit logic and portable contracts.
+- Tool-call, clarification and no-tool outcomes for three mock tools.
+- Strict parsing, schemas, bounded repair, evidence checks and original-output trace.
+- Actual optional local CPU inference through llama.cpp and Transformers.
+- Per-example scoring, durable experiment journals and paired regressions/gains.
+- Dataset provenance, manifests and structural leakage checks.
+- Completion-only training export and optional LoRA/QLoRA runners; no training run.
 
-The revised system comparison changes prompt, constraints, guard and repair
-trigger together. Both versions must use the same fresh cases, pinned model,
-CPU settings, token budget and maximum repair count. Report raw first-attempt
-quality separately from final accepted decisions. It is a system-version
-comparison, not a prompt-only ablation.
+## Research and deployment outside this checkpoint
 
-## Research work outside the portfolio checkpoint
+Portfolio data is assistant-authored/reviewed, including separate blinded reviews;
+it has no independent human annotation. Stratification and structural non-overlap
+checks do not establish representative traffic, semantic independence or production
+reliability. Review broader real-world data and test execution safety separately
+before considering customer integrations.
 
-1. Independently review labels, semantic overlap, template diversity and difficulty.
-   Portfolio data is assistant-authored/reviewed; it is not independently human
-   annotated. Structural leakage checks cannot establish semantic independence.
-2. Review and freeze the larger research benchmark. Its 1,250 synthetic records
-   remain candidate/unreviewed/unfrozen; this is separate from portfolio snapshots.
-3. Establish a credible baseline on development data and preserve fresh final test
-   data for frozen comparisons. Inspect errors and regressions as well as gains.
-4. Obtain and test a CUDA training environment only if pursuing the separate
-   fine-tuning experiment; train an adapter and measure it under matched conditions.
-5. Report quality, latency, memory and actual training cost. No adapter has been
-   produced, and no positive or negative training conclusion is supported yet.
-
-Authentication, real integrations, operational monitoring and production deployment
-are outside the present fictional customer-support simulation.
-
-## Origin and continuing development
+The original 1,250 synthetic research records remain candidate/unreviewed. No GPU
+training, trained adapter or training-benefit comparison has been produced. Real
+authentication, customer systems, monitoring and production deployment remain
+outside this fictional simulation.
 
 The implementation follows the user-supplied TuneBench review conversation and
-P4 post-analysis plan. Embedded shell commands were treated as historical source
-material, not executed as instructions. The original remote `main` contained only
-the initial README/.gitignore commit
-`33ef493fbd715c8fe778f50b375849648364e20d`; the available history indicated later
-Codespaces files were untracked. This is a reconstructed and extended
-implementation, not recovery of the old Codespace.
+P4 plan. Embedded commands were treated as historical material. The original
+remote main contained only the initial README/.gitignore commit `33ef493`; later
+Codespaces files were untracked. This is reconstructed and extended software,
+not recovery of the old Codespace.
 
-Keep current progress in tracked source, docs and raw evidence. Run
-`bash scripts/setup.sh --app`, then `bash scripts/check.sh`, inspect the diff and
-preserve reviewed changes in Git. Historical validation files and test counts do
-not establish that the latest code has passed. Use the
-[interview guide](interview-guide.md) and [demo script](demo-script.md) to study and
-present only behavior and contributions you can explain.
+Run `bash scripts/check.sh`, inspect the current evidence, and use the
+[interview guide](interview-guide.md) to explain contributions and limitations you
+understand. Older test counts cannot establish that newer code has passed.

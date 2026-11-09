@@ -1,0 +1,109 @@
+{
+  "system_version": "candidate",
+  "source_root": "/workspace/TuneBench",
+  "source_package_version": "0.5.0",
+  "installed_libraries": {
+    "python": "3.12.14",
+    "tunebench": "0.5.0",
+    "torch": "2.8.0+cpu",
+    "transformers": "4.57.6",
+    "accelerate": "1.15.0",
+    "jsonschema": "4.26.0",
+    "tokenizers": "0.22.2",
+    "numpy": "2.5.4",
+    "lm-format-enforcer": "0.11.3",
+    "interegular": "0.3.3",
+    "llama-cpp-python": "0.3.36",
+    "pydantic": "2.14.3",
+    "pydantic_core": "2.50.4"
+  },
+  "model_runtime": {
+    "loaded": true,
+    "local_path": "/workspace/models/Qwen3-4B-Instruct-2507-GGUF/a06e946bb6b655725eafa393f4a9745d460374c9/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+    "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+    "base_model_id": "Qwen/Qwen3-4B-Instruct-2507",
+    "resolved_model_revision": "a06e946bb6b655725eafa393f4a9745d460374c9",
+    "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+    "weights_bytes": 2497281120,
+    "publisher": "Unsloth; third-party quantization of the official Qwen model",
+    "verification": "Pinned upstream SHA-256 and file size checked locally before loading",
+    "backend": "llama.cpp",
+    "llama_cpp_python_version": "0.3.36",
+    "device": "cpu",
+    "dtype": "Q4_K_M",
+    "quantization": "Q4_K_M",
+    "cpu_threads": 4,
+    "cpu_batch_threads": 4,
+    "context_tokens": 8192,
+    "max_new_tokens": 256,
+    "seed": 42,
+    "chat_format": "chatml",
+    "thinking": false,
+    "prompt_version": "strong-v4",
+    "downloads": false,
+    "effective_generation_config": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "top_k": 0,
+      "min_p": 0.0,
+      "typical_p": 1.0,
+      "repeat_penalty": 1.1,
+      "frequency_penalty": 0.0,
+      "presence_penalty": 0.0,
+      "max_tokens": 256,
+      "seed": 42,
+      "stream": false,
+      "do_sample": false,
+      "num_beams": 1,
+      "max_new_tokens": 256,
+      "repetition_penalty": 1.1
+    },
+    "structured_output": {
+      "enabled": true,
+      "library": "llama.cpp JSON-schema grammar",
+      "schema_sha256": "2a96cd21705628d6121d4eaf503a5270282a69193abc52787a776cec0b692da1",
+      "post_validation_required": true
+    },
+    "last_generation": {
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 1149,
+        "completion_tokens": 39,
+        "total_tokens": 1188
+      }
+    }
+  },
+  "protocol_sha256": "ebbbcc2cba36caa39d1cb4ec28a9f33c6063cc504d4435834b144203468bd45a",
+  "active_seconds": 290.36546219402226,
+  "timing_basis": "Sum of case elapsed_ms; idle interruptions excluded",
+  "quality_claims_validated": true,
+  "pipeline": {
+    "status_counts": {
+      "validated": 9,
+      "clarification": 18,
+      "no_tool": 12,
+      "blocked": 1
+    },
+    "runtime_errors": 0,
+    "generation_attempts": 47,
+    "repair_attempts": 7,
+    "execution_enabled": false,
+    "execution_safety": "Measured separately; no tools execute here"
+  },
+  "worker_events": [
+    {
+      "started_at_utc": "2026-11-09T15:42:32.192311+00:00",
+      "pid": 94399,
+      "version": "candidate",
+      "protocol_sha256": "ebbbcc2cba36caa39d1cb4ec28a9f33c6063cc504d4435834b144203468bd45a",
+      "preserved_cases": 0,
+      "prefix_bytes": 0,
+      "prefix_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "completed",
+      "completed_at_utc": "2026-11-09T15:47:26.874816+00:00",
+      "preserved_prefix_verified": true,
+      "final_journal_sha256": "0d1fd272c67e1fcd972157a0355a616782558ae57f6a7176baf6e2316e91f8e0",
+      "completed_cases": 40
+    }
+  ]
+}

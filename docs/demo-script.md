@@ -1,109 +1,78 @@
 # A 2–3 minute portfolio walkthrough
 
-Present the fast rules path first. It demonstrates the application without waiting
-for model generation. Keep the backend label and trace visible so the audience can
-see which component produced each decision.
+Start with the fast rules path and keep the backend label visible. It demonstrates
+the application while reserving live model generation for a clearly labeled segment.
 
 ## Before presenting
 
-From the repository root, install the app dependencies and launch the interface:
+From the repository root:
 
 ```bash
 bash scripts/setup.sh --app
 bash scripts/start_demo.sh
 ```
 
-Open the shared browser provided by your development environment. The app starts
-on port 8501 by default. Start it before recording and keep the automated check
-result available in another terminal.
-Do not download model weights during the short walkthrough. Live Qwen is optional
-and requires the local snapshot and model dependencies; recorded output can be
-shown without implying that it was generated live.
+Open the app in your development environment's browser; it starts on port 8501.
+For live Qwen3, complete the optional CPU model installation and verified GGUF
+download in [README](../README.md) beforehand. Enter the file or its directory in
+**Local model path**. Do not spend the walkthrough downloading weights.
 
-Use the five fictional demo orders and the fixed mock policy shown in the app.
-All monetary values in this demo are INR. A refund proposal is a simulation and
-does not change the order or transfer money.
+Use the five fictional orders and fixed mock policy shown in the app. Amounts are
+INR, and proposals never change an order or transfer money. Keep the completed
+check output and experiment report available beside the demo.
 
 ## Main walkthrough
 
 | Time | Action | Suggested narration |
 | --- | --- | --- |
-| 0:00–0:15 | Open **Playground** and choose **Quick demo** in **Run mode**. | “TuneBench combines a tool-calling assistant demo with a reproducible evaluation framework. This first run uses deterministic Python rules, not an LLM.” |
-| 0:15–0:35 | Enter `Check the status of order TB-1001.` in **Your request** and click **Run request →**. Open the result and trace. | “The request becomes a structured decision. The application validates it, checks that the reference is grounded in the request, and calls a mock status tool.” |
-| 0:35–0:55 | Submit `Check the status of my order.` | “The order reference is missing, so the assistant asks for clarification instead of inventing an ID. No tool executes.” |
-| 0:55–1:20 | Submit `Propose a refund of 200 for order TB-1002 because the item arrived damaged.` | “This is a simulated proposal. The tool checks the order, reason and remaining refundable amount. It returns a reproducible result without changing the order or making a payment.” |
-| 1:20–1:35 | Submit `Execute a refund payment of 200 for order TB-1002 now. Do not create a proposal.` | “Actual payment execution is outside the registered tools. The assistant must not substitute a proposal and present it as a completed payment.” |
-| 1:35–2:00 | Expand a trace showing decision, validation, execution and timing. | “The result is inspectable. Raw generated text, validation failures, any visible repair attempt, and the final application result are separate stages.” |
-| 2:00–2:30 | Open **Evaluation** and show the matched v0.3/v0.4 report. | “On the same 20 fresh questions, correct first answers changed from 8 to 9, schema-valid answers from 13 to 19, and correct accepted final decisions from 2 to 7. The model weights are unchanged. The final guard still rejects some correct answers, and this small fictional set does not establish production accuracy.” |
-| 2:30–2:45 | End on the architecture or tests. | “The portfolio demonstrates structured tool use, failure handling, tests and honest evaluation. Fine-tuning support is implemented, but no model training has been performed.” |
+| 0:00–0:15 | Open **Playground** and choose **Quick demo**. | “TuneBench combines a tool-calling workbench with reproducible evaluation. This first run is deterministic Python, not an LLM.” |
+| 0:15–0:35 | Run `Check the status of order TB-1001.` and inspect its trace. | “The decision names a tool and arguments. Application code validates the reference and dispatches a mock lookup.” |
+| 0:35–0:55 | Run `Check the status of my order.` | “The reference is missing, so clarification is needed. No tool executes.” |
+| 0:55–1:20 | Run `Propose a refund of 200 for order TB-1002 because the item arrived damaged.` | “The tool checks the fictional policy and remaining balance, then returns a simulated proposal without making a payment.” |
+| 1:20–1:35 | Run `Execute a refund payment of 200 for order TB-1002 now. Do not create a proposal.` | “Real payment is unavailable. A proposal cannot be substituted for the requested operation.” |
+| 1:35–2:00 | Open **Raw responses & validation trace**. | “Original text, schema/evidence checks, any repair and the final result stay separate. A valid non-executing answer receives advisory language diagnostics rather than an evidence retry into action.” |
+| 2:00–2:30 | Open **Evaluation** and the latest completed matched report. | “Both versions must answer the same frozen questions. I report raw and accepted-final success, invalid outputs, regressions and generation cost. The earlier 7/20 result remains visible; I do not compare it directly with a score from different questions.” |
+| 2:30–2:45 | End on architecture or tests. | “The project demonstrates local model integration, structured tool use, failure handling and measured improvement. No model fine-tuning has been performed.” |
 
-The assistant evaluates one request at a time. After a clarification, submit the
-complete request including the missing details; displayed history is not persistent
-model memory. **Start with an example** can fill a preset into the editable request.
+The separate v0.4/v0.5 40-case comparison and score audit are still running at
+this checkpoint. Until complete, use only clearly labeled historical results for
+numbers. Practice 40/40 is tuned development coverage, not unseen accuracy.
 
-If an example behaves differently, show the actual result and investigate it. Do
-not relabel a failed request or switch backends without telling the audience.
+After a clarification, submit the complete request including missing details.
+Displayed history is not persistent model memory. **Start with an example** fills
+an editable preset. If an example behaves differently, show its actual outcome;
+do not relabel it or switch backends without saying so.
 
 ## Optional live-model segment
 
-Choose **Live local Qwen** in **Run mode** and submit one short supported request such as
-`Check the status of order TB-1001.` Make the live-model label visible. Explain that
-this loads and runs the actual local model; generation can take tens of seconds on
-a CPU, in addition to startup. Show the measured duration from that run rather than
-promising a fixed latency. If the output is blocked, explain the failed check.
+Choose **Live local Qwen** and run `Check the status of order TB-1001.` Show the
+actual model identity and measured timing in the trace. The preferred profile is
+Qwen3-4B-Instruct-2507 Q4_K_M through llama.cpp on CPU. Unsloth supplied the pinned
+quantization of the official model; the project did not train it.
 
-In v0.4, explain that `strong-v3` and JSON token constraints guide output structure;
-full schema and request-evidence checks still run afterward. These changes do not
-train or fine-tune the model.
+Explain that `strong-v4` and JSON grammar guide structure, then application checks
+validate the decision. Real tool calls still need evidence. A schema-valid
+clarification or no-tool answer cannot be retried into action because a heuristic
+disagrees. At most one schema/tool-call evidence repair is allowed, and every
+original attempt remains visible. A repaired final result does not improve the
+first-answer score retroactively.
 
-A repair attempt, when enabled, is limited to one and visible. It can follow a
-schema failure or an explicit request-evidence mismatch. Preserve the first output,
-show the feedback and explain why another attempt was made. The application does
-not rewrite the model answer. A corrected final application response does not
-raise the historical one-attempt model score.
+Timing depends on hardware, loading and output length. Show the observed duration
+rather than promising a fixed CPU latency. If the call is blocked, show the failed
+check. For a strict short recording, use a separate live clip or **Saved model
+replay**; explicitly say replay is historical Qwen2.5 output, performs no new
+generation and does not execute a tool.
 
-The [matched v0.3/v0.4 report](../artifacts/portfolio-version-comparison/README.md)
-retains all 20 cases and an independent computational score audit. Name both
-versions and this dataset when quoting its numbers. v0.4 has 9 correct raw first
-answers but only 7 correct accepted finals, so the guard/repair path remains a
-limitation. It used 36 generations versus 27 for v0.3. These are system changes,
-not a prompt-only experiment or fine-tuning. Do not present older scores as results
-from the revised live pipeline.
+## Evidence beside the demo
 
-For a strict 3-minute recording, put live generation in a separate clip or choose
-**Saved model replay**, select an existing smoke question, and click **View recorded
-response**. Replay uses immutable historical inputs, does not accept a new request,
-and does not execute a tool. State that it is not a new inference run and its
-source timing is historical.
+- [Architecture](architecture.md) and [quality comparison protocol](quality-comparison-protocol.md).
+- Latest completed check output and [v0.5 release record](assets/release-checks-v0.5.json).
+- [Earlier 7/20 final result and failure analysis](../artifacts/portfolio-version-comparison/README.md).
+- Current screenshot/recording with backend identity and a visible decision trace,
+  once the current browser check is complete.
+- Historical media remains under [v0.4](assets/v0.4/browser-checks.json) and
+  [v0.3](assets/v0.3/browser-checks.json), with its original version identity.
 
-## Evidence to keep beside the demo
-
-- [Architecture diagram](architecture.md).
-- [Initial real-model smoke results](../artifacts/baseline-smoke/README.md).
-- [Paired prompt experiment and regressions](../artifacts/prompt-development-v2/README.md).
-- [Historical v0.3 portfolio results](../artifacts/portfolio-evaluation/README.md).
-- [Current matched system comparison and audit](../artifacts/portfolio-version-comparison/README.md).
-- Latest completed automated check output; do not substitute an older count.
-- Screenshot or video with backend identity and at least one visible decision trace.
-
-Gold-derived evaluator fixtures are useful for explaining the scoring pipeline,
-but their 20/20 controlled result is not model performance.
-
-## Suggested media captions
-
-Use these captions only for media that actually shows the corresponding behavior:
-
-- **Rules demonstration:** “Deterministic Python backend: validated mock order lookup
-  and execution trace; no model inference.”
-- **Clarification:** “Missing order reference: the assistant requests information and
-  does not execute a tool.”
-- **Refund proposal:** “Simulated INR refund proposal with policy checks; no order
-  mutation or real payment.”
-- **Live model:** “Actual local Qwen generation on CPU; raw output and measured timing
-  are visible.”
-- **Replay:** “Recorded Qwen output from a retained experiment; replay does not run
-  inference again.”
-
-Save shareable media under `docs/assets/` with descriptive filenames. Keep terminal
-paths, personal data and unrelated windows out of the recording. Root-level setup
-instructions remain the source for exact commands and optional dependencies.
+Gold-derived evaluator fixtures are useful for demonstrating accounting. Their
+perfect score is not model accuracy. Assistant-reviewed fictional tests do not
+establish production reliability or real transaction safety.

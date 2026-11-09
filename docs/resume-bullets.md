@@ -1,74 +1,71 @@
 # Resume and portfolio wording
 
-Choose bullets that describe work you understand and can demonstrate. Adapt the
-verbs to your actual contribution, and disclose development assistance when asked.
-Do not imply independent authorship of components you have not studied or modified.
+Choose statements you understand and can demonstrate. Describe your actual
+contribution, including assistance used during development. If you integrated,
+extended or tested a component rather than writing it independently, use that verb.
 
-## Suggested project description
+## Project description
 
-**TuneBench — Tool-calling assistant and evaluation framework**
-Python, JSON Schema, Streamlit, pytest, Hugging Face Transformers,
-lm-format-enforcer; optional PEFT/LoRA training support.
+**TuneBench — CPU tool-calling workbench and evaluation framework**
+Python, llama.cpp/GGUF, JSON Schema, Streamlit, pytest; legacy Hugging Face
+Transformers and optional PEFT training support.
 
 A customer-support simulation with explicit tool-call, clarification and no-tool
-outcomes, an inspectable execution trace, and reproducible model evaluation.
+outcomes, a trace of original answers and validation, and reproducible CPU model
+evaluation. No real payment system is connected.
 
-## Select two or three bullets
+## Choose two or three bullets
 
-- Implemented a Python tool-calling workflow with structured output validation,
-  request-grounding checks, and three nonmutating mock customer-support tools;
-  exposed decisions and execution traces in a Streamlit demo.
-- Integrated JSON-constrained local model generation with complete schema checks,
-  request-evidence validation and at most one visible repair, preserving the model's
-  original output and distinguishing raw accuracy from accepted final decisions.
-- Built deterministic evaluation for outcome choice, tool selection, arguments,
-  clarification and strict task success, retaining malformed and missing responses
-  in per-example diagnostics.
-- Added versioned prompts and a reproducible paired Qwen2.5-1.5B-Instruct CPU
-  experiment with saved raw outputs, inference settings, regression analysis and
-  family-cluster confidence intervals.
-- Developed synthetic-data generation and cross-split leakage checks, portable
-  packaged contracts, and offline unit/CLI integration tests.
-- Prepared completion-only training data and optional LoRA/QLoRA runners, with
-  explicit separation between implemented training support and unperformed GPU runs.
+- Integrated a verified quantized Qwen3-4B local CPU model with JSON-constrained
+  generation, typed tool decisions and three nonmutating support tools in Streamlit.
+- Added request-evidence checks before tool execution and bounded model repair,
+  keeping original output intact; made heuristic diagnostics advisory for
+  schema-valid non-executing decisions to avoid retries into actions.
+- Built deterministic scoring for decision type, tool selection, arguments,
+  clarification and strict success, retaining malformed, blocked and missing
+  predictions in per-example diagnostics.
+- Compared frozen system versions with pinned source/model/data hashes, original
+  outputs, durable case journals, regression analysis and computational score audit.
+- Tested the shared Python package, CLI and UI, including portable packaged
+  contracts and standalone-wheel execution outside the source checkout.
 
-If your contribution was integration and learning rather than writing a component
-from scratch, use wording such as “Integrated and tested” or “Extended an
-AI-assisted implementation with …”, followed by a concrete change you made.
+Use wording such as “Integrated and tested” or “Extended an AI-assisted
+implementation with …” when that reflects your contribution. Prepare to explain
+a concrete change and its verification rather than reciting the entire feature list.
 
-## Optional measured detail
+## Measured claims
 
-Use a number only with its scope and linked evidence. A measured statement is:
+The new 40-question comparison and independent score audit are still running at
+this checkpoint. Add a numerical resume claim only after that report is complete,
+using both versions on the same cases, the exact denominator and a link to evidence.
+Include the tool-call result separately so an aggregate cannot hide false blocks.
+Do not turn the tuned 40/40 development run into a claim of unseen accuracy.
 
-> Compared two Qwen CPU system versions on the same 20 frozen fictional cases:
-> strict first-answer success changed from 8/20 to 9/20, schema validity from 13/20
-> to 19/20, and accepted final success from 2/20 to 7/20; retained raw responses,
-> regressions and an independent computational score audit.
+The earlier weak result remains visible: on the same historical 20 questions,
+v0.3/v0.4 raw strict success changed 8/20 → 9/20, schema validity 13/20 → 19/20 and
+accepted final success 2/20 → **7/20**. That report exposed guard/repair failures and
+motivated the new CPU model and policy. See the
+[retained comparison](../artifacts/portfolio-version-comparison/README.md).
+It must not be compared directly with a score from the new 40 cases.
 
-Evidence: [matched system comparison](../artifacts/portfolio-version-comparison/README.md).
-This changes several pipeline components together with unchanged model weights;
-it is not a prompt-only result or fine-tuning benefit. v0.4 still falls from 9/20
-raw successes to 7/20 accepted finals, and the small assistant-authored set does not
-establish general improvement or production accuracy.
+The current full local software suite passes 469 tests; fresh app setup passes
+465 with four optional checks skipped, and core-only passes 459 with five skips.
+Evidence is in the [v0.5 release record](assets/release-checks-v0.5.json). A software
+test count is distinct from successful model conversations. Quote the latest
+completed count when submitting, and rerun `bash scripts/check.sh` after code changes.
 
-Older evidence remains separate: the [paired prompt experiment](../artifacts/prompt-development-v2/README.md)
-changed 2/12 to 5/12 on development cases, with four gains and one regression. The
-[7/20 smoke result](../artifacts/baseline-smoke/README.md) used different questions.
-Do not describe 20/20 gold-derived evaluator fixtures as model accuracy or compare
-scores across different datasets as a matched improvement.
+## Accurate boundaries
 
-For a test count, quote the exact count from the latest completed check run and
-link its evidence. Re-run `bash scripts/check.sh` before submitting the project;
-do not copy an old count from a chat or use a placeholder as a measured result.
+The preferred model uses Unsloth's existing Q4_K_M conversion of official Qwen3
+weights. This project integrates and evaluates it; it has not fine-tuned Qwen or
+measured a LoRA benefit. Optional training preparation/runners are implemented,
+while a GPU training experiment is not completed evidence.
 
-## Claims this evidence does not support
+The model, quantization, runtime, prompt and guard change together in the system
+comparison. It cannot isolate which component caused a gain. Portfolio cases are
+fictional and assistant-authored/reviewed, with no independent human annotation.
+A small test result does not establish production accuracy or payment automation.
 
-Do not write “fine-tuned Qwen”, “improved accuracy with LoRA”, “production-ready
-refund agent”, “deployed payment automation”, or “high-accuracy AI assistant”.
-There has been no model fine-tuning, no real payment integration, and no production
-reliability study. Describe the working portfolio implementation and the actual
-experiments instead.
-
-Link the repository, the [architecture](architecture.md), the
-[demo walkthrough](demo-script.md), and the measured experiment reports in a
-portfolio entry. A clear failure analysis is useful engineering evidence.
+Link the repository, [architecture](architecture.md), [demo walkthrough](demo-script.md)
+and completed experiment report. Be ready to explain both the improvement and the
+remaining failures honestly.

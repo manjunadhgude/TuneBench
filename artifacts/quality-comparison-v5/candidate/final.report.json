@@ -1,0 +1,1188 @@
+{
+  "evaluation_version": "0.2.0",
+  "task_schema_version": "3.0.0",
+  "total_examples": 40,
+  "prediction_records": 40,
+  "missing_predictions": 0,
+  "invalid_predictions": 1,
+  "task_success": {
+    "correct": 32,
+    "total": 40,
+    "accuracy": 0.8
+  },
+  "outcome_accuracy": {
+    "correct": 33,
+    "total": 40,
+    "accuracy": 0.825
+  },
+  "outcome_classification": {
+    "labels": [
+      "tool_call",
+      "clarification",
+      "no_tool"
+    ],
+    "confusion_matrix": {
+      "tool_call": {
+        "tool_call": 9,
+        "clarification": 6,
+        "no_tool": 0,
+        "invalid": 1
+      },
+      "clarification": {
+        "tool_call": 0,
+        "clarification": 12,
+        "no_tool": 0,
+        "invalid": 0
+      },
+      "no_tool": {
+        "tool_call": 0,
+        "clarification": 0,
+        "no_tool": 12,
+        "invalid": 0
+      }
+    },
+    "per_class": {
+      "tool_call": {
+        "support": 16,
+        "precision": 1.0,
+        "recall": 0.5625,
+        "f1": 0.72
+      },
+      "clarification": {
+        "support": 12,
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8
+      },
+      "no_tool": {
+        "support": 12,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 0.84
+  },
+  "tool_call": {
+    "total": 16,
+    "tool_selection": {
+      "correct": 9,
+      "denominator": 16,
+      "accuracy": 0.5625
+    },
+    "arguments_given_correct_tool": {
+      "correct": 9,
+      "denominator": 9,
+      "accuracy": 1.0
+    },
+    "joint_exact_match": {
+      "correct": 9,
+      "denominator": 16,
+      "accuracy": 0.5625
+    }
+  },
+  "clarification": {
+    "total": 12,
+    "intended_tool_accuracy": {
+      "correct": 11,
+      "denominator": 11,
+      "accuracy": 1.0
+    },
+    "missing_fields_exact_accuracy": {
+      "correct": 11,
+      "denominator": 11,
+      "accuracy": 1.0
+    },
+    "missing_fields_micro": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "denominator": 11
+    },
+    "joint_exact_match": {
+      "correct": 11,
+      "denominator": 12,
+      "accuracy": 0.9166666666666666
+    },
+    "reason_code_accuracy": {
+      "correct": 11,
+      "denominator": 12,
+      "accuracy": 0.9166666666666666
+    }
+  },
+  "no_tool": {
+    "total": 12,
+    "recall": 1.0,
+    "reason_code_accuracy": {
+      "correct": 12,
+      "denominator": 12,
+      "accuracy": 1.0
+    }
+  },
+  "error_categories": {
+    "invalid_prediction": 1,
+    "null_outcome": 1,
+    "wrong_outcome": 7
+  },
+  "breakdown": {
+    "family_id": {
+      "PV3_CLARIFY_ELIGIBILITY_COMPETING_REASONS": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_ELIGIBILITY_REASON_NOT_SUPPLIED": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_ELIGIBILITY_REFERENCE_NOT_GIVEN": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_ELIGIBILITY_TWO_REQUIRED_VALUES": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_PROPOSAL_AMOUNT_NOT_DECIDED": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_PROPOSAL_COMPETING_ESTIMATES": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_PROPOSAL_REASON_AND_AMOUNT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_PROPOSAL_REASON_NOT_GIVEN": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_PROPOSAL_REFERENCE_NOT_GIVEN": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_STATUS_REFERENCE_NOT_AVAILABLE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_STATUS_TWO_UNRESOLVED_REFERENCES": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_CLARIFY_UNSELECTED_SERVICE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV3_ELIGIBILITY_BROKEN_LID": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_ELIGIBILITY_CORRECTED_CUSTOMER_REASON": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_ELIGIBILITY_DIFFERENT_DELIVERED_PRODUCT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_ELIGIBILITY_PARCEL_STILL_ABSENT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_INFORMATION_ELIGIBILITY_MEANING": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_INFORMATION_HYPOTHETICAL_UNIT_COST": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_INFORMATION_KNOWN_STATUS_WORD": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_INFORMATION_PROPOSAL_VERSUS_PAYMENT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_NO_ACTION_HISTORICAL_UNTRUSTED_QUOTE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_NO_ACTION_RECORDED_ORDER_STATUS": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_NO_ACTION_SHORT_ACKNOWLEDGMENT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_NO_ACTION_WITHDRAWN_LOOKUP_IN_CONVERSATION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_PROPOSAL_DAMAGED_SUBSET_PRICE": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV3_PROPOSAL_EXPLICIT_DAMAGED_BINDING": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV3_PROPOSAL_EXPLICIT_WRONG_DELIVERY": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_PROPOSAL_NONRECEIPT_WITH_IRRELEVANT_TOTAL": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_PROPOSAL_PERCENT_OF_PREVIOUS_SENTENCE_TOTAL": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV3_PROPOSAL_REVISED_REFERENCE_AND_AMOUNT": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV3_PROPOSAL_UNWANTED_ITEM_WITH_PAYMENT_PROHIBITION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_PROPOSAL_WRONG_ITEM_FULL_UNIT_COST": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV3_STATUS_AUTHORITATIVE_NEW_REFERENCE": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV3_STATUS_CLEAR_CONVERSATIONAL_REFERENCE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_STATUS_POLITE_RECEIPT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_STATUS_RECEIPT_VERSUS_SUPPORT_CASE": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV3_UNSUPPORTED_ACCOUNT_ORDER_EXPORT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_UNSUPPORTED_ACTUAL_REFUND_PAYMENT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_UNSUPPORTED_ADDRESS_CHANGE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV3_UNSUPPORTED_ORDER_CANCELLATION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      }
+    },
+    "difficulty": {
+      "easy": {
+        "total": 9,
+        "outcome_accuracy": 0.8888888888888888,
+        "task_success_accuracy": 0.8888888888888888,
+        "invalid_predictions": 0
+      },
+      "hard": {
+        "total": 11,
+        "outcome_accuracy": 0.7272727272727273,
+        "task_success_accuracy": 0.6363636363636364,
+        "invalid_predictions": 0
+      },
+      "medium": {
+        "total": 20,
+        "outcome_accuracy": 0.85,
+        "task_success_accuracy": 0.85,
+        "invalid_predictions": 1
+      }
+    },
+    "gold_outcome": {
+      "clarification": {
+        "total": 12,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.9166666666666666,
+        "invalid_predictions": 0
+      },
+      "no_tool": {
+        "total": 12,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "tool_call": {
+        "total": 16,
+        "outcome_accuracy": 0.5625,
+        "task_success_accuracy": 0.5625,
+        "invalid_predictions": 1
+      }
+    },
+    "split": {
+      "test": {
+        "total": 40,
+        "outcome_accuracy": 0.825,
+        "task_success_accuracy": 0.8,
+        "invalid_predictions": 1
+      }
+    }
+  },
+  "per_example": [
+    {
+      "example_id": "portfolio-v3-holdout-01",
+      "family_id": "PV3_ELIGIBILITY_DIFFERENT_DELIVERED_PRODUCT",
+      "scenario_id": "portfolio-v3-scenario-01",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-02",
+      "family_id": "PV3_CLARIFY_PROPOSAL_REASON_NOT_GIVEN",
+      "scenario_id": "portfolio-v3-scenario-02",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-03",
+      "family_id": "PV3_NO_ACTION_WITHDRAWN_LOOKUP_IN_CONVERSATION",
+      "scenario_id": "portfolio-v3-scenario-03",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-04",
+      "family_id": "PV3_CLARIFY_UNSELECTED_SERVICE",
+      "scenario_id": "portfolio-v3-scenario-04",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": null,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v3-holdout-05",
+      "family_id": "PV3_CLARIFY_ELIGIBILITY_COMPETING_REASONS",
+      "scenario_id": "portfolio-v3-scenario-05",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-06",
+      "family_id": "PV3_PROPOSAL_REVISED_REFERENCE_AND_AMOUNT",
+      "scenario_id": "portfolio-v3-scenario-06",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v3-holdout-07",
+      "family_id": "PV3_UNSUPPORTED_ADDRESS_CHANGE",
+      "scenario_id": "portfolio-v3-scenario-07",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-08",
+      "family_id": "PV3_UNSUPPORTED_ACTUAL_REFUND_PAYMENT",
+      "scenario_id": "portfolio-v3-scenario-08",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-09",
+      "family_id": "PV3_CLARIFY_PROPOSAL_AMOUNT_NOT_DECIDED",
+      "scenario_id": "portfolio-v3-scenario-09",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-10",
+      "family_id": "PV3_NO_ACTION_SHORT_ACKNOWLEDGMENT",
+      "scenario_id": "portfolio-v3-scenario-10",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-11",
+      "family_id": "PV3_NO_ACTION_HISTORICAL_UNTRUSTED_QUOTE",
+      "scenario_id": "portfolio-v3-scenario-11",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-12",
+      "family_id": "PV3_ELIGIBILITY_PARCEL_STILL_ABSENT",
+      "scenario_id": "portfolio-v3-scenario-12",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-13",
+      "family_id": "PV3_ELIGIBILITY_BROKEN_LID",
+      "scenario_id": "portfolio-v3-scenario-13",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-14",
+      "family_id": "PV3_UNSUPPORTED_ACCOUNT_ORDER_EXPORT",
+      "scenario_id": "portfolio-v3-scenario-14",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-15",
+      "family_id": "PV3_ELIGIBILITY_CORRECTED_CUSTOMER_REASON",
+      "scenario_id": "portfolio-v3-scenario-15",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-16",
+      "family_id": "PV3_CLARIFY_ELIGIBILITY_REFERENCE_NOT_GIVEN",
+      "scenario_id": "portfolio-v3-scenario-16",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-17",
+      "family_id": "PV3_INFORMATION_ELIGIBILITY_MEANING",
+      "scenario_id": "portfolio-v3-scenario-17",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-18",
+      "family_id": "PV3_PROPOSAL_UNWANTED_ITEM_WITH_PAYMENT_PROHIBITION",
+      "scenario_id": "portfolio-v3-scenario-18",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-19",
+      "family_id": "PV3_CLARIFY_STATUS_REFERENCE_NOT_AVAILABLE",
+      "scenario_id": "portfolio-v3-scenario-19",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-20",
+      "family_id": "PV3_INFORMATION_HYPOTHETICAL_UNIT_COST",
+      "scenario_id": "portfolio-v3-scenario-20",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-21",
+      "family_id": "PV3_INFORMATION_PROPOSAL_VERSUS_PAYMENT",
+      "scenario_id": "portfolio-v3-scenario-21",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-22",
+      "family_id": "PV3_INFORMATION_KNOWN_STATUS_WORD",
+      "scenario_id": "portfolio-v3-scenario-22",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-23",
+      "family_id": "PV3_PROPOSAL_PERCENT_OF_PREVIOUS_SENTENCE_TOTAL",
+      "scenario_id": "portfolio-v3-scenario-23",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v3-holdout-24",
+      "family_id": "PV3_CLARIFY_ELIGIBILITY_REASON_NOT_SUPPLIED",
+      "scenario_id": "portfolio-v3-scenario-24",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-25",
+      "family_id": "PV3_CLARIFY_PROPOSAL_REASON_AND_AMOUNT",
+      "scenario_id": "portfolio-v3-scenario-25",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-26",
+      "family_id": "PV3_UNSUPPORTED_ORDER_CANCELLATION",
+      "scenario_id": "portfolio-v3-scenario-26",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-27",
+      "family_id": "PV3_STATUS_POLITE_RECEIPT",
+      "scenario_id": "portfolio-v3-scenario-27",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-28",
+      "family_id": "PV3_STATUS_CLEAR_CONVERSATIONAL_REFERENCE",
+      "scenario_id": "portfolio-v3-scenario-28",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-29",
+      "family_id": "PV3_NO_ACTION_RECORDED_ORDER_STATUS",
+      "scenario_id": "portfolio-v3-scenario-29",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-30",
+      "family_id": "PV3_PROPOSAL_WRONG_ITEM_FULL_UNIT_COST",
+      "scenario_id": "portfolio-v3-scenario-30",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v3-holdout-31",
+      "family_id": "PV3_CLARIFY_PROPOSAL_COMPETING_ESTIMATES",
+      "scenario_id": "portfolio-v3-scenario-31",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-32",
+      "family_id": "PV3_STATUS_RECEIPT_VERSUS_SUPPORT_CASE",
+      "scenario_id": "portfolio-v3-scenario-32",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v3-holdout-33",
+      "family_id": "PV3_STATUS_AUTHORITATIVE_NEW_REFERENCE",
+      "scenario_id": "portfolio-v3-scenario-33",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v3-holdout-34",
+      "family_id": "PV3_PROPOSAL_EXPLICIT_DAMAGED_BINDING",
+      "scenario_id": "portfolio-v3-scenario-34",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v3-holdout-35",
+      "family_id": "PV3_CLARIFY_PROPOSAL_REFERENCE_NOT_GIVEN",
+      "scenario_id": "portfolio-v3-scenario-35",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-36",
+      "family_id": "PV3_CLARIFY_STATUS_TWO_UNRESOLVED_REFERENCES",
+      "scenario_id": "portfolio-v3-scenario-36",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-37",
+      "family_id": "PV3_PROPOSAL_DAMAGED_SUBSET_PRICE",
+      "scenario_id": "portfolio-v3-scenario-37",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "clarification",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v3-holdout-38",
+      "family_id": "PV3_CLARIFY_ELIGIBILITY_TWO_REQUIRED_VALUES",
+      "scenario_id": "portfolio-v3-scenario-38",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-39",
+      "family_id": "PV3_PROPOSAL_EXPLICIT_WRONG_DELIVERY",
+      "scenario_id": "portfolio-v3-scenario-39",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v3-holdout-40",
+      "family_id": "PV3_PROPOSAL_NONRECEIPT_WITH_IRRELEVANT_TOTAL",
+      "scenario_id": "portfolio-v3-scenario-40",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    }
+  ],
+  "inference_metadata": {
+    "system_version": "candidate",
+    "source_root": "/workspace/TuneBench",
+    "source_package_version": "0.5.0",
+    "installed_libraries": {
+      "python": "3.12.14",
+      "tunebench": "0.5.0",
+      "torch": "2.8.0+cpu",
+      "transformers": "4.57.6",
+      "accelerate": "1.15.0",
+      "jsonschema": "4.26.0",
+      "tokenizers": "0.22.2",
+      "numpy": "2.5.4",
+      "lm-format-enforcer": "0.11.3",
+      "interegular": "0.3.3",
+      "llama-cpp-python": "0.3.36",
+      "pydantic": "2.14.3",
+      "pydantic_core": "2.50.4"
+    },
+    "model_runtime": {
+      "loaded": true,
+      "local_path": "/workspace/models/Qwen3-4B-Instruct-2507-GGUF/a06e946bb6b655725eafa393f4a9745d460374c9/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+      "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+      "base_model_id": "Qwen/Qwen3-4B-Instruct-2507",
+      "resolved_model_revision": "a06e946bb6b655725eafa393f4a9745d460374c9",
+      "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+      "weights_bytes": 2497281120,
+      "publisher": "Unsloth; third-party quantization of the official Qwen model",
+      "verification": "Pinned upstream SHA-256 and file size checked locally before loading",
+      "backend": "llama.cpp",
+      "llama_cpp_python_version": "0.3.36",
+      "device": "cpu",
+      "dtype": "Q4_K_M",
+      "quantization": "Q4_K_M",
+      "cpu_threads": 4,
+      "cpu_batch_threads": 4,
+      "context_tokens": 8192,
+      "max_new_tokens": 256,
+      "seed": 42,
+      "chat_format": "chatml",
+      "thinking": false,
+      "prompt_version": "strong-v4",
+      "downloads": false,
+      "effective_generation_config": {
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "top_k": 0,
+        "min_p": 0.0,
+        "typical_p": 1.0,
+        "repeat_penalty": 1.1,
+        "frequency_penalty": 0.0,
+        "presence_penalty": 0.0,
+        "max_tokens": 256,
+        "seed": 42,
+        "stream": false,
+        "do_sample": false,
+        "num_beams": 1,
+        "max_new_tokens": 256,
+        "repetition_penalty": 1.1
+      },
+      "structured_output": {
+        "enabled": true,
+        "library": "llama.cpp JSON-schema grammar",
+        "schema_sha256": "2a96cd21705628d6121d4eaf503a5270282a69193abc52787a776cec0b692da1",
+        "post_validation_required": true
+      },
+      "last_generation": {
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 1149,
+          "completion_tokens": 39,
+          "total_tokens": 1188
+        }
+      }
+    },
+    "protocol_sha256": "ebbbcc2cba36caa39d1cb4ec28a9f33c6063cc504d4435834b144203468bd45a",
+    "active_seconds": 290.36546219402226,
+    "timing_basis": "Sum of case elapsed_ms; idle interruptions excluded",
+    "quality_claims_validated": true,
+    "pipeline": {
+      "status_counts": {
+        "validated": 9,
+        "clarification": 18,
+        "no_tool": 12,
+        "blocked": 1
+      },
+      "runtime_errors": 0,
+      "generation_attempts": 47,
+      "repair_attempts": 7,
+      "execution_enabled": false,
+      "execution_safety": "Measured separately; no tools execute here"
+    },
+    "worker_events": [
+      {
+        "started_at_utc": "2026-11-09T15:42:32.192311+00:00",
+        "pid": 94399,
+        "version": "candidate",
+        "protocol_sha256": "ebbbcc2cba36caa39d1cb4ec28a9f33c6063cc504d4435834b144203468bd45a",
+        "preserved_cases": 0,
+        "prefix_bytes": 0,
+        "prefix_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "completed",
+        "completed_at_utc": "2026-11-09T15:47:26.874816+00:00",
+        "preserved_prefix_verified": true,
+        "final_journal_sha256": "0d1fd272c67e1fcd972157a0355a616782558ae57f6a7176baf6e2316e91f8e0",
+        "completed_cases": 40
+      }
+    ]
+  }
+}

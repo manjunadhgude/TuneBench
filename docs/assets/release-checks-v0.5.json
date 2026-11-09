@@ -1,0 +1,66 @@
+{
+  "version": "0.5.0",
+  "recorded_at_utc": "2026-11-09T15:46:46.813908+00:00",
+  "frozen_source_commit": "5d52dc8",
+  "release_complete": false,
+  "checks": {
+    "full_suite": {
+      "command": "bash scripts/check.sh",
+      "result": "pass",
+      "tests_passed": 469,
+      "includes": [
+        "pytest",
+        "lint",
+        "format",
+        "CLI",
+        "1250 candidate generation and audit",
+        "completion-only training export",
+        "simulated assistant"
+      ]
+    },
+    "core_only": {
+      "result": "pass",
+      "tests_passed": 459,
+      "skipped": 5,
+      "model_dependencies_installed": false
+    },
+    "fresh_app_setup": {
+      "result": "pass",
+      "tests_passed": 465,
+      "skipped": 4,
+      "source_archive": "5d52dc8",
+      "model_dependencies_installed": false,
+      "launch_health": "HTTP200 ok on isolated port"
+    },
+    "wheel": {
+      "result": "pass",
+      "file": "dist/tunebench-0.5.0-py3-none-any.whl",
+      "bytes": 69167,
+      "sha256": "ff95529432b0da2bda4f0330a35b8ddfe2810846ea90be69a73a62954df37070",
+      "verified": "Imported from site-packages outside checkout; packaged GGUF metadata and simulated refund path work with no optional model dependencies."
+    },
+    "development": {
+      "purpose": "Tuned development data; not an unseen quality estimate",
+      "cases": 40,
+      "first_raw_correct": 37,
+      "final_raw_correct": 40,
+      "final_accepted_correct": 40,
+      "final_generations": 40,
+      "artifacts": "artifacts/quality-development-v5"
+    },
+    "matched_comparison": {
+      "result": "running",
+      "examples_per_version": 40,
+      "tools_execute": false,
+      "artifacts": "artifacts/quality-comparison-v5"
+    },
+    "browser": {
+      "result": "pending"
+    }
+  },
+  "limitations": [
+    "Small assistant-authored/reviewed fictional benchmark; no independent human annotation.",
+    "Different model, quantization, inference runtime, prompt and guard change together.",
+    "No fine-tuning, GPU training, real customer integration or real payment execution."
+  ]
+}
