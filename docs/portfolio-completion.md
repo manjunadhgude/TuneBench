@@ -44,8 +44,8 @@ source feature alone is not evidence that its browser flow was exercised.
 - [x] A screenshot or short demo recording is saved, with backend identity visible.
 - [x] The README's setup/launch commands have been exercised from their documented directories.
 
-Verified v0.3 evidence: [browser checks](assets/browser-checks.json),
-[demo video](assets/tunebench-demo.webm), [live Qwen screenshot](assets/tunebench-live.png),
+Verified v0.3 evidence: [browser checks](assets/v0.3/browser-checks.json),
+[demo video](assets/v0.3/tunebench-demo.webm), [live Qwen screenshot](assets/v0.3/tunebench-live.png),
 and [frozen holdout results](../artifacts/portfolio-evaluation/README.md).
 The v0.3 full app suite passed 274 tests; its core-only environment passed 268 with
 the optional UI module skipped. Setup, launch and standalone-wheel CLI were
@@ -61,19 +61,32 @@ constraints do not enforce every schema restriction or prove decision correctnes
 Both attempts remain intact; application code never rewrites the model answer.
 Quick demo is still deterministic Python, not model inference.
 
-The final evidence items are pending at this documentation checkpoint:
+Final verification:
 
-- [ ] Complete the fresh matched v0.3/v0.4 20-case system comparison, retaining raw
-  first-attempt and accepted final scores, failures, regressions and generation cost.
-- [ ] Run the full v0.4 checks and record the observed count and result.
-- [ ] Recheck the current browser flows, including an actual local-model request,
-  and retain current screenshots or recording.
-- [ ] Verify the updated setup and standalone package before the release checkpoint.
+- [x] Complete the fresh matched v0.3/v0.4 20-case system comparison: raw strict
+  success 8/20 → 9/20, first-answer schema validity 13/20 → 19/20, accepted final
+  success 2/20 → 7/20. Every case, raw attempt, regression and generation cost is
+  retained in the [report](../artifacts/portfolio-version-comparison/README.md) and
+  [independent computational audit](../artifacts/portfolio-version-comparison/independent-audit.json).
+- [x] Full v0.4 checks pass: 401 tests, lint, formatting and CLI/data workflows.
+- [x] All 11 current browser checks pass, including an actual local Qwen request,
+  a 390px mobile layout and no browser errors. Retained
+  [checks](assets/browser-checks.json), [live screenshot](assets/tunebench-live.png)
+  and [demo recording](assets/tunebench-demo.webm) show the current version.
+- [x] Fresh hash-locked app setup passes 398 tests with three optional model checks
+  skipped, and the documented launch command serves the app. Core-only checks pass
+  392 with four skips. The standalone v0.4 wheel executes a simulated refund outside
+  the source checkout. See [release checks](assets/release-checks-v0.4.json).
 
-The old holdout remains unchanged and is no longer unseen. The new comparison
-changes several pipeline components together, so it cannot isolate a prompt change
-or demonstrate a training benefit. Replace these pending items only with observed
-results and links to the retained evidence.
+Both holdouts remain unchanged and have now been observed. Further tuning needs
+development data and a new final test set. The matched comparison changes several
+pipeline components together, so it cannot isolate a prompt change or demonstrate
+a training benefit. v0.4 still drops from 9 correct first answers to 7 accepted
+finals. Its 36 generations include 16 repairs, compared with 27 generations and
+seven repairs for v0.3. The small assistant-authored/reviewed set has no independent
+human annotation and does not establish production accuracy or execution safety.
+Current browser and package evidence is summarized in the
+[release checks](assets/release-checks-v0.4.json).
 
 ## What this portfolio demonstrates
 

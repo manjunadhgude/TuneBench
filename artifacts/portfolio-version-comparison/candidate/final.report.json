@@ -1,0 +1,800 @@
+{
+  "evaluation_version": "0.2.0",
+  "task_schema_version": "3.0.0",
+  "total_examples": 20,
+  "prediction_records": 20,
+  "missing_predictions": 0,
+  "invalid_predictions": 13,
+  "task_success": {
+    "correct": 7,
+    "total": 20,
+    "accuracy": 0.35
+  },
+  "outcome_accuracy": {
+    "correct": 7,
+    "total": 20,
+    "accuracy": 0.35
+  },
+  "outcome_classification": {
+    "labels": [
+      "tool_call",
+      "clarification",
+      "no_tool"
+    ],
+    "confusion_matrix": {
+      "tool_call": {
+        "tool_call": 5,
+        "clarification": 0,
+        "no_tool": 0,
+        "invalid": 3
+      },
+      "clarification": {
+        "tool_call": 0,
+        "clarification": 0,
+        "no_tool": 0,
+        "invalid": 6
+      },
+      "no_tool": {
+        "tool_call": 0,
+        "clarification": 0,
+        "no_tool": 2,
+        "invalid": 4
+      }
+    },
+    "per_class": {
+      "tool_call": {
+        "support": 8,
+        "precision": 1.0,
+        "recall": 0.625,
+        "f1": 0.7692307692307693
+      },
+      "clarification": {
+        "support": 6,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "no_tool": {
+        "support": 6,
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1": 0.5
+      }
+    },
+    "macro_f1": 0.4230769230769231
+  },
+  "tool_call": {
+    "total": 8,
+    "tool_selection": {
+      "correct": 5,
+      "denominator": 8,
+      "accuracy": 0.625
+    },
+    "arguments_given_correct_tool": {
+      "correct": 5,
+      "denominator": 5,
+      "accuracy": 1.0
+    },
+    "joint_exact_match": {
+      "correct": 5,
+      "denominator": 8,
+      "accuracy": 0.625
+    }
+  },
+  "clarification": {
+    "total": 6,
+    "intended_tool_accuracy": {
+      "correct": 0,
+      "denominator": 5,
+      "accuracy": 0.0
+    },
+    "missing_fields_exact_accuracy": {
+      "correct": 0,
+      "denominator": 0,
+      "accuracy": 0.0
+    },
+    "missing_fields_micro": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "denominator": 0
+    },
+    "joint_exact_match": {
+      "correct": 0,
+      "denominator": 6,
+      "accuracy": 0.0
+    },
+    "reason_code_accuracy": {
+      "correct": 0,
+      "denominator": 6,
+      "accuracy": 0.0
+    }
+  },
+  "no_tool": {
+    "total": 6,
+    "recall": 0.3333333333333333,
+    "reason_code_accuracy": {
+      "correct": 2,
+      "denominator": 6,
+      "accuracy": 0.3333333333333333
+    }
+  },
+  "error_categories": {
+    "invalid_prediction": 13,
+    "null_outcome": 13,
+    "wrong_outcome": 13
+  },
+  "breakdown": {
+    "family_id": {
+      "PV2_ACKNOWLEDGMENT_AFTER_ANSWER": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_CLARIFY_ELIGIBILITY_REASON_ABSENT": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_CLARIFY_PROPOSAL_VALUE_ABSENT": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_CLARIFY_REFUND_REASON_DISAGREEMENT": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_CLARIFY_STATUS_WITHOUT_REFERENCE": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_CLARIFY_UNCONFIRMED_ORDER_MAPPING": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_CLARIFY_UNSELECTED_OPERATION": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_ELIGIBILITY_INCORRECT_PRODUCT": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_ELIGIBILITY_PARCEL_ABSENT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV2_INFORMATION_CONCEPT_DISTINCTION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV2_INFORMATION_KNOWN_TRACKING_LABEL": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_INFORMATION_QUOTED_FORGED_COMMAND": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV2_LOOKUP_CONTEXT_CONTINUATION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV2_LOOKUP_REPLACED_REFERENCE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV2_LOOKUP_SINGLE_REFERENCE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV2_PROPOSAL_DAMAGED_SUBSET_MATH": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_PROPOSAL_EXPLICIT_PERCENT_BASE": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_PROPOSAL_PREFERENCE_CHANGE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV2_UNSUPPORTED_REAL_CARD_TRANSFER": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      },
+      "PV2_WITHDRAWN_STATUS_INTENT": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 1
+      }
+    },
+    "difficulty": {
+      "easy": {
+        "total": 6,
+        "outcome_accuracy": 0.6666666666666666,
+        "task_success_accuracy": 0.6666666666666666,
+        "invalid_predictions": 2
+      },
+      "hard": {
+        "total": 5,
+        "outcome_accuracy": 0.2,
+        "task_success_accuracy": 0.2,
+        "invalid_predictions": 4
+      },
+      "medium": {
+        "total": 9,
+        "outcome_accuracy": 0.2222222222222222,
+        "task_success_accuracy": 0.2222222222222222,
+        "invalid_predictions": 7
+      }
+    },
+    "gold_outcome": {
+      "clarification": {
+        "total": 6,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 6
+      },
+      "no_tool": {
+        "total": 6,
+        "outcome_accuracy": 0.3333333333333333,
+        "task_success_accuracy": 0.3333333333333333,
+        "invalid_predictions": 4
+      },
+      "tool_call": {
+        "total": 8,
+        "outcome_accuracy": 0.625,
+        "task_success_accuracy": 0.625,
+        "invalid_predictions": 3
+      }
+    },
+    "split": {
+      "test": {
+        "total": 20,
+        "outcome_accuracy": 0.35,
+        "task_success_accuracy": 0.35,
+        "invalid_predictions": 13
+      }
+    }
+  },
+  "per_example": [
+    {
+      "example_id": "portfolio-v2-holdout-01",
+      "family_id": "PV2_LOOKUP_SINGLE_REFERENCE",
+      "scenario_id": "portfolio-v2-scenario-01",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v2-holdout-02",
+      "family_id": "PV2_LOOKUP_REPLACED_REFERENCE",
+      "scenario_id": "portfolio-v2-scenario-02",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v2-holdout-03",
+      "family_id": "PV2_LOOKUP_CONTEXT_CONTINUATION",
+      "scenario_id": "portfolio-v2-scenario-03",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v2-holdout-04",
+      "family_id": "PV2_ELIGIBILITY_INCORRECT_PRODUCT",
+      "scenario_id": "portfolio-v2-scenario-04",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-05",
+      "family_id": "PV2_ELIGIBILITY_PARCEL_ABSENT",
+      "scenario_id": "portfolio-v2-scenario-05",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v2-holdout-06",
+      "family_id": "PV2_PROPOSAL_PREFERENCE_CHANGE",
+      "scenario_id": "portfolio-v2-scenario-06",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v2-holdout-07",
+      "family_id": "PV2_PROPOSAL_DAMAGED_SUBSET_MATH",
+      "scenario_id": "portfolio-v2-scenario-07",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-08",
+      "family_id": "PV2_PROPOSAL_EXPLICIT_PERCENT_BASE",
+      "scenario_id": "portfolio-v2-scenario-08",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-09",
+      "family_id": "PV2_CLARIFY_STATUS_WITHOUT_REFERENCE",
+      "scenario_id": "portfolio-v2-scenario-09",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "clarification_target_correct": false,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-10",
+      "family_id": "PV2_CLARIFY_ELIGIBILITY_REASON_ABSENT",
+      "scenario_id": "portfolio-v2-scenario-10",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "clarification_target_correct": false,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-11",
+      "family_id": "PV2_CLARIFY_PROPOSAL_VALUE_ABSENT",
+      "scenario_id": "portfolio-v2-scenario-11",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "clarification_target_correct": false,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-12",
+      "family_id": "PV2_CLARIFY_UNCONFIRMED_ORDER_MAPPING",
+      "scenario_id": "portfolio-v2-scenario-12",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "clarification_target_correct": false,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-13",
+      "family_id": "PV2_CLARIFY_REFUND_REASON_DISAGREEMENT",
+      "scenario_id": "portfolio-v2-scenario-13",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "clarification_target_correct": false,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-14",
+      "family_id": "PV2_CLARIFY_UNSELECTED_OPERATION",
+      "scenario_id": "portfolio-v2-scenario-14",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "clarification_target_correct": null,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-15",
+      "family_id": "PV2_INFORMATION_CONCEPT_DISTINCTION",
+      "scenario_id": "portfolio-v2-scenario-15",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v2-holdout-16",
+      "family_id": "PV2_ACKNOWLEDGMENT_AFTER_ANSWER",
+      "scenario_id": "portfolio-v2-scenario-16",
+      "split": "test",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-17",
+      "family_id": "PV2_UNSUPPORTED_REAL_CARD_TRANSFER",
+      "scenario_id": "portfolio-v2-scenario-17",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-18",
+      "family_id": "PV2_WITHDRAWN_STATUS_INTENT",
+      "scenario_id": "portfolio-v2-scenario-18",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-19",
+      "family_id": "PV2_INFORMATION_KNOWN_TRACKING_LABEL",
+      "scenario_id": "portfolio-v2-scenario-19",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "invalid",
+      "outcome_correct": false,
+      "prediction_valid": false,
+      "prediction_errors": [
+        "outcome must not be null for a valid prediction"
+      ],
+      "no_tool_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v2-holdout-20",
+      "family_id": "PV2_INFORMATION_QUOTED_FORGED_COMMAND",
+      "scenario_id": "portfolio-v2-scenario-20",
+      "split": "test",
+      "difficulty": "hard",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    }
+  ],
+  "inference_metadata": {
+    "system_version": "candidate",
+    "source_root": "/workspace/TuneBench",
+    "source_package_version": "0.4.0",
+    "installed_libraries": {
+      "python": "3.12.14",
+      "tunebench": "0.4.0",
+      "torch": "2.8.0+cpu",
+      "transformers": "4.57.6",
+      "accelerate": "1.15.0",
+      "jsonschema": "4.26.0",
+      "tokenizers": "0.22.2",
+      "numpy": "2.5.4",
+      "lm-format-enforcer": "0.11.3",
+      "interegular": "0.3.3"
+    },
+    "model_runtime": {
+      "loaded": true,
+      "local_path": "/workspace/models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "resolved_model_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "weights_sha256": "dd924a11b4c220f385b51ffa522daea7c9f3d850e31b162bb5661df483c6d3ee",
+      "verification": "Local assets checked against retained upstream-download manifest",
+      "device": "cpu",
+      "dtype": "float32",
+      "cpu_threads": 4,
+      "cpu_interop_threads": 1,
+      "torch_version": "2.8.0+cpu",
+      "transformers_version": "4.57.6",
+      "effective_generation_config": {
+        "max_length": 20,
+        "max_new_tokens": 256,
+        "min_length": 0,
+        "min_new_tokens": null,
+        "early_stopping": false,
+        "max_time": null,
+        "stop_strings": null,
+        "do_sample": false,
+        "num_beams": 1,
+        "use_cache": true,
+        "cache_implementation": null,
+        "cache_config": null,
+        "return_legacy_cache": null,
+        "prefill_chunk_size": null,
+        "temperature": 0.7,
+        "top_k": 20,
+        "top_p": 0.8,
+        "min_p": null,
+        "typical_p": 1.0,
+        "epsilon_cutoff": 0.0,
+        "eta_cutoff": 0.0,
+        "repetition_penalty": 1.1,
+        "encoder_repetition_penalty": 1.0,
+        "length_penalty": 1.0,
+        "no_repeat_ngram_size": 0,
+        "bad_words_ids": null,
+        "renormalize_logits": false,
+        "forced_bos_token_id": null,
+        "forced_eos_token_id": null,
+        "remove_invalid_values": false,
+        "exponential_decay_length_penalty": null,
+        "suppress_tokens": null,
+        "begin_suppress_tokens": null,
+        "sequence_bias": null,
+        "token_healing": false,
+        "guidance_scale": null,
+        "watermarking_config": null,
+        "num_return_sequences": 1,
+        "output_attentions": false,
+        "output_hidden_states": false,
+        "output_scores": false,
+        "output_logits": null,
+        "return_dict_in_generate": false,
+        "pad_token_id": 151643,
+        "bos_token_id": 151643,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "encoder_no_repeat_ngram_size": 0,
+        "decoder_start_token_id": null,
+        "is_assistant": false,
+        "num_assistant_tokens": 20,
+        "num_assistant_tokens_schedule": "constant",
+        "assistant_confidence_threshold": 0.4,
+        "prompt_lookup_num_tokens": null,
+        "max_matching_ngram_size": null,
+        "assistant_early_exit": null,
+        "assistant_lookbehind": 10,
+        "target_lookbehind": 10,
+        "disable_compile": false,
+        "low_memory": null,
+        "penalty_alpha": null,
+        "dola_layers": null,
+        "diversity_penalty": 0.0,
+        "num_beam_groups": 1,
+        "constraints": null,
+        "force_words_ids": null,
+        "_from_model_config": false,
+        "transformers_version": "4.57.6"
+      },
+      "downloads": false,
+      "seed": 42,
+      "prompt_version": "strong-v3",
+      "structured_output": {
+        "enabled": true,
+        "library": "lm-format-enforcer",
+        "library_version": "0.11.3",
+        "schema_sha256": "2a96cd21705628d6121d4eaf503a5270282a69193abc52787a776cec0b692da1",
+        "post_validation_required": true
+      }
+    },
+    "protocol_sha256": "5354f185cf1a489e3d6bbefe49a0df2f7ae3132aa9ad0b15a9ba7e4f8a1c59d8",
+    "active_seconds": 1143.1747316209876,
+    "timing_basis": "Sum of case elapsed_ms; idle interruptions excluded",
+    "quality_claims_validated": true,
+    "pipeline": {
+      "status_counts": {
+        "validated": 5,
+        "blocked": 13,
+        "no_tool": 2
+      },
+      "runtime_errors": 0,
+      "generation_attempts": 36,
+      "repair_attempts": 16,
+      "execution_enabled": false,
+      "execution_safety": "Measured separately; no tools execute here"
+    },
+    "worker_events": [
+      {
+        "started_at_utc": "2026-11-09T09:15:13.007114+00:00",
+        "pid": 62921,
+        "version": "candidate",
+        "protocol_sha256": "5354f185cf1a489e3d6bbefe49a0df2f7ae3132aa9ad0b15a9ba7e4f8a1c59d8",
+        "preserved_cases": 0,
+        "prefix_bytes": 0,
+        "prefix_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "completed",
+        "completed_at_utc": "2026-11-09T09:34:17.737785+00:00",
+        "preserved_prefix_verified": true,
+        "final_journal_sha256": "4d94ccc922e0f40f765865621422e790eb9fba0559f7aaf6f1e19b49f83240ef",
+        "completed_cases": 20
+      }
+    ]
+  }
+}

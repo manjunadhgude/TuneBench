@@ -82,36 +82,48 @@ A repaired application result is separate from raw first-attempt model accuracy.
 
 ## Measured results
 
-The original v0.3 portfolio dataset contains **60 individually authored fictional cases: 40 for
-development and 20 held out**. The data, prompt, model, code and repair policy are
-frozen before the held-out run. All 20 cases remain in each report's denominator,
-including blocked and invalid decisions. This is assistant-authored/reviewed data;
-independent human annotation and broader real-world sampling remain outstanding.
+Both versions answered the **same 20 new, frozen fictional questions**, using
+unchanged Qwen2.5-1.5B-Instruct weights on CPU. The prompt, JSON constraints,
+grounding and repair feedback changed together. This measures complete systems;
+it does not isolate a prompt change or show a fine-tuning benefit.
 
-| Historical v0.3 held-out decision evaluation | Strictly correct / 20 |
-| --- | ---: |
-| Deterministic rules baseline — not an LLM | 6/20 |
-| Qwen raw first attempt | 7/20 |
-| Qwen accepted final decision, with validation and bounded repair | 3/20 |
+| Decision evaluation | v0.3 | v0.4 |
+| --- | ---: | ---: |
+| Strictly correct original first answer | 8/20 | 9/20 |
+| Schema-valid original first answer | 13/20 | 19/20 |
+| Strictly correct accepted final decision | 2/20 | 7/20 |
 
-The model made 25 generations including five repair attempts; nine final decisions were blocked.
-The guard rejected four correct contextual/derived answers, so final success fell rather
-than improved. It also accepted one incorrect decision on ambiguous references. This is a working evaluation prototype with limited model quality, not a production
-customer-support assistant. The resumed evaluation preserved six completed cases and ran the
-remaining fourteen once; active case runtime was 804.4 seconds, excluding the idle pause.
-See the [complete results and failure analysis](artifacts/portfolio-evaluation/README.md).
-The held-out runner disables tool execution to measure canonical decisions separately
-from demo-store policy. Its score is not a real-transaction success rate or evidence
-that the execution guard blocks every unsafe call. See the
-[evaluation protocol](docs/portfolio-evaluation-protocol.md) and
-[data review](docs/portfolio-data-review.md).
+All 20 questions remain in every denominator, including invalid and blocked
+answers. Final decisions include validation and at most one repair; they are
+separate from original model accuracy. The final comparison has seven gains and
+two regressions. The revised guard accepted no incorrect decisions on these 20
+cases, but rejected correct answers too: five correct first answers were lost,
+and three errors were repaired. Final success still falls below the revised
+model's own raw 9/20 result.
 
-Earlier experiments use different data and remain separate: the first real-model
-smoke run scored **7/20** strict successes. A paired 12-case prompt-development run
-changed **2/12 to 5/12**, with four improvements and one regression; its uncertainty
-interval includes zero. See the [smoke evidence](artifacts/baseline-smoke/README.md)
+v0.4 used 36 generations, including 16 repairs, versus 27 generations and seven
+repairs for v0.3. Active case elapsed time was 1,143.2 versus 877.1 seconds on the
+tested CPU. Both runs had zero runtime errors. These are small assistant-authored,
+assistant-reviewed data, without independent human annotation. Accuracy remains
+limited; this is a portfolio prototype, not a production support assistant.
+
+See the [matched results and raw evidence](artifacts/portfolio-version-comparison/README.md),
+[failure analysis](artifacts/portfolio-version-comparison/error-analysis.md),
+[computational audit](artifacts/portfolio-version-comparison/independent-audit.json)
+and [frozen protocol](docs/version-comparison-protocol.md). Scoring disables tool
+execution, so these scores do not measure real transactions or establish that the
+execution guard blocks every unsafe request. Further tuning requires development
+data and a new final test set.
+
+Earlier results use different questions and remain separate. The original v0.3
+portfolio holdout scored 7/20 raw and 3/20 accepted final decisions; its conservative
+guard rejected four correct contextual/derived answers. See the
+[historical results](artifacts/portfolio-evaluation/README.md) and
+[data review](docs/portfolio-data-review.md). The initial real-model smoke scored
+7/20; a paired 12-case development prompt experiment changed 2/12 to 5/12, with
+four gains and one regression. See the [smoke evidence](artifacts/baseline-smoke/README.md)
 and [paired prompt evidence](artifacts/prompt-development-v2/README.md).
-These small results do not establish production accuracy or a training benefit.
+Different datasets cannot support a direct before/after accuracy claim.
 
 ## Optional: run the actual model
 
@@ -149,8 +161,10 @@ After setup, run the same application logic without the browser:
 bash scripts/check.sh
 ```
 
-The historical v0.3 checkpoint passes **274 tests**, including contracts,
-metrics, grounding, mock tools, CLI and Streamlit behavior. CI installs the app
+The v0.4 full local suite passes **401 tests**, including contracts,
+metrics, grounding, mock tools, CLI and Streamlit behavior. A fresh app-only
+installation passes 398 tests with three optional model checks skipped; core-only
+passes 392 with four skips. CI installs the app
 requirements and runs the CPU checks without model downloads or a GPU. Controlled
 gold-derived fixtures test the evaluator; their perfect score is not model accuracy.
 
@@ -161,6 +175,7 @@ gold-derived fixtures test the evaluator; their perfect score is not model accur
 | `app.py` | Streamlit Playground, Evaluation and Project tabs |
 | `src/tunebench/` | Assistant, guard, mock tools, inference, contracts and scoring |
 | `datasets/portfolio-v1/` | Frozen 40-development / 20-holdout case files and hashes |
+| `datasets/portfolio-v2/` | Frozen 20-case matched system comparison, now evaluated |
 | `tests/` | Offline unit, integration and UI checks |
 | `artifacts/` | Retained inputs, raw outputs, protocols, metrics and error analyses |
 | `docs/` | Architecture, walkthrough, interview preparation and research notes |

@@ -1,5 +1,10 @@
 # Portfolio evaluation protocol
 
+This page records the **historical v0.3 protocol at commit `a6e143a`**. Its
+`strong-v2` prompt and schema-only repair policy describe the retained v0.3
+results. The current runner uses a revised protocol; see the
+[matched v0.3/v0.4 comparison](version-comparison-protocol.md) for current testing.
+
 The portfolio evaluates one narrow GenAI task: select a tool call, ask for
 clarification, or decline to call a tool. It separately demonstrates strict
 validation, conservative grounding, one bounded repair, and simulated execution.
@@ -79,6 +84,11 @@ without a repair; the frozen policy does not silently loosen after a rejection.
 
 After the implementation and dataset are frozen, run the baselines into fresh,
 separate directories:
+
+For historical reproduction, use an isolated checkout or archive of `a6e143a`.
+The commands below describe the original run; choose new output directories
+instead of overwriting the retained evidence. Running the current source does
+not reproduce the v0.3 system.
 
 ```bash
 .venv/bin/python scripts/evaluate_portfolio.py \

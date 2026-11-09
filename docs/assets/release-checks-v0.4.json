@@ -1,0 +1,80 @@
+{
+  "version": "0.4.0",
+  "recorded_at_utc": "2026-11-09T09:38:46.603532+00:00",
+  "frozen_source_commit": "b7758905e3b9c268432883bfb02cd410d9c7fc29",
+  "release_complete": true,
+  "checks": {
+    "full_suite": {
+      "command": "bash scripts/check.sh",
+      "tests_passed": 401,
+      "result": "pass",
+      "includes": [
+        "pytest",
+        "ruff lint and format",
+        "controlled evaluator fixtures",
+        "1250 candidate generation and audit",
+        "completion-only training export",
+        "simulated assistant CLI"
+      ]
+    },
+    "core_only": {
+      "tests_passed": 392,
+      "skipped": 4,
+      "result": "pass",
+      "absent_optional_dependencies": [
+        "streamlit",
+        "torch",
+        "transformers",
+        "lm-format-enforcer"
+      ]
+    },
+    "wheel": {
+      "file": "dist/tunebench-0.4.0-py3-none-any.whl",
+      "result": "pass",
+      "verified": "Installed into isolated core environment; imported from site-packages outside repository; packaged resources and simulated refund proposal succeeded.",
+      "sha256": "93f5669f0f5ccfc9270c6b8bab3907c7ecc519e2953894e43318f891bd92a931",
+      "bytes": 62098
+    },
+    "browser": {
+      "result": "pass",
+      "checks_passed": 11,
+      "live_model_checked": true,
+      "browser_errors": [],
+      "evidence": "docs/assets/browser-checks.json",
+      "live_lookup_elapsed_seconds": 73.86
+    },
+    "matched_comparison": {
+      "result": "pass",
+      "examples_per_version": 20,
+      "tools_execute": false,
+      "audit": "artifacts/portfolio-version-comparison/independent-audit.json",
+      "audit_sha256": "c80d1f9b5978b3a87a1895c870dfd356e2fae7be9a89d8969ebf50df37b807ea",
+      "raw_strict_correct": {
+        "legacy": 8,
+        "candidate": 9
+      },
+      "schema_valid_first_answers": {
+        "legacy": 13,
+        "candidate": 19
+      },
+      "accepted_final_strict_correct": {
+        "legacy": 2,
+        "candidate": 7
+      }
+    },
+    "fresh_app_setup": {
+      "result": "pass",
+      "command": "bash scripts/setup.sh --app; bash scripts/check.sh; bash scripts/start_demo.sh",
+      "source_archive": "b775890",
+      "tests_passed": 398,
+      "skipped": 3,
+      "model_dependencies_installed": false,
+      "launch_health": "HTTP 200 ok on isolated port"
+    }
+  },
+  "limitations": [
+    "CPU portfolio prototype; no real payments or customer integrations.",
+    "Unchanged pretrained weights; no GPU training or trained adapter.",
+    "Small assistant-authored evaluation; no production accuracy claim."
+  ]
+}

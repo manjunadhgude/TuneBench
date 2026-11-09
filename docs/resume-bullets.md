@@ -38,20 +38,24 @@ AI-assisted implementation with …”, followed by a concrete change you made.
 
 ## Optional measured detail
 
-Use a number only with its scope and linked evidence. The current defensible model
-statement is:
+Use a number only with its scope and linked evidence. A measured statement is:
 
-> Compared two prompt versions on the same 12 development cases: strict task
-> success changed from 2/12 to 5/12, with four gains and one regression; retained
-> raw outputs and documented uncertainty and failure cases.
+> Compared two Qwen CPU system versions on the same 20 frozen fictional cases:
+> strict first-answer success changed from 8/20 to 9/20, schema validity from 13/20
+> to 19/20, and accepted final success from 2/20 to 7/20; retained raw responses,
+> regressions and an independent computational score audit.
 
-Evidence: [paired experiment](../artifacts/prompt-development-v2/README.md).
-This is not a claim of statistically established improvement. The earlier
+Evidence: [matched system comparison](../artifacts/portfolio-version-comparison/README.md).
+This changes several pipeline components together with unchanged model weights;
+it is not a prompt-only result or fine-tuning benefit. v0.4 still falls from 9/20
+raw successes to 7/20 accepted finals, and the small assistant-authored set does not
+establish general improvement or production accuracy.
+
+Older evidence remains separate: the [paired prompt experiment](../artifacts/prompt-development-v2/README.md)
+changed 2/12 to 5/12 on development cases, with four gains and one regression. The
 [7/20 smoke result](../artifacts/baseline-smoke/README.md) used different questions.
-Do not describe 20/20 gold-derived evaluator fixtures as model accuracy.
-The fresh v0.3/v0.4 system comparison is pending at this checkpoint. Add its numbers
-only after reviewing the completed paired report; it changes multiple pipeline
-components and cannot be described as a prompt-only or fine-tuning improvement.
+Do not describe 20/20 gold-derived evaluator fixtures as model accuracy or compare
+scores across different datasets as a matched improvement.
 
 For a test count, quote the exact count from the latest completed check run and
 link its evidence. Re-run `bash scripts/check.sh` before submitting the project;

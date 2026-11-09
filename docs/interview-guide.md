@@ -66,24 +66,37 @@ must not be reported as Qwen's model accuracy.
 
 ### What are the measured model results?
 
-The first 20-case smoke experiment achieved 7 strict successes. A later, different
-12-case development set was used for a paired prompt comparison: legacy `strong`
-achieved 2/12 and `strong-v2` achieved 5/12, with four improvements and one regression.
-The revised prompt also produced one fewer parseable JSON response. Explain that
-these are small development checks, not production accuracy estimates.
+The latest comparison ran v0.3 and v0.4 on the same 20 fresh, frozen fictional
+questions with unchanged Qwen weights and matched CPU generation budgets:
 
-Do not compare 7/20 directly with 5/12 as if the same questions were used. Open the
-[saved paired report](../artifacts/prompt-development-v2/paired-run/comparison.json)
-and [error analysis](../artifacts/prompt-development-v2/error-analysis.md).
-The uncertainty interval includes zero, so the result does not establish a general
-improvement.
+| Metric | v0.3 | v0.4 |
+| --- | ---: | ---: |
+| Strictly correct first answer | 8/20 | 9/20 |
+| Schema-valid first answer | 13/20 | 19/20 |
+| Strictly correct accepted final decision | 2/20 | 7/20 |
 
-The historical v0.3 portfolio run scored 7/20 raw first-attempt successes and 3/20
-accepted final successes. Four correct answers were rejected by the guard. Explain
-that this identified a validator problem as well as a model problem. The fresh
-v0.3/v0.4 system comparison is pending at this checkpoint; do not assign a new
-score until the completed report exists. See the
-[v0.3 results](../artifacts/portfolio-evaluation/README.md).
+Explain the distinction: constrained generation improves structure on this set,
+but valid JSON can still make the wrong decision. The final application improves
+against v0.3, yet v0.4 still falls from 9 correct raw answers to 7 accepted finals.
+The guard and repairs can harm correct answers. There are three raw gains and two
+raw regressions; seven final gains and two final regressions. Open the
+[matched report](../artifacts/portfolio-version-comparison/README.md),
+[error analysis](../artifacts/portfolio-version-comparison/error-analysis.md) and
+[independent computational audit](../artifacts/portfolio-version-comparison/independent-audit.json).
+
+v0.4 used 36 generations including 16 repairs, versus 27 including seven repairs
+for v0.3. Active case wall time was 1143.2 versus 877.1 seconds on the tested CPU;
+this is an observation, not a controlled hardware speed comparison. All 20 cases
+remain in each denominator. The data is assistant-authored/reviewed, not independently
+human annotated. Tool execution was disabled for scoring. These results do not
+establish production accuracy, general improvement or a fine-tuning benefit.
+
+Keep older evidence separate. The initial smoke run scored 7/20. A different
+12-case prompt-development comparison changed 2/12 to 5/12, with four gains and one
+regression; its uncertainty interval includes zero. The historical v0.3 portfolio
+holdout scored 7/20 raw and 3/20 final and motivated the guard changes. Its
+[retained results](../artifacts/portfolio-evaluation/README.md) use different cases.
+Do not compare scores across these sets as a matched before/after result.
 
 ### Why not fine-tune immediately?
 

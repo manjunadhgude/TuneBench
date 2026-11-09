@@ -14,11 +14,37 @@ saved replay modes. Three nonmutating mock tools provide fictional order lookup,
 refund eligibility and refund proposals. No real payment or customer system is
 connected, and no GPU or paid API is needed for the fast rules demo.
 
-The fresh matched v0.3/v0.4 20-case model comparison and final v0.4 release checks
-are pending at this documentation checkpoint. No new quality score or current
-browser-verification claim is made here. See the
-[completion checklist](portfolio-completion.md) for the evidence required before
-marking the revised portfolio checkpoint complete.
+The frozen v0.4 source checkpoint is `b775890`. Its full check workflow passes
+**401 tests**, lint, formatting and the CLI/data workflows. A fresh app setup passes
+398 tests with three optional checks skipped; a core-only setup passes 392 with
+four skips. The documented launch and a standalone wheel installed outside the
+source checkout also pass. See the [release checks](assets/release-checks-v0.4.json).
+
+The completed v0.3/v0.4 comparison uses the same 20 fresh, frozen fictional cases:
+
+| Metric | v0.3 | v0.4 |
+| --- | ---: | ---: |
+| Strictly correct first answer | 8/20 | 9/20 |
+| Schema-valid first answer | 13/20 | 19/20 |
+| Strictly correct accepted final decision | 2/20 | 7/20 |
+
+All 20 remain in every denominator. The independent computational audit reparsed
+raw text and recomputed the scores without generation reruns. Raw paired outcomes
+have three gains and two regressions; final outcomes have seven gains and two
+regressions. v0.4 still loses correctness from 9 raw answers to 7 accepted finals.
+Its 36 generations include 16 repairs, versus 27 including seven repairs for v0.3.
+Observed active case wall times were 1143.2 and 877.1 seconds respectively, not a
+controlled hardware latency benchmark. See the
+[matched report](../artifacts/portfolio-version-comparison/README.md) and
+[independent audit](../artifacts/portfolio-version-comparison/independent-audit.json).
+
+This assistant-authored/reviewed small dataset has no independent human annotation,
+and execution was disabled during scoring. It does not establish production
+accuracy, general improvement or real execution safety. The holdout is now seen;
+future tuning requires development data and a new final test set. All 11 current
+browser checks pass, including actual local Qwen execution, replay, mobile layout
+and no browser errors. See the [completion checklist](portfolio-completion.md)
+and [release evidence](assets/release-checks-v0.4.json).
 
 ## Historical portfolio v0.3 evidence
 

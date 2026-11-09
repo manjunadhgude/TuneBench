@@ -140,8 +140,25 @@ The historical v0.3 portfolio holdout scored **7/20** raw first-attempt strict
 successes and **3/20** accepted final successes. Its guard rejected four correct
 contextual or derived answers, which motivated the v0.4 changes. These results
 remain [retained evidence](../artifacts/portfolio-evaluation/README.md); they are
-not measurements of the revised implementation. The fresh v0.3/v0.4 comparison
-has not completed at this checkpoint.
+not measurements of the revised implementation.
+
+On the same fresh 20-case `portfolio-v2` holdout, the independently recomputed
+v0.3/v0.4 comparison measured:
+
+| Metric | v0.3 | v0.4 |
+| --- | ---: | ---: |
+| Strictly correct first answer | 8/20 | 9/20 |
+| Schema-valid first answer | 13/20 | 19/20 |
+| Strictly correct accepted final decision | 2/20 | 7/20 |
+
+The final decision includes guard and repair effects. v0.4 still loses correctness
+from 9 raw first answers to 7 accepted finals: some correct answers are rejected or
+changed by repair. Raw paired outcomes have three gains and two regressions; final
+outcomes have seven gains and two regressions. See the
+[matched report](../artifacts/portfolio-version-comparison/README.md) and
+[independent computational audit](../artifacts/portfolio-version-comparison/independent-audit.json).
+The data is assistant-authored/reviewed, execution is disabled during scoring, and
+this small set does not establish general improvement or real execution safety.
 
 See the [initial experiment](../artifacts/baseline-smoke/README.md),
 [paired prompt experiment](../artifacts/prompt-development-v2/README.md),
@@ -187,5 +204,9 @@ The v0.3 and v0.4 comparison changes the prompt, generation constraints, guard a
 repair trigger together. It is a system-version comparison, not a prompt-only
 ablation or evidence of model training. The same fresh questions and pinned model
 are used for both versions; raw first-attempt and accepted final scores must both
-be reported. That new comparison is pending at this documentation checkpoint.
-Earlier one-attempt research evidence remains unchanged.
+be reported. The completed comparison retains every case and both stages. Its
+observed cost was 27 generations and 877.1 seconds of active case wall time for
+v0.3, versus 36 generations and 1143.2 seconds for v0.4. These are CPU observations,
+not a controlled hardware latency benchmark. Earlier one-attempt research evidence
+remains unchanged. The new holdout has now been observed and must not be reused as
+an unseen test after further tuning.

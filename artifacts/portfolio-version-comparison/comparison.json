@@ -1,0 +1,59 @@
+{
+  "comparison_type": "system_version_comparison_not_prompt_ablation",
+  "examples": 20,
+  "protocol_sha256": "5354f185cf1a489e3d6bbefe49a0df2f7ae3132aa9ad0b15a9ba7e4f8a1c59d8",
+  "results": {
+    "raw-first": {
+      "legacy": {
+        "correct": 8,
+        "total": 20,
+        "accuracy": 0.4
+      },
+      "candidate": {
+        "correct": 9,
+        "total": 20,
+        "accuracy": 0.45
+      },
+      "improvements": [
+        "portfolio-v2-holdout-07",
+        "portfolio-v2-holdout-08",
+        "portfolio-v2-holdout-16"
+      ],
+      "regressions": [
+        "portfolio-v2-holdout-05",
+        "portfolio-v2-holdout-11"
+      ]
+    },
+    "final": {
+      "legacy": {
+        "correct": 2,
+        "total": 20,
+        "accuracy": 0.1
+      },
+      "candidate": {
+        "correct": 7,
+        "total": 20,
+        "accuracy": 0.35
+      },
+      "improvements": [
+        "portfolio-v2-holdout-01",
+        "portfolio-v2-holdout-02",
+        "portfolio-v2-holdout-03",
+        "portfolio-v2-holdout-05",
+        "portfolio-v2-holdout-06",
+        "portfolio-v2-holdout-15",
+        "portfolio-v2-holdout-20"
+      ],
+      "regressions": [
+        "portfolio-v2-holdout-11",
+        "portfolio-v2-holdout-18"
+      ]
+    }
+  },
+  "limitations": [
+    "Prompt, constraints and grounding changed; not a prompt ablation.",
+    "Same pretrained weights; this is not pure model quality.",
+    "Small assistant-authored holdout; no production reliability claim.",
+    "Execution disabled; execution safety checked separately."
+  ]
+}

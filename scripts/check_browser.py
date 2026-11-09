@@ -6,7 +6,9 @@ import shutil
 import tempfile
 from pathlib import Path
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import expect, sync_playwright
+
+from tunebench.dashboard import PRESETS
 
 
 def main():
@@ -40,6 +42,9 @@ def main():
             def preset(name):
                 page.get_by_role("combobox", name="Start with an example").click()
                 page.get_by_role("option", name=name, exact=True).click()
+                expect(page.get_by_role("textbox", name="Your request", exact=True)).to_have_value(
+                    PRESETS[name]
+                )
 
             def run_and_wait(expected):
                 page.get_by_role("button", name="Run request →", exact=True).click()

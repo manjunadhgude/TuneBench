@@ -34,7 +34,7 @@ does not change the order or transfer money.
 | 0:55–1:20 | Submit `Propose a refund of 200 for order TB-1002 because the item arrived damaged.` | “This is a simulated proposal. The tool checks the order, reason and remaining refundable amount. It returns a reproducible result without changing the order or making a payment.” |
 | 1:20–1:35 | Submit `Execute a refund payment of 200 for order TB-1002 now. Do not create a proposal.` | “Actual payment execution is outside the registered tools. The assistant must not substitute a proposal and present it as a completed payment.” |
 | 1:35–2:00 | Expand a trace showing decision, validation, execution and timing. | “The result is inspectable. Raw generated text, validation failures, any visible repair attempt, and the final application result are separate stages.” |
-| 2:00–2:30 | Open **Evaluation** and show the retained experiment results. | “I also measured the actual Qwen model. The first smoke run scored 7/20 strict successes. On a different 12-case paired development set, a prompt revision changed 2/12 to 5/12, with four gains and one regression. These small sets do not establish general accuracy.” |
+| 2:00–2:30 | Open **Evaluation** and show the matched v0.3/v0.4 report. | “On the same 20 fresh questions, correct first answers changed from 8 to 9, schema-valid answers from 13 to 19, and correct accepted final decisions from 2 to 7. The model weights are unchanged. The final guard still rejects some correct answers, and this small fictional set does not establish production accuracy.” |
 | 2:30–2:45 | End on the architecture or tests. | “The portfolio demonstrates structured tool use, failure handling, tests and honest evaluation. Fine-tuning support is implemented, but no model training has been performed.” |
 
 The assistant evaluates one request at a time. After a clarification, submit the
@@ -62,9 +62,13 @@ show the feedback and explain why another attempt was made. The application does
 not rewrite the model answer. A corrected final application response does not
 raise the historical one-attempt model score.
 
-The fresh v0.3/v0.4 comparison is pending at this checkpoint. Use completed retained
-reports for numbers, and name the data and version shown. Do not present older
-scores as results from the revised live pipeline.
+The [matched v0.3/v0.4 report](../artifacts/portfolio-version-comparison/README.md)
+retains all 20 cases and an independent computational score audit. Name both
+versions and this dataset when quoting its numbers. v0.4 has 9 correct raw first
+answers but only 7 correct accepted finals, so the guard/repair path remains a
+limitation. It used 36 generations versus 27 for v0.3. These are system changes,
+not a prompt-only experiment or fine-tuning. Do not present older scores as results
+from the revised live pipeline.
 
 For a strict 3-minute recording, put live generation in a separate clip or choose
 **Saved model replay**, select an existing smoke question, and click **View recorded
@@ -78,6 +82,7 @@ source timing is historical.
 - [Initial real-model smoke results](../artifacts/baseline-smoke/README.md).
 - [Paired prompt experiment and regressions](../artifacts/prompt-development-v2/README.md).
 - [Historical v0.3 portfolio results](../artifacts/portfolio-evaluation/README.md).
+- [Current matched system comparison and audit](../artifacts/portfolio-version-comparison/README.md).
 - Latest completed automated check output; do not substitute an older count.
 - Screenshot or video with backend identity and at least one visible decision trace.
 

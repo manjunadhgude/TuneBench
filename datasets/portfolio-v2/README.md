@@ -41,3 +41,7 @@ holdout and its ledger unread until source freeze. Dataset validation establishe
 contract integrity; it does not claim any model performance or factual quality
 of generated prose answers. Keep earlier smoke/development/portfolio scores as
 separate historical measurements.
+
+The matched run is now complete; see the
+[saved results](../../artifacts/portfolio-version-comparison/README.md).
+This holdout has now been observed and must not be treated as unseen again.
