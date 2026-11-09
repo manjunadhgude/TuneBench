@@ -1,0 +1,81 @@
+{
+  "dataset_version": "1.0.0",
+  "policy": {
+    "version": "demo-refund-policy-v1",
+    "as_of": "2026-11-09",
+    "simulated": true,
+    "currency": "INR",
+    "refund_window_days": 30,
+    "rules": [
+      "All orders, balances, dates and results are fictional. No payment or external service is contacted.",
+      "The fixed as_of date makes this demonstration repeatable; it does not use today's clock.",
+      "damaged_item, wrong_item and changed_mind are eligible only after delivery and within 30 calendar days of delivery, inclusive.",
+      "not_received is eligible only while an order is shipped and the fixed as_of date is strictly later than expected_delivery_date. A delivered order requires a separate dispute workflow that this demo does not implement.",
+      "Any reason is ineligible when remaining_refundable is zero.",
+      "Refund proposals require a positive INR amount with at most two decimal places, no greater than remaining_refundable.",
+      "A proposal is an immutable simulation: it does not reserve money, change balances, or execute a refund. Repeating a proposal produces the same proposal ID."
+    ]
+  },
+  "orders": [
+    {
+      "order_id": "TB-1001",
+      "item": "Wireless headphones",
+      "status": "shipped",
+      "currency": "INR",
+      "order_total": "2499.00",
+      "refunded_amount": "0.00",
+      "remaining_refundable": "2499.00",
+      "ordered_date": "2026-11-03",
+      "expected_delivery_date": "2026-11-12",
+      "delivered_date": null
+    },
+    {
+      "order_id": "TB-1002",
+      "item": "Desk lamp",
+      "status": "delivered",
+      "currency": "INR",
+      "order_total": "1299.00",
+      "refunded_amount": "300.00",
+      "remaining_refundable": "999.00",
+      "ordered_date": "2026-10-28",
+      "expected_delivery_date": "2026-11-02",
+      "delivered_date": "2026-11-01"
+    },
+    {
+      "order_id": "TB-1003",
+      "item": "Travel backpack",
+      "status": "delivered",
+      "currency": "INR",
+      "order_total": "1899.00",
+      "refunded_amount": "0.00",
+      "remaining_refundable": "1899.00",
+      "ordered_date": "2026-09-15",
+      "expected_delivery_date": "2026-09-22",
+      "delivered_date": "2026-09-21"
+    },
+    {
+      "order_id": "TB-1004",
+      "item": "Mechanical keyboard",
+      "status": "shipped",
+      "currency": "INR",
+      "order_total": "3499.00",
+      "refunded_amount": "0.00",
+      "remaining_refundable": "3499.00",
+      "ordered_date": "2026-10-25",
+      "expected_delivery_date": "2026-11-01",
+      "delivered_date": null
+    },
+    {
+      "order_id": "TB-1005",
+      "item": "USB-C charging cable",
+      "status": "delivered",
+      "currency": "INR",
+      "order_total": "499.00",
+      "refunded_amount": "499.00",
+      "remaining_refundable": "0.00",
+      "ordered_date": "2026-10-27",
+      "expected_delivery_date": "2026-11-02",
+      "delivered_date": "2026-11-01"
+    }
+  ]
+}

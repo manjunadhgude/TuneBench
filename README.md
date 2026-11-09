@@ -1,128 +1,172 @@
 # TuneBench
-A reproducible research and engineering framework for evaluating and fine-tuning small language models for reliable tool selection and argument generation.
 
-TuneBench asks whether supervised fine-tuning improves a small instruction model over
-a strong prompting baseline, under matched inference and evaluation conditions.
-It evaluates one decision per request: a tool call, a clarification, or no tool.
-The three e-commerce tools are **mock definitions**; no customer data, orders, or
-payments are accessed or modified.
+**A CPU-friendly GenAI tool-calling workbench with validation, simulated tools, and evaluation.**
 
-## Run locally or in a cloud development environment
+TuneBench turns a simulated customer-support request into a tool call, a clarification,
+or a no-tool decision. The Streamlit app shows the request, structured output,
+validation, execution trace, and result. A separate evaluation framework records
+model failures and compares versions without hiding raw outputs.
 
-Python 3.12 is the tested runtime; Python 3.11+ is supported. Codespaces is not required.
+![TuneBench Playground: backend choice, request and inspectable result](docs/assets/tunebench-playground.png)
+
+[Watch the short demo](docs/assets/tunebench-demo.webm) ·
+[Architecture](docs/architecture.md) · [Interview guide](docs/interview-guide.md)
+
+## Start the app
+
+Use Python 3.12 for the tested, hash-locked app setup. These commands were verified
+on Linux; Windows users can use WSL. Codespaces and a GPU are not required:
 
 ```bash
-git clone https://github.com/manjunadhgude/TuneBench.git
+git clone --branch codex/tunebench-foundation https://github.com/manjunadhgude/TuneBench.git
 cd TuneBench
-bash scripts/setup.sh
-source .venv/bin/activate
-tunebench doctor
+bash scripts/setup.sh --app
+bash scripts/start_demo.sh
+```
+
+Use the existing checkout if you already have the repository. Setup creates `.venv`
+and installs hash-locked application/development dependencies using uv or pip.
+The app starts on port 8501; open it in your development environment's browser.
+**Quick demo works without downloading a model or providing an API key.**
+
+In **Playground**, choose **Quick demo**, enter a request, and click **Run request →**.
+Try these fictional examples:
+
+- `Check the status of order TB-1001.`
+- `Check the status of my order.`
+- `Propose a refund of 200 for order TB-1002 because the item arrived damaged.`
+- `Execute a refund payment of 200 for order TB-1002 now. Do not create a proposal.`
+
+Requests are stateless. After a clarification, submit the complete request with the
+missing information. The **Evaluation** tab presents retained results; **Project**
+explains the design and limitations.
+
+## Three modes, clearly labeled
+
+| Mode | What runs |
+| --- | --- |
+| **Quick demo** | Deterministic Python rules and the guarded execution path. This is not an LLM. |
+| **Live local Qwen** | Actual Qwen2.5-1.5B-Instruct generation from an existing verified local snapshot. |
+| **Saved model replay** | Previously recorded smoke responses. No new generation or tool execution. |
+
+Live mode can fail or be slow. Replay uses its saved questions, not arbitrary new
+input. A fast rules result or recorded response must not be presented as live model
+performance.
+
+## What the assistant executes
+
+| Mock tool | Purpose |
+| --- | --- |
+| `get_order_status` | Read a fictional order's status |
+| `check_refund_eligibility` | Check the versioned mock refund policy |
+| `propose_refund` | Return an immutable simulated proposal |
+
+Five fictional orders use INR balances and a fixed policy date, **9 November 2026**.
+The policy checks a 30-day refund window, nonreceipt conditions, remaining balance
+and monetary precision. No tool changes an order, reserves money, contacts a real
+customer system, or transfers a payment.
+
+The flow is **request → rules/model → strict parse → schema validation → grounding
+checks → clarification, no tool, or mock execution → visible trace**. It checks
+supported actions and request-grounded arguments before execution. Model mode uses
+`strong-v2` and permits at most one visible repair for a parse/schema failure;
+grounding failures are blocked directly. The first output and repair remain visible.
+
+The guard is deliberately conservative: it can reject otherwise correct contextual
+references or derived amounts. These checks do not guarantee semantic correctness.
+A repaired application result is separate from raw first-attempt model accuracy.
+
+## Measured results
+
+The portfolio dataset contains **60 individually authored fictional cases: 40 for
+development and 20 held out**. The data, prompt, model, code and repair policy are
+frozen before the held-out run. All 20 cases remain in each report's denominator,
+including blocked and invalid decisions. This is assistant-authored/reviewed data;
+independent human annotation and broader real-world sampling remain outstanding.
+
+| Held-out decision evaluation | Strictly correct / 20 |
+| --- | ---: |
+| Deterministic rules baseline — not an LLM | 6/20 |
+| Qwen raw first attempt | 7/20 |
+| Qwen accepted final decision, with validation and bounded repair | 3/20 |
+
+The model made 25 generations including five repair attempts; nine final decisions were blocked.
+The guard rejected four correct contextual/derived answers, so final success fell rather
+than improved. It also accepted one incorrect decision on ambiguous references. This is a working evaluation prototype with limited model quality, not a production
+customer-support assistant. The resumed evaluation preserved six completed cases and ran the
+remaining fourteen once; active case runtime was 804.4 seconds, excluding the idle pause.
+See the [complete results and failure analysis](artifacts/portfolio-evaluation/README.md).
+The held-out runner disables tool execution to measure canonical decisions separately
+from demo-store policy. Its score is not a real-transaction success rate or evidence
+that the execution guard blocks every unsafe call. See the
+[evaluation protocol](docs/portfolio-evaluation-protocol.md) and
+[data review](docs/portfolio-data-review.md).
+
+Earlier experiments use different data and remain separate: the first real-model
+smoke run scored **7/20** strict successes. A paired 12-case prompt-development run
+changed **2/12 to 5/12**, with four improvements and one regression; its uncertainty
+interval includes zero. See the [smoke evidence](artifacts/baseline-smoke/README.md)
+and [paired prompt evidence](artifacts/prompt-development-v2/README.md).
+These small results do not establish production accuracy or a training benefit.
+
+## Optional: run the actual model
+
+Quick demo needs none of this. The verified CPU model stack uses PyTorch 2.8.0 CPU,
+Transformers 4.57.6 and Accelerate 1.15.0. With uv installed:
+
+```bash
+uv pip install --python .venv/bin/python --torch-backend cpu \
+  'torch==2.8.0' 'transformers==4.57.6' 'accelerate==1.15.0'
+.venv/bin/python scripts/download_smoke_model.py \
+  --output ../models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306
+```
+
+The downloader verifies pinned upstream file hashes. In **Live local Qwen**, enter
+that directory in **Local model directory**. The app verifies existing assets and
+never downloads weights implicitly. The public model does not require a paid API.
+Allow roughly 3 GB for weights and 10 GB of process memory. Generation can take
+roughly 25–60 seconds per attempt on a CPU, plus initial loading. A repair adds
+another attempt; hardware, request and output length affect timing. Retained runs provide actual measurements.
+
+See [model setup and evidence](artifacts/baseline-smoke/README.md) for reproduction
+and network requirements. No GPU training or trained-adapter evaluation has been
+performed. LoRA/QLoRA runners are optional future experiment support, not a completed
+fine-tuning result.
+
+## CLI and checks
+
+After setup, run the same application logic without the browser:
+
+```bash
+.venv/bin/tunebench orders
+.venv/bin/tunebench assist --message 'Check the status of order TB-1001.'
+.venv/bin/tunebench evaluate --gold GOLD.jsonl --predictions PREDICTIONS.jsonl \
+  --output REPORT.json
 bash scripts/check.sh
 ```
 
-Use the existing checkout when already working in this repository. `setup.sh` installs
-the hash-locked core and development dependencies into `.venv`; model libraries are
-optional. It supports uv or standard Python venv/pip. Package caches are kept under
-the checkout's ignored `.cache/uv` directory because home may be read-only.
-For another machine set `UV_CACHE_DIR` to a writable path if needed.
+The current completed checkpoint passes **274 tests**, including contracts,
+metrics, grounding, mock tools, CLI and Streamlit behavior. CI installs the app
+requirements and runs the CPU checks without model downloads or a GPU. Controlled
+gold-derived fixtures test the evaluator; their perfect score is not model accuracy.
 
-## Exercise the complete CPU pipeline
+## Explore and present the project
 
-```bash
-# Controlled fixtures verify the scorer; this does not run an LLM.
-tunebench demo --output artifacts/runs/demo
-
-# 20 smoke examples, or 1250 synthetic candidates with --full.
-tunebench generate --output data/generated/smoke
-tunebench generate --full --seed 42 --output data/generated/candidates
-tunebench audit --data-dir data/generated/candidates
-
-# Train/validation supervision only: 1000 + 125 records; test is excluded.
-tunebench export-training --data-dir data/generated/candidates \
-  --output data/generated/training
-
-tunebench evaluate --gold artifacts/runs/demo/smoke.jsonl \
-  --predictions artifacts/runs/demo/corrupted-fixture.jsonl \
-  --output artifacts/runs/demo/rescored.json
-tunebench compare --baseline artifacts/runs/demo/corrupted-report.json \
-  --candidate artifacts/runs/demo/oracle-report.json \
-  --output artifacts/runs/demo/comparison.json
-```
-
-Generation, inference, and training/export commands refuse to replace existing outputs.
-Choose a new directory for each experiment. The demo scores 20 gold-derived fixture
-predictions correctly and 18/20 after one null and one missing prediction. Those
-numbers demonstrate evaluator behavior and **are not measured model performance**.
-
-## Real models and fine-tuning
-
-The candidate model is `Qwen/Qwen2.5-1.5B-Instruct`. Model downloads and inference are
-explicit operations, not installation side effects:
-
-```bash
-uv pip install --python .venv/bin/python -e '.[model]'
-tunebench infer --tasks data/generated/smoke/smoke.jsonl \
-  --prompt-style strong --device cpu --output artifacts/runs/baseline-b.jsonl
-tunebench evaluate --gold data/generated/smoke/smoke.jsonl \
-  --predictions artifacts/runs/baseline-b.jsonl --output artifacts/runs/baseline-b-report.json
-
-# On a separate CUDA GPU machine after data review and baseline measurements:
-uv pip install --python .venv/bin/python -e '.[training]'
-tunebench train --data-dir data/generated/candidates --output artifacts/runs/lora
-```
-
-Use `[qlora]` and `train --quantize` for optional four-bit QLoRA. Baselines A (`minimal`)
-and B (`strong`) use the same greedy decoding, output validation, and zero-retry policy.
-Use `infer --adapter artifacts/runs/lora/adapter --prompt-style strong` for the matched
-fine-tuned comparison. Train/validation preparation and token-masking tests run offline.
-CPU model loading and the first 20-example smoke run are now verified. GPU fine-tuning
-remains unrun; no GPU is exposed here.
-See the [first real-model results](artifacts/baseline-smoke/README.md) for raw outputs,
-the measured score, and the tested CPU installation/download commands. Model downloads
-use `huggingface.co` and `us.aws.cdn.hf.co`; no credentials are required for this public model.
-
-An explicit `--prompt-style strong-v2` development candidate adds clear reason-code
-definitions and concrete JSON examples. On 12 fresh paired development questions,
-full success changed from 2/12 with legacy `strong` to 5/12 with `strong-v2`, with
-four improvements and one regression. This small result does not establish general
-quality; JSON parsing regressed on one case. See the
-[paired development evidence](artifacts/prompt-development-v2/README.md).
-Legacy `minimal`/`strong` prompts and defaults remain unchanged for reproducibility.
-
-## Experimental safeguards
-
-- Task schema **3.0.0**, prediction capture schema v2, evaluation protocol **0.2.0**.
-  The report derives its task version from the actual schema.
-- Reports keep per-example errors, missing/invalid predictions, independent outcome
-  credit, tool/argument exact matches, conditional clarification-field metrics,
-  no-tool metrics, strict task success, and family/difficulty breakdowns.
-- Comparison uses paired examples, matching gold hashes and evaluator versions, with
-  family-cluster bootstrap intervals. Inference metadata sidecars are included in reports
-  automatically; mismatched model revision, prompt or decoding needs `--allow-unmatched`
-  for intentional ablations. Reports without run metadata warn that matching is unverified.
-- Synthetic candidates use 30 disjoint families with 1000/125/125 train/validation/test
-  counts, and one distinct scenario per example. They are **unreviewed and unfrozen**.
-  Difficulty reflects template reasoning; the plan's conflicting difficulty quotas are
-  reported as unmet. Limited template diversity prevents scientific claims of generalization.
-- Review gold labels and semantic near-duplicates before finalizing the benchmark.
-  Develop prompts/checkpoints on validation only. Accessing test through `infer` requires
-  `--allow-test`; reserve that flag for the final, frozen experiment.
-- Training applies loss to completion tokens only, rejects truncation and unsafe chat
-  boundaries, and refuses smoke/test partitions or train/validation family leakage.
-
-## Repository layout
-
-| Path | Purpose |
+| Path | What to inspect |
 | --- | --- |
-| `src/tunebench/` | Contracts, generator/audit, evaluator, comparison, CLI, optional model/training runners |
-| `schemas/`, `configs/` | Human-readable contract and benchmark configuration copies |
-| `src/tunebench/resources/` | Packaged copies, tested for synchronization and wheel portability |
-| `tests/` | Offline contract, metric, data-integrity, prompt-isolation, token-masking, and CLI tests |
-| `scripts/` | Repeatable setup and full CPU validation |
-| `docs/` | Dataset design, model workflow, and reconstruction/remaining work |
+| `app.py` | Streamlit Playground, Evaluation and Project tabs |
+| `src/tunebench/` | Assistant, guard, mock tools, inference, contracts and scoring |
+| `datasets/portfolio-v1/` | Frozen 40-development / 20-holdout case files and hashes |
+| `tests/` | Offline unit, integration and UI checks |
+| `artifacts/` | Retained inputs, raw outputs, protocols, metrics and error analyses |
+| `docs/` | Architecture, walkthrough, interview preparation and research notes |
 
-See [implementation status](docs/status.md), [dataset design](docs/dataset.md), and
-[model workflow](docs/model-workflow.md). The implementation was reconstructed from
-the supplied prior-work conversation and project plan; it is not a byte-for-byte
-recovery of uncommitted Codespaces files. Commit and push reviewed changes to preserve
-progress beyond the local development session.
+Use the [2–3 minute walkthrough](docs/demo-script.md),
+[interview guide](docs/interview-guide.md), [resume wording](docs/resume-bullets.md),
+and [completion/evidence checklist](docs/portfolio-completion.md). Describe only
+contributions you understand and can demonstrate, including development assistance.
+
+The original research framework also generates 1,250 synthetic candidate records
+and prepares completion-only training data. Those candidates remain unreviewed and
+unfrozen, separate from the small portfolio dataset. Human data review, a stronger
+baseline, GPU training and a broader evaluation are future research work.

@@ -1,5 +1,20 @@
 # Implementation and research status
 
+## Portfolio v0.3
+
+The interview portfolio prototype now includes a guarded assistant, three working
+nonmutating mock tools, a Streamlit workbench with rules/live/replay modes, a frozen
+60-case dataset, browser-tested flows, a recorded demo and interview documentation.
+The full application suite passes 274 tests; see [completion evidence](portfolio-completion.md).
+
+The held-out model result remains weak: raw Qwen is correct on 7/20; accepted final
+decisions are correct on 3/20 because conservative guards reject correct answers
+and still miss some ambiguities. This is an evaluation workbench and experimental
+prototype, not a production-ready assistant. GPU training remains unperformed.
+See [the complete results](../artifacts/portfolio-evaluation/README.md).
+
+## Earlier foundation and remaining research
+
 This implementation follows the two user-supplied project documents: the TuneBench
 prior-work review conversation (184 messages) and the P4 post-analysis plan.
 Their embedded shell commands were treated as historical source material, not

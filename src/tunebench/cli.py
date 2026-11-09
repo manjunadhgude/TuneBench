@@ -32,7 +32,15 @@ def _evaluate(gold, predictions):
 
 def _doctor():
     packages = {}
-    for package in ("tunebench", "jsonschema", "torch", "transformers", "peft", "accelerate"):
+    for package in (
+        "tunebench",
+        "jsonschema",
+        "streamlit",
+        "torch",
+        "transformers",
+        "peft",
+        "accelerate",
+    ):
         try:
             packages[package] = importlib.metadata.version(package)
         except importlib.metadata.PackageNotFoundError:
@@ -50,6 +58,12 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(prog="tunebench")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("doctor", help="Inspect tools without exposing environment variables")
+    assist = commands.add_parser("assist", help="Run the guarded assistant with simulated tools")
+    assist.add_argument("--message", required=True)
+    assist.add_argument("--backend", choices=["rules", "model"], default="rules")
+    assist.add_argument("--model-path", help="Local model snapshot; no automatic download")
+    assist.add_argument("--max-repairs", type=int, choices=[0, 1], default=1)
+    commands.add_parser("orders", help="Show the simulated demo order fixtures")
     generate = commands.add_parser("generate", help="Generate synthetic candidate data")
     generate.add_argument("--output", required=True)
     generate.add_argument("--seed", type=int, default=42)
@@ -99,12 +113,25 @@ def main(argv=None) -> int:
         print(f"tunebench: {exc}", file=sys.stderr)
         return 2
     print(json.dumps(result, indent=2, allow_nan=False))
-    return 0
+    return 2 if args.command == "assist" and result.get("status") == "error" else 0
 
 
 def _run(args):
     if args.command == "doctor":
         return _doctor()
+    if args.command == "assist":
+        from tunebench.assistant import respond
+
+        return respond(
+            args.message,
+            backend=args.backend,
+            model_path=args.model_path,
+            max_repairs=args.max_repairs,
+        )
+    if args.command == "orders":
+        from tunebench.mock_tools import load_demo_orders
+
+        return {"simulated": True, "orders": load_demo_orders()}
     if args.command == "generate":
         from tunebench.dataset import (
             GENERATOR_VERSION,

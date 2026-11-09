@@ -11,4 +11,5 @@ trap 'rm -rf "$task_output"' EXIT
 "$task_python" -m tunebench generate --full --output "$task_output/data" > "$task_output/generate.json"
 "$task_python" -m tunebench audit --data-dir "$task_output/data" > "$task_output/audit.json"
 "$task_python" -m tunebench export-training --data-dir "$task_output/data" --output "$task_output/training"
-echo "PASS: tests, lint, format, controlled scoring, 1250-candidate audit, training export."
+"$task_python" -m tunebench assist --message "Check the status of order TB-1001." > "$task_output/assistant.json"
+echo "PASS: tests, lint, format, controlled scoring, data audit, training export, simulated assistant."

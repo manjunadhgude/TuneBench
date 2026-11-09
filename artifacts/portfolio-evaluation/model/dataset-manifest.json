@@ -1,0 +1,85 @@
+{
+  "dataset_id": "tunebench-portfolio-v1",
+  "dataset_version": "1.0.0",
+  "task_schema_version": "3.0.0",
+  "status": "frozen_before_portfolio_inference",
+  "author": "Codex assistant",
+  "review": "Assistant semantic review of all 60 cases; not independent human review",
+  "source": "Individually authored fictional practice scenarios, not sampled from the 1,250-example candidate generator",
+  "holdout_policy": "Do not tune prompts or change labels using holdout results; record any later change as a new version.",
+  "family_isolation": "Disjoint descriptive family IDs and prompt/scenario content; broad tool concepts and some boundary patterns recur across splits.",
+  "limitations": [
+    "Small curated fictional dataset; not representative production traffic.",
+    "Same assistant authored and semantically reviewed scenarios; human review remains outstanding.",
+    "Known project smoke failure categories informed coverage; no portfolio predictions were inspected.",
+    "Family-disjoint labels do not establish statistically independent or entirely novel reasoning.",
+    "Benchmark gold uses only canonical tool contracts; demo business policy and live tool execution are separate."
+  ],
+  "files": {
+    "development": {
+      "path": "development.jsonl",
+      "sha256": "4f38c51625766a7fae78f8b8dbb9a9c24e654a31ba3b145600804f97e928759c",
+      "bytes": 70250,
+      "examples": 40,
+      "split": "validation",
+      "outcomes": {
+        "clarification": 13,
+        "no_tool": 13,
+        "tool_call": 14
+      },
+      "difficulty": {
+        "easy": 16,
+        "hard": 3,
+        "medium": 21
+      },
+      "families": {
+        "PV1_D_CONVERSATION_CLOSE": 2,
+        "PV1_D_ELIGIBILITY_CONFLICT": 1,
+        "PV1_D_ELIGIBILITY_EXPLICIT": 4,
+        "PV1_D_ELIGIBILITY_MISSING_FACTS": 3,
+        "PV1_D_INFORMATION_ONLY": 6,
+        "PV1_D_PROPOSAL_AMOUNT_CONFLICT": 1,
+        "PV1_D_PROPOSAL_EXPLICIT": 6,
+        "PV1_D_PROPOSAL_MISSING_FACTS": 4,
+        "PV1_D_STATUS_DIRECT": 2,
+        "PV1_D_STATUS_LITERAL_DATA": 2,
+        "PV1_D_STATUS_UNRESOLVED_REFERENCE": 3,
+        "PV1_D_UNDECIDED_SERVICE": 1,
+        "PV1_D_UNSUPPORTED_OPERATION": 5
+      },
+      "distinct_scenarios": 40
+    },
+    "holdout": {
+      "path": "holdout.jsonl",
+      "sha256": "41bc632a179f769c0b9080f6a54c0952e148cb359cba1885cf263a3dfab80510",
+      "bytes": 36315,
+      "examples": 20,
+      "split": "test",
+      "outcomes": {
+        "clarification": 6,
+        "no_tool": 6,
+        "tool_call": 8
+      },
+      "difficulty": {
+        "hard": 10,
+        "medium": 10
+      },
+      "families": {
+        "PV1_H_CONTEXT_OMISSION": 2,
+        "PV1_H_CONTEXT_SERVICE_CHOICE": 1,
+        "PV1_H_CORRECTED_CALL": 3,
+        "PV1_H_CROSS_TURN_CALL": 2,
+        "PV1_H_CURRENT_TURN_ACK": 1,
+        "PV1_H_DERIVED_PROPOSAL": 2,
+        "PV1_H_LITERAL_REFERENCE_CALL": 1,
+        "PV1_H_NEGATED_SCOPE": 2,
+        "PV1_H_QUOTED_ATTACK": 1,
+        "PV1_H_UNRESOLVED_CALCULATION": 1,
+        "PV1_H_UNRESOLVED_CORRECTIONS": 2,
+        "PV1_H_UNSUPPORTED_BOUNDARY": 1,
+        "PV1_H_WITHDRAWN_REQUEST": 1
+      },
+      "distinct_scenarios": 20
+    }
+  }
+}

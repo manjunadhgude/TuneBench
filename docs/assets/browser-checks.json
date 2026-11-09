@@ -1,0 +1,17 @@
+{
+  "checks_passed": [
+    "Actual simulated order lookup in quick rules mode",
+    "Missing amount clarifies with a full-request follow-up instruction",
+    "Nonmutating INR250 mock refund proposal",
+    "Actual-payment request returns no tool",
+    "Unknown fictional order blocked before execution",
+    "Blank input cannot run",
+    "Recorded replay is labelled and performs no new tool execution",
+    "Evaluation distinguishes historical datasets and backend identities",
+    "Architecture and honest scope visible",
+    "390px viewport has no horizontal overflow",
+    "Actual local Qwen response and its raw attempt are visible"
+  ],
+  "browser_errors": [],
+  "live_model_checked": true
+}

@@ -1,0 +1,28 @@
+{
+  "status": "completed",
+  "backend": "rules",
+  "backend_label": "Deterministic rules baseline (not an LLM)",
+  "started_at_utc": "2026-11-08T22:10:22.945787+00:00",
+  "completed_at_utc": "2026-11-08T22:10:23.032603+00:00",
+  "elapsed_seconds": 0.0868333980006355,
+  "examples": 20,
+  "quality_claims_validated": true,
+  "protocol_sha256": "00849e1925a05bb43b6b2a69969459c96124fd8871fba8368b6ff125a8a31ddf",
+  "tasks_sha256": "41bc632a179f769c0b9080f6a54c0952e148cb359cba1885cf263a3dfab80510",
+  "model_runtime": null,
+  "pipeline": {
+    "status_counts": {
+      "clarification": 12,
+      "no_tool": 4,
+      "validated": 4
+    },
+    "accepted_decisions": 20,
+    "cases_with_repair": 0,
+    "repair_attempts": 0,
+    "generation_attempts": 0,
+    "runtime_error_cases": 0,
+    "tool_execution_enabled": false,
+    "tool_results_returned": 0,
+    "execution_safety_evidence": "Not measured here: decision-only evaluation disables tool execution. See guard and mock-tool integration tests for execution-policy checks."
+  }
+}

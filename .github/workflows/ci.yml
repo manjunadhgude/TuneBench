@@ -9,6 +9,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install the locked development environment
-        run: bash scripts/setup.sh
+        run: bash scripts/setup.sh --app
       - name: Validate without model downloads or GPU
         run: bash scripts/check.sh

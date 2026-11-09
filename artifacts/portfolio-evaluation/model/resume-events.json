@@ -1,0 +1,38 @@
+[
+  {
+    "recorded_at_utc": "2026-11-09T02:38:52.161680+00:00",
+    "pid": 31604,
+    "parent_pid": 1,
+    "previous_worker_pid": null,
+    "resume_script": "scripts/resume_portfolio_evaluation.py",
+    "resume_script_sha256": "1b1dd7b573ae8d538569d2f45f5770df7373380da9c8493f3cf716d6b360c7aa",
+    "protocol_sha256": "3cd59ee03235186bd66d6a824e567466d777d497250da6b70138003c5f24075e",
+    "preserved_cases": 6,
+    "preserved_journal_bytes": 28694,
+    "preserved_journal_sha256": "1463203a1aef34bd1054852bc5d1af4f43d1a99c668494b86c8f9218721d095e",
+    "remaining_example_ids": [
+      "portfolio-v1-holdout-07",
+      "portfolio-v1-holdout-08",
+      "portfolio-v1-holdout-09",
+      "portfolio-v1-holdout-10",
+      "portfolio-v1-holdout-11",
+      "portfolio-v1-holdout-12",
+      "portfolio-v1-holdout-13",
+      "portfolio-v1-holdout-14",
+      "portfolio-v1-holdout-15",
+      "portfolio-v1-holdout-16",
+      "portfolio-v1-holdout-17",
+      "portfolio-v1-holdout-18",
+      "portfolio-v1-holdout-19",
+      "portfolio-v1-holdout-20"
+    ],
+    "reason": "Previous worker stopped during an environment/session interruption",
+    "status": "completed",
+    "original_worker_start_and_stop_times": "not retained",
+    "completed_at_utc": "2026-11-09T02:49:13.686954+00:00",
+    "resume_active_wall_seconds": 621.524956553003,
+    "completed_cases": 20,
+    "final_journal_sha256": "f7ba5a3c8a263d6f7cd17976e33d47625d88ed1b354e4c098f0fa19e8b99fe15",
+    "preserved_prefix_verified": true
+  }
+]

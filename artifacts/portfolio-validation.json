@@ -1,0 +1,57 @@
+{
+  "project_version": "0.3.0",
+  "scope": "interview portfolio software prototype; not production-ready",
+  "software_checks": {
+    "app_suite_passed": 274,
+    "app_suite_failed": 0,
+    "core_only_passed": 268,
+    "core_only_ui_module_skipped": 1,
+    "lint": "passed",
+    "format": "passed",
+    "setup_with_app": "passed",
+    "check_script": "passed",
+    "wheel_build": "passed",
+    "isolated_wheel_cli_execution": "passed"
+  },
+  "browser": {
+    "checks_passed": [
+      "Actual simulated order lookup in quick rules mode",
+      "Missing amount clarifies with a full-request follow-up instruction",
+      "Nonmutating INR250 mock refund proposal",
+      "Actual-payment request returns no tool",
+      "Unknown fictional order blocked before execution",
+      "Blank input cannot run",
+      "Recorded replay is labelled and performs no new tool execution",
+      "Evaluation distinguishes historical datasets and backend identities",
+      "Architecture and honest scope visible",
+      "390px viewport has no horizontal overflow",
+      "Actual local Qwen response and its raw attempt are visible"
+    ],
+    "browser_errors": [],
+    "live_model_checked": true
+  },
+  "dataset": {
+    "development_examples": 40,
+    "holdout_examples": 20,
+    "holdout_sha256": "41bc632a179f769c0b9080f6a54c0952e148cb359cba1885cf263a3dfab80510",
+    "review": "assistant-authored and assistant-reviewed; no independent human review"
+  },
+  "model_evaluation": {
+    "raw_first_correct": 7,
+    "accepted_final_correct": 3,
+    "examples": 20,
+    "repair_attempts": 5,
+    "runtime_errors": 0,
+    "resumed": true,
+    "preserved_initial_cases": 6,
+    "active_case_seconds": 804.4412896200074,
+    "limitation": "Conservative guards rejected four correct raw answers and accepted one incorrect ambiguous-reference choice."
+  },
+  "training_performed": false,
+  "real_payments_or_external_tool_integrations": false,
+  "environment_published_by_assistant": false,
+  "media": {
+    "video_sha256": "3f52b1fcfecf6c57161f433d475fc4b453b623211fcad80d8be2e87b356f550a",
+    "video_duration_seconds": 17.28
+  }
+}

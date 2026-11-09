@@ -1,0 +1,40 @@
+{
+  "title": "Frozen portfolio decision evaluation",
+  "dataset_label": "tunebench-portfolio-v1: 20 examples",
+  "status": "completed",
+  "quality_claims_validated": true,
+  "limitations": [
+    "Small assistant-authored, assistant-reviewed fictional benchmark; no human review.",
+    "Decision-only evaluation; simulated execution policy is checked separately.",
+    "Raw first output and final guarded product decisions are separate results.",
+    "No fine-tuning; rules baseline results are not LLM accuracy.",
+    "Earlier smoke/development percentages use different data and are not comparable."
+  ],
+  "results": [
+    {
+      "label": "Deterministic rules baseline (not an LLM)",
+      "backend": "rules",
+      "examples": 20,
+      "strict_correct": 6,
+      "outcome_correct": 11,
+      "valid_predictions": 20
+    }
+  ],
+  "elapsed_seconds": 0.0868333980006355,
+  "pipeline": {
+    "status_counts": {
+      "clarification": 12,
+      "no_tool": 4,
+      "validated": 4
+    },
+    "accepted_decisions": 20,
+    "cases_with_repair": 0,
+    "repair_attempts": 0,
+    "generation_attempts": 0,
+    "runtime_error_cases": 0,
+    "tool_execution_enabled": false,
+    "tool_results_returned": 0,
+    "execution_safety_evidence": "Not measured here: decision-only evaluation disables tool execution. See guard and mock-tool integration tests for execution-policy checks."
+  },
+  "protocol_sha256": "00849e1925a05bb43b6b2a69969459c96124fd8871fba8368b6ff125a8a31ddf"
+}

@@ -1,0 +1,41 @@
+{
+  "title": "Portfolio holdout \u2014 raw model and guarded decisions",
+  "dataset_label": "20 frozen stress-oriented holdout questions; separate from all earlier runs",
+  "status": "completed",
+  "results": [
+    {
+      "label": "Deterministic rules baseline (not an LLM)",
+      "backend": "rules",
+      "examples": 20,
+      "strict_correct": 6,
+      "outcome_correct": 11,
+      "valid_predictions": 20
+    },
+    {
+      "label": "Qwen raw first attempt",
+      "backend": "model",
+      "examples": 20,
+      "strict_correct": 7,
+      "outcome_correct": 12,
+      "valid_predictions": 15
+    },
+    {
+      "label": "Local Qwen with validation and bounded repair",
+      "backend": "model",
+      "examples": 20,
+      "strict_correct": 3,
+      "outcome_correct": 7,
+      "valid_predictions": 11
+    }
+  ],
+  "limitations": [
+    "All 20 cases are medium/hard, fictional, assistant-authored and assistant-reviewed; no human annotation.",
+    "Rules are a deterministic baseline, not LLM accuracy.",
+    "Raw Qwen: 7/20. Accepted final decisions: 3/20; conservative grounding rejects some correct answers.",
+    "The policy blocks execution but does not guarantee semantic correctness; no production-readiness claim.",
+    "Decision-only evaluation disables simulated tool execution; execution guards are checked in tests.",
+    "Model evaluation resumed after an interruption: first six cases preserved byte-for-byte, remaining fourteen generated once.",
+    "Reported model time sums active case runtimes and excludes the idle interruption.",
+    "No fine-tuning or model weight changes; previous smoke/development percentages use different questions."
+  ]
+}
