@@ -133,7 +133,7 @@ def test_repair_can_be_disabled_for_single_attempt_evidence():
 @pytest.mark.parametrize(
     ("message", "outcome", "error"),
     [
-        ("Where is order TB-1001?", _call(order_id="TB-1002"), "single literal"),
+        ("Where is order TB-1001?", _call(order_id="TB-1002"), "literal order reference"),
         ("Where is order UNKNOWN-123?", _call(order_id="UNKNOWN-123"), "fictional demo"),
         (
             "Check refund eligibility for damaged order TB-1002.",
@@ -143,12 +143,12 @@ def test_repair_can_be_disabled_for_single_attempt_evidence():
         (
             "Propose a refund for damaged order TB-1002; I have not chosen an amount.",
             _call("propose_refund", order_id="TB-1002", reason="damaged_item", refund_amount=29.99),
-            "explicitly stated",
+            "monetary evidence",
         ),
         (
             "Check refund eligibility for damaged order TB-1002.",
             _call("check_refund_eligibility", order_id="TB-1002", reason="wrong_item"),
-            "unsupported by",
+            "not supported by",
         ),
         (
             "Execute a refund payment for order TB-1002.",
@@ -164,7 +164,43 @@ def test_valid_json_does_not_bypass_grounding_or_action_guards(message, outcome,
     assert result["policy_override"] is True
     assert result["attempts"][0]["schema_valid"] is True
     assert any(error in e for e in result["validation_errors"])
-    assert len(result["attempts"]) == 1  # Grounding blocks do not trigger a hidden repair.
+    # Only request-evidence failures can use the bounded repair; unknown demo IDs
+    # are checked separately after the decision passes validation.
+    assert len(result["attempts"]) == (1 if error == "fictional demo" else 2)
+    assert result["tool_result"] is None
+
+
+def test_grounding_repair_is_visible_and_cannot_rewrite_the_first_model_answer():
+    calls = []
+    wrong = json.dumps(_call(order_id="TB-1002"))
+    corrected = json.dumps(_call(order_id="TB-1001"))
+
+    def generate(messages):
+        calls.append(deepcopy(messages))
+        return wrong if len(calls) == 1 else corrected
+
+    result = assistant.respond("Where is order TB-1001?", generate=generate)
+    assert result["status"] == "executed"
+    assert result["raw_first_attempt_valid"] is True
+    assert [attempt["raw_output"] for attempt in result["attempts"]] == [wrong, corrected]
+    assert result["attempts"][0]["schema_errors"] == []
+    assert result["attempts"][0]["grounding_errors"]
+    assert result["attempts"][1]["grounding_errors"] == []
+    assert result["accepted_outcome"] == json.loads(corrected)
+    assert "Evidence extracted from the request" in calls[1][-1]["content"]
+    assert result["tool_result"]["data"]["order_id"] == "TB-1001"
+
+
+def test_grounding_repair_can_be_disabled_and_does_not_execute_a_wrong_id():
+    result = assistant.respond(
+        "Where is order TB-1001?",
+        generate=_injected(_call(order_id="TB-1002")),
+        max_repairs=0,
+    )
+    assert result["status"] == "blocked"
+    assert len(result["attempts"]) == 1
+    assert result["raw_first_attempt_valid"] is True
+    assert result["accepted_outcome"] is None
     assert result["tool_result"] is None
 
 

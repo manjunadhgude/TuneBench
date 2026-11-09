@@ -22,13 +22,16 @@ from importlib import metadata as package_metadata
 from pathlib import Path
 from typing import Any
 
+from tunebench import __version__
 from tunebench.contracts import load_tool_registry, validate_task
 from tunebench.evaluator import evaluate
+from tunebench.grounding import POLICY_VERSION
 from tunebench.inference import build_messages
 from tunebench.io import parse_json, read_jsonl, write_json, write_jsonl
+from tunebench.structured import generation_schema
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL_VERSION = "portfolio-decision-evaluation-v1"
+PROTOCOL_VERSION = "portfolio-decision-evaluation-v2"
 LABELS = {
     "rules": "Deterministic rules baseline (not an LLM)",
     "model": "Local Qwen with validation and bounded repair",
@@ -184,7 +187,15 @@ def _sources() -> list[Path]:
 
 def _versions() -> dict[str, str | None]:
     versions: dict[str, str | None] = {"python": platform.python_version()}
-    for name in ("tunebench", "jsonschema", "torch", "transformers", "accelerate"):
+    for name in (
+        "tunebench",
+        "jsonschema",
+        "torch",
+        "transformers",
+        "accelerate",
+        "lm-format-enforcer",
+        "interegular",
+    ):
         try:
             versions[name] = package_metadata.version(name)
         except package_metadata.PackageNotFoundError:
@@ -247,7 +258,9 @@ def run_evaluation(
 
     sources = _sources()
     source_hashes = {str(path.relative_to(PROJECT_ROOT)): sha256(path) for path in sources}
-    messages = [build_messages(task, "strong-v2") for task in tasks]
+    # Rules never consume model messages. Retain exactly the model's first-turn
+    # messages when using the live backend, including the current prompt version.
+    messages = [build_messages(task, "strong-v3") for task in tasks] if backend == "model" else []
     outputdir.mkdir(parents=True, exist_ok=True)
     frozen_data = outputdir / "tasks.jsonl"
     frozen_data.write_bytes(data.read_bytes())
@@ -268,10 +281,23 @@ def run_evaluation(
         "tasks_sha256": sha256(frozen_data),
         "dataset_manifest_sha256": sha256(dataset_manifest_path) if dataset_manifest_path else None,
         "source_commit": _git("rev-parse", "HEAD"),
+        "source_package_version": __version__,
         "source_worktree_dirty": bool(_git("status", "--porcelain")),
         "source_files_sha256": source_hashes,
-        "prompt_style": "strong-v2",
+        "prompt_style": "strong-v3" if backend == "model" else "rules-v2",
         "first_attempt_messages_sha256": _json_hash(messages),
+        "structured_output": {
+            "enabled": backend == "model",
+            "library": "lm-format-enforcer" if backend == "model" else None,
+            "schema_sha256": hashlib.sha256(
+                json.dumps(generation_schema(), sort_keys=True).encode()
+            ).hexdigest()
+            if backend == "model"
+            else None,
+            "post_validation_required": True,
+        },
+        "execution_guard_policy": "evidence-grounding-v2",
+        "evidence_policy_version": POLICY_VERSION,
         "libraries": _versions(),
         "model_id": manifest["model_id"] if manifest else None,
         "resolved_model_revision": manifest["revision"] if manifest else None,
@@ -293,11 +319,22 @@ def run_evaluation(
             parse_json((model_path / "generation_config.json").read_text()) if manifest else None
         ),
         "max_repairs": max_repairs,
-        "retry_policy": "Bounded parse/schema repair only; grounding blocks; no case reruns",
+        "retry_policy": (
+            "At most one parse/schema or explicit-evidence repair; no output rewriting "
+            "and no case reruns"
+            if backend == "model"
+            else "No generation or repair: deterministic rules baseline"
+        ),
         "repair_policy": {
-            "max_repairs": max_repairs,
-            "triggers": ["parse_error", "schema_error"],
-            "grounding_failure": "block_without_repair",
+            "max_repairs": max_repairs if backend == "model" else 0,
+            "triggers": ["parse_error", "schema_error", "explicit_evidence_error"]
+            if backend == "model"
+            else [],
+            "feedback": "Validation errors and evidence extracted only from the request",
+            "grounding_failure": "bounded_repair_then_block"
+            if backend == "model" and max_repairs
+            else "block",
+            "output_rewriting": False,
         },
         "execute_tools": False,
         "scoring": "Canonical exact decision, including all invalid/blocked/error cases",

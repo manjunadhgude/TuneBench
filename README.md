@@ -18,7 +18,7 @@ Use Python 3.12 for the tested, hash-locked app setup. These commands were verif
 on Linux; Windows users can use WSL. Codespaces and a GPU are not required:
 
 ```bash
-git clone --branch codex/tunebench-foundation https://github.com/manjunadhgude/TuneBench.git
+git clone https://github.com/manjunadhgude/TuneBench.git
 cd TuneBench
 bash scripts/setup.sh --app
 bash scripts/start_demo.sh
@@ -69,22 +69,26 @@ customer system, or transfers a payment.
 The flow is **request → rules/model → strict parse → schema validation → grounding
 checks → clarification, no tool, or mock execution → visible trace**. It checks
 supported actions and request-grounded arguments before execution. Model mode uses
-`strong-v2` and permits at most one visible repair for a parse/schema failure;
-grounding failures are blocked directly. The first output and repair remain visible.
+`strong-v3` with token-level JSON constraints and permits at most one visible
+repair for a parse/schema or request-evidence failure. A failed repair is blocked.
+The first output, validation feedback and repair remain visible; no model answer
+is silently replaced with the rules baseline.
 
-The guard is deliberately conservative: it can reject otherwise correct contextual
-references or derived amounts. These checks do not guarantee semantic correctness.
+The guard extracts literal references, explicit corrections, reasons and monetary
+evidence. It can derive a requested quantity × unit price or percentage using
+Decimal arithmetic. Its language rules remain limited and may reject correct
+answers or miss mistakes. JSON constraints also require full postvalidation.
 A repaired application result is separate from raw first-attempt model accuracy.
 
 ## Measured results
 
-The portfolio dataset contains **60 individually authored fictional cases: 40 for
+The original v0.3 portfolio dataset contains **60 individually authored fictional cases: 40 for
 development and 20 held out**. The data, prompt, model, code and repair policy are
 frozen before the held-out run. All 20 cases remain in each report's denominator,
 including blocked and invalid decisions. This is assistant-authored/reviewed data;
 independent human annotation and broader real-world sampling remain outstanding.
 
-| Held-out decision evaluation | Strictly correct / 20 |
+| Historical v0.3 held-out decision evaluation | Strictly correct / 20 |
 | --- | ---: |
 | Deterministic rules baseline — not an LLM | 6/20 |
 | Qwen raw first attempt | 7/20 |
@@ -112,11 +116,11 @@ These small results do not establish production accuracy or a training benefit.
 ## Optional: run the actual model
 
 Quick demo needs none of this. The verified CPU model stack uses PyTorch 2.8.0 CPU,
-Transformers 4.57.6 and Accelerate 1.15.0. With uv installed:
+Transformers 4.57.6, Accelerate 1.15.0 and lm-format-enforcer 0.11.3. With uv installed:
 
 ```bash
 uv pip install --python .venv/bin/python --torch-backend cpu \
-  'torch==2.8.0' 'transformers==4.57.6' 'accelerate==1.15.0'
+  'torch==2.8.0' 'transformers==4.57.6' 'accelerate==1.15.0' 'lm-format-enforcer==0.11.3'
 .venv/bin/python scripts/download_smoke_model.py \
   --output ../models/Qwen2.5-1.5B-Instruct/989aa7980e4cf806f80c7fef2b1adb7bc71aa306
 ```
@@ -145,7 +149,7 @@ After setup, run the same application logic without the browser:
 bash scripts/check.sh
 ```
 
-The current completed checkpoint passes **274 tests**, including contracts,
+The historical v0.3 checkpoint passes **274 tests**, including contracts,
 metrics, grounding, mock tools, CLI and Streamlit behavior. CI installs the app
 requirements and runs the CPU checks without model downloads or a GPU. Controlled
 gold-derived fixtures test the evaluator; their perfect score is not model accuracy.

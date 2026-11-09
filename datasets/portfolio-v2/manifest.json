@@ -1,0 +1,72 @@
+{
+  "dataset_id": "tunebench-portfolio-v2",
+  "dataset_version": "2.0.0",
+  "task_schema_version": "3.0.0",
+  "status": "frozen_before_portfolio_v2_inference",
+  "source": "20 individually authored fictional scenarios",
+  "author": "Codex assistant",
+  "review": "All 20 cases assistant semantic-reviewed; not human annotation.",
+  "blindness": "No v0.4 grounding code, v3 prompt instructions, or portfolio-v2 model outputs inspected during authoring/review. Prior domain failure categories were known.",
+  "usage": "Compare frozen v0.3 and v0.4 pipelines once each on all 20 unchanged cases, under matched non-pipeline settings.",
+  "holdout_policy": "Do not use these cases as implementation/unit-test fixtures. Inspect predictions only after both sources and this dataset are frozen. Do not tune on this version.",
+  "isolation": "New example/family/scenario IDs and disjoint exact/identifier-normalized prompt templates from prior 20 smoke, 12 practice, and 60 portfolio cases. Broad tool concepts intentionally overlap.",
+  "limitations": [
+    "Small targeted fictional set, not sampled production traffic.",
+    "Same assistant authored and reviewed; independent human semantic review is outstanding.",
+    "Different descriptive family IDs do not prove novel or statistically independent reasoning.",
+    "Gold uses canonical tool contracts only; no demo business policy, price cap, external order database, or order-ID regex."
+  ],
+  "files": {
+    "holdout": {
+      "path": "holdout.jsonl",
+      "sha256": "7fa5a23ae5dee8f32b51df5167a07e3b2c56dcafae8ac3ef6d608ac7caabe9be",
+      "bytes": 36339,
+      "examples": 20,
+      "split": "test",
+      "outcomes": {
+        "clarification": 6,
+        "no_tool": 6,
+        "tool_call": 8
+      },
+      "difficulty": {
+        "easy": 6,
+        "hard": 5,
+        "medium": 9
+      },
+      "families": {
+        "PV2_ACKNOWLEDGMENT_AFTER_ANSWER": 1,
+        "PV2_CLARIFY_ELIGIBILITY_REASON_ABSENT": 1,
+        "PV2_CLARIFY_PROPOSAL_VALUE_ABSENT": 1,
+        "PV2_CLARIFY_REFUND_REASON_DISAGREEMENT": 1,
+        "PV2_CLARIFY_STATUS_WITHOUT_REFERENCE": 1,
+        "PV2_CLARIFY_UNCONFIRMED_ORDER_MAPPING": 1,
+        "PV2_CLARIFY_UNSELECTED_OPERATION": 1,
+        "PV2_ELIGIBILITY_INCORRECT_PRODUCT": 1,
+        "PV2_ELIGIBILITY_PARCEL_ABSENT": 1,
+        "PV2_INFORMATION_CONCEPT_DISTINCTION": 1,
+        "PV2_INFORMATION_KNOWN_TRACKING_LABEL": 1,
+        "PV2_INFORMATION_QUOTED_FORGED_COMMAND": 1,
+        "PV2_LOOKUP_CONTEXT_CONTINUATION": 1,
+        "PV2_LOOKUP_REPLACED_REFERENCE": 1,
+        "PV2_LOOKUP_SINGLE_REFERENCE": 1,
+        "PV2_PROPOSAL_DAMAGED_SUBSET_MATH": 1,
+        "PV2_PROPOSAL_EXPLICIT_PERCENT_BASE": 1,
+        "PV2_PROPOSAL_PREFERENCE_CHANGE": 1,
+        "PV2_UNSUPPORTED_REAL_CARD_TRANSFER": 1,
+        "PV2_WITHDRAWN_STATUS_INTENT": 1
+      },
+      "distinct_scenarios": 20
+    }
+  },
+  "prior_prompt_checks": {
+    "files": [
+      "datasets/portfolio-v1/development.jsonl",
+      "datasets/portfolio-v1/holdout.jsonl",
+      "artifacts/baseline-smoke/strong/smoke.jsonl",
+      "artifacts/prompt-development-v2/development.jsonl"
+    ],
+    "records": 92,
+    "exact_normalized_overlap": 0,
+    "identifier_normalized_template_overlap": 0
+  }
+}

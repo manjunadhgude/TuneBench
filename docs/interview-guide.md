@@ -44,8 +44,18 @@ score.
 A schema can require an ID to be a string, but cannot establish that the user
 provided that ID. The guard checks supported references and values before tool
 execution. Explain the actual implemented checks and their limitations: a small
-rule set is not a general natural-language proof system. Show a blocked example
-and the guard's stated reason rather than claiming all hallucinations are prevented.
+rule set is not a general natural-language proof system. In v0.4 it can follow
+explicit corrections and derive an amount from supplied factors with `Decimal`.
+Missing factors still require clarification. Show a blocked example and the
+stated reason rather than claiming all hallucinations are prevented.
+
+### What does constrained generation do?
+
+The live v0.4 path uses `strong-v3` plus `lm-format-enforcer` to restrict which
+tokens can follow the current JSON prefix. This helps produce the expected decision
+shape while keeping model weights unchanged. The library does not enforce every
+schema restriction, so full validation still follows generation. Valid structure
+also cannot establish that an order ID, action or amount is correct.
 
 ### Why provide a rules backend if this is an AI project?
 
@@ -67,6 +77,13 @@ Do not compare 7/20 directly with 5/12 as if the same questions were used. Open 
 and [error analysis](../artifacts/prompt-development-v2/error-analysis.md).
 The uncertainty interval includes zero, so the result does not establish a general
 improvement.
+
+The historical v0.3 portfolio run scored 7/20 raw first-attempt successes and 3/20
+accepted final successes. Four correct answers were rejected by the guard. Explain
+that this identified a validator problem as well as a model problem. The fresh
+v0.3/v0.4 system comparison is pending at this checkpoint; do not assign a new
+score until the completed report exists. See the
+[v0.3 results](../artifacts/portfolio-evaluation/README.md).
 
 ### Why not fine-tune immediately?
 
@@ -101,9 +118,13 @@ The 1,250 generated records remain synthetic candidates, not a reviewed final be
 ### Why do retries and output repair matter?
 
 A second generation, JSON repair or rules fallback can change the result and cost.
-The baseline experiments use one attempt, no repair and matched decoding. If a demo
-adds an intervention, retain the raw first output and show both stages. Report raw
-model metrics separately from final application success and any retry latency.
+The early baseline experiments use one attempt, no repair and matched decoding.
+The live v0.4 assistant allows at most one repair after schema or explicit
+request-evidence validation fails. It supplies errors and extracted request facts,
+then asks the model to generate again; it never rewrites the answer into a rules
+result. Both attempts stay in the trace. Report raw first-attempt metrics separately
+from accepted final success, total generations and latency. A final block does not
+make the initial answer correct.
 
 ### How do you compare two versions fairly?
 
@@ -113,6 +134,12 @@ while holding other conditions fixed. Preserve both prompt versions and their ra
 responses. Use paired outcomes to identify improvements and regressions. The report
 comparison checks data and protocol metadata and uses family-cluster resampling;
 small synthetic families still limit the inference you can draw.
+
+The v0.3/v0.4 comparison deliberately changes several components: prompt,
+constraints, evidence checks and repair trigger. Call it a system-version
+comparison. Keep the same fresh cases, model weights, CPU settings, maximum token
+budget and maximum repair count; document the intentional differences. It cannot
+isolate which component caused a gain or show a fine-tuning benefit.
 
 ### Why is live inference slow on a CPU?
 
@@ -143,9 +170,11 @@ Work through these exercises and keep your own notes:
    running it. Explain why a missing prediction stays in the evaluator denominator.
 5. Read one actual failed Qwen response. Identify whether the problem is parsing,
    schema, action selection, an argument, or a reason code.
-6. Make a small change you understand, add a meaningful test, run the checks and
+6. Trace a visible repair: identify the first error, the feedback, the second raw
+   output and the accepted or blocked final decision.
+7. Make a small change you understand, add a meaningful test, run the checks and
    describe that specific contribution in your own words.
-7. Explain how a wheel loads packaged schemas when run outside the source checkout.
+8. Explain how a wheel loads packaged schemas when run outside the source checkout.
 
 Being able to diagnose a limitation and propose a measured next step is more useful
 than repeating a high accuracy claim that the evidence does not support.

@@ -2,8 +2,10 @@
 
 import importlib.util
 import json
+import sys
 from copy import deepcopy
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -188,6 +190,14 @@ def test_protocol_precedes_responder_and_existing_output_is_preserved(tmp_path, 
         assert protocol["tasks_sha256"] == evaluation.sha256(data)
         assert protocol["model_id"] is None
         assert protocol["source_files_sha256"]["scripts/evaluate_portfolio.py"]
+        assert protocol["source_files_sha256"]["src/tunebench/grounding.py"]
+        assert protocol["source_files_sha256"]["src/tunebench/prompts_v3.py"]
+        assert protocol["source_files_sha256"]["src/tunebench/structured.py"]
+        assert "lm-format-enforcer" in protocol["libraries"]
+        assert protocol["prompt_style"] == "rules-v2"
+        assert protocol["structured_output"]["enabled"] is False
+        assert protocol["repair_policy"]["max_repairs"] == 0
+        assert json.loads((output / "first-attempt.messages.json").read_text()) == []
         assert kwargs["execute_tools"] is False
         calls.append(1)
         return response(example["expected_outcome"], backend="rules")
@@ -206,6 +216,62 @@ def test_protocol_precedes_responder_and_existing_output_is_preserved(tmp_path, 
     with pytest.raises(ValueError, match="fresh output directory"):
         evaluation.run_evaluation(data, output, backend="rules", model_path=None, max_repairs=1)
     assert len(calls) == 1
+
+
+def test_model_protocol_freezes_actual_v3_messages_and_bounded_evidence_repair(
+    tmp_path, monkeypatch
+):
+    # Synthetic backend captures exercise metadata without loading any weights.
+    monkeypatch.setitem(
+        sys.modules,
+        "torch",
+        SimpleNamespace(set_num_threads=lambda _: None, set_num_interop_threads=lambda _: None),
+    )
+    monkeypatch.setitem(sys.modules, "transformers", SimpleNamespace(set_seed=lambda _: None))
+    data = tmp_path / "development.jsonl"
+    output = tmp_path / "evaluation"
+    snapshot = tmp_path / "snapshot"
+    snapshot.mkdir()
+    example = task()
+    write_jsonl(data, [example])
+    manifest = {
+        "model_id": "synthetic-test-only",
+        "revision": "a" * 40,
+        "files": {"model.safetensors": {"upstream_hash": "b" * 64}},
+    }
+    write_json(snapshot / "download-manifest.json", manifest)
+    write_json(snapshot / "generation_config.json", {})
+    from tunebench import assistant, live_model
+
+    monkeypatch.setattr(live_model, "verify_local_snapshot", lambda _path: manifest)
+    monkeypatch.setattr(live_model, "model_status", lambda: {"loaded": True})
+
+    def responder(message, **_kwargs):
+        protocol = json.loads((output / "protocol.json").read_text())
+        messages = json.loads((output / "first-attempt.messages.json").read_text())
+        assert messages == [evaluation.build_messages(example, "strong-v3")]
+        assert messages[0][-1]["content"] == message
+        assert protocol["protocol_version"] == "portfolio-decision-evaluation-v2"
+        assert protocol["prompt_style"] == "strong-v3"
+        assert protocol["structured_output"]["enabled"] is True
+        assert protocol["structured_output"]["post_validation_required"] is True
+        schema = evaluation.generation_schema()
+        expected_hash = evaluation.hashlib.sha256(
+            json.dumps(schema, sort_keys=True).encode()
+        ).hexdigest()
+        assert protocol["structured_output"]["schema_sha256"] == expected_hash
+        assert protocol["repair_policy"]["max_repairs"] == 1
+        assert "explicit_evidence_error" in protocol["repair_policy"]["triggers"]
+        assert protocol["repair_policy"]["output_rewriting"] is False
+        assert protocol["execution_guard_policy"] == "evidence-grounding-v2"
+        return response(example["expected_outcome"])
+
+    monkeypatch.setattr(assistant, "respond", responder)
+    result = evaluation.run_evaluation(
+        data, output, backend="model", model_path=snapshot, max_repairs=1
+    )
+    assert result["quality_claims_validated"] is True
+    assert result["results"][0]["strict_correct"] == 1
 
 
 def test_policy_mutation_stops_after_journaling_completed_case(tmp_path, monkeypatch):

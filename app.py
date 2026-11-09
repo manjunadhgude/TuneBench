@@ -244,7 +244,7 @@ with playground:
                 st.caption("Deterministic rules baseline · instant · this mode does not use an LLM")
             else:
                 st.caption(
-                    "Real Qwen model · CPU · strong-v2 prompt · at most one validation retry"
+                    "Real Qwen model · CPU · constrained JSON · at most one validation retry"
                 )
                 model_path = st.text_input(
                     "Local model directory", value=default_model_path(), key="model_path"
@@ -332,6 +332,31 @@ with evaluation:
     st.write("")
     st.subheader("Evidence, with the context attached")
     st.write("Actual saved model runs. Deterministic demo scores are kept separate.")
+    versions = read_artifact("artifacts/portfolio-version-comparison/comparison.json")
+    if versions:
+        st.markdown("**System comparison · the same 20 fresh test questions**")
+        st.caption(
+            "Both versions use the same Qwen weights on CPU. v0.4 changes the prompt, "
+            "JSON constraints, grounding checks and repair feedback."
+        )
+        for stage, label in (("raw-first", "Raw first answer"), ("final", "Accepted final answer")):
+            st.markdown(f"**{label}**")
+            for column, (key, title) in zip(
+                st.columns(2), [("legacy", "v0.3"), ("candidate", "v0.4")], strict=True
+            ):
+                report = read_artifact(
+                    f"artifacts/portfolio-version-comparison/{key}/{stage}.report.json"
+                )
+                if report:
+                    with column, st.container(border=True):
+                        st.markdown(f"**{title}**")
+                        metric_row(report_summary(report))
+        st.caption(
+            "Final answers include validation and at most one repair; blocked cases count "
+            "as failures. These are small, assistant-authored test data. No tool executed "
+            "during scoring, and no weights were trained."
+        )
+        st.divider()
     reports = historical_reports()
     if reports["strong"] and reports["strong-v2"]:
         st.markdown("**A paired prompt experiment · the same 12 development cases**")

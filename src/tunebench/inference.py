@@ -23,7 +23,12 @@ No-tool reasons: informational_request, unsupported_request, no_action_requested
 For a known clarification target, missing_fields must be nonempty. For an ambiguous
 intent use a null target and an empty missing_fields list."""
 
-PROMPT_VERSIONS = {"minimal": "minimal-v1", "strong": "strong-v1", "strong-v2": "strong-v2"}
+PROMPT_VERSIONS = {
+    "minimal": "minimal-v1",
+    "strong": "strong-v1",
+    "strong-v2": "strong-v2",
+    "strong-v3": "strong-v3",
+}
 STRONG_V2_EXAMPLES = (
     (
         "Check the status of order DEMO-7.",
@@ -85,7 +90,11 @@ amounts, and the exact reason enum. Examples illustrate the policy; available to
 
 def _instruction(prompt_style: str) -> str:
     if prompt_style not in PROMPT_VERSIONS:
-        raise ValueError("prompt_style must be 'minimal', 'strong', or 'strong-v2'")
+        raise ValueError("prompt_style must be 'minimal', 'strong', 'strong-v2', or 'strong-v3'")
+    if prompt_style == "strong-v3":
+        from tunebench.prompts_v3 import instruction_v3
+
+        return instruction_v3()
     if prompt_style == "strong-v2":
         examples = "\n".join(
             "User: " + prompt + "\nOutput: " + json.dumps(outcome, separators=(",", ":"))

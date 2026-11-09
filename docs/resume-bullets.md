@@ -7,7 +7,8 @@ Do not imply independent authorship of components you have not studied or modifi
 ## Suggested project description
 
 **TuneBench — Tool-calling assistant and evaluation framework**
-Python, JSON Schema, Streamlit, pytest, Hugging Face Transformers; optional PEFT/LoRA.
+Python, JSON Schema, Streamlit, pytest, Hugging Face Transformers,
+lm-format-enforcer; optional PEFT/LoRA training support.
 
 A customer-support simulation with explicit tool-call, clarification and no-tool
 outcomes, an inspectable execution trace, and reproducible model evaluation.
@@ -17,6 +18,9 @@ outcomes, an inspectable execution trace, and reproducible model evaluation.
 - Implemented a Python tool-calling workflow with structured output validation,
   request-grounding checks, and three nonmutating mock customer-support tools;
   exposed decisions and execution traces in a Streamlit demo.
+- Integrated JSON-constrained local model generation with complete schema checks,
+  request-evidence validation and at most one visible repair, preserving the model's
+  original output and distinguishing raw accuracy from accepted final decisions.
 - Built deterministic evaluation for outcome choice, tool selection, arguments,
   clarification and strict task success, retaining malformed and missing responses
   in per-example diagnostics.
@@ -45,6 +49,9 @@ Evidence: [paired experiment](../artifacts/prompt-development-v2/README.md).
 This is not a claim of statistically established improvement. The earlier
 [7/20 smoke result](../artifacts/baseline-smoke/README.md) used different questions.
 Do not describe 20/20 gold-derived evaluator fixtures as model accuracy.
+The fresh v0.3/v0.4 system comparison is pending at this checkpoint. Add its numbers
+only after reviewing the completed paired report; it changes multiple pipeline
+components and cannot be described as a prompt-only or fine-tuning improvement.
 
 For a test count, quote the exact count from the latest completed check run and
 link its evidence. Re-run `bash scripts/check.sh` before submitting the project;

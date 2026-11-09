@@ -52,9 +52,19 @@ this loads and runs the actual local model; generation can take tens of seconds 
 a CPU, in addition to startup. Show the measured duration from that run rather than
 promising a fixed latency. If the output is blocked, explain the failed check.
 
-A repair attempt, when enabled, is limited and visible. Preserve the first output
-and explain why another attempt was made. A corrected final application response
-does not raise the historical one-attempt model score.
+In v0.4, explain that `strong-v3` and JSON token constraints guide output structure;
+full schema and request-evidence checks still run afterward. These changes do not
+train or fine-tune the model.
+
+A repair attempt, when enabled, is limited to one and visible. It can follow a
+schema failure or an explicit request-evidence mismatch. Preserve the first output,
+show the feedback and explain why another attempt was made. The application does
+not rewrite the model answer. A corrected final application response does not
+raise the historical one-attempt model score.
+
+The fresh v0.3/v0.4 comparison is pending at this checkpoint. Use completed retained
+reports for numbers, and name the data and version shown. Do not present older
+scores as results from the revised live pipeline.
 
 For a strict 3-minute recording, put live generation in a separate clip or choose
 **Saved model replay**, select an existing smoke question, and click **View recorded
@@ -67,6 +77,7 @@ source timing is historical.
 - [Architecture diagram](architecture.md).
 - [Initial real-model smoke results](../artifacts/baseline-smoke/README.md).
 - [Paired prompt experiment and regressions](../artifacts/prompt-development-v2/README.md).
+- [Historical v0.3 portfolio results](../artifacts/portfolio-evaluation/README.md).
 - Latest completed automated check output; do not substitute an older count.
 - Screenshot or video with backend identity and at least one visible decision trace.
 

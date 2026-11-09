@@ -24,9 +24,10 @@ Evidence: [baseline smoke experiment](../artifacts/baseline-smoke/README.md),
 The older `artifacts/validation.json` is a historical check result; it does not
 supersede later model runs or establish that newer UI changes have been checked.
 
-## Portfolio demonstration acceptance checks
+## Historical v0.3 demonstration checks
 
-Complete these against the current code and retain the observed results. A checked
+The checked items below were exercised against v0.3. They remain useful historical
+evidence, but do not establish that revised v0.4 browser flows have passed. A checked
 source feature alone is not evidence that its browser flow was exercised.
 
 - [x] **Quick demo** is labeled as deterministic Python and runs without a model download.
@@ -39,16 +40,40 @@ source feature alone is not evidence that its browser flow was exercised.
 - [x] **Saved model replay** is labeled as recorded and does not imply fresh inference.
 - [x] **Live local Qwen** uses the actual local Qwen model and reports actual timing;
   absence of a model produces a clear setup message rather than a fabricated response.
-- [x] Streamlit browser behavior and the current automated check suite are verified.
+- [x] Streamlit browser behavior and the v0.3 automated check suite were verified.
 - [x] A screenshot or short demo recording is saved, with backend identity visible.
 - [x] The README's setup/launch commands have been exercised from their documented directories.
 
 Verified v0.3 evidence: [browser checks](assets/browser-checks.json),
 [demo video](assets/tunebench-demo.webm), [live Qwen screenshot](assets/tunebench-live.png),
 and [frozen holdout results](../artifacts/portfolio-evaluation/README.md).
-The full app suite passes 274 tests; a core-only environment passes 268 with the
-optional UI module skipped. Setup, launch and standalone-wheel CLI were exercised.
-These checks establish a working prototype; model/guard quality remains limited.
+The v0.3 full app suite passed 274 tests; its core-only environment passed 268 with
+the optional UI module skipped. Setup, launch and standalone-wheel CLI were
+exercised. These checks establish the earlier working prototype; they are not
+current v0.4 check results.
+
+## v0.4 changes and final verification
+
+The revised source adds `strong-v3`, optional `lm-format-enforcer` JSON constraints,
+request-evidence checks for corrections/context and exact derived amounts, and at
+most one visible schema or evidence repair. Complete validation remains necessary:
+constraints do not enforce every schema restriction or prove decision correctness.
+Both attempts remain intact; application code never rewrites the model answer.
+Quick demo is still deterministic Python, not model inference.
+
+The final evidence items are pending at this documentation checkpoint:
+
+- [ ] Complete the fresh matched v0.3/v0.4 20-case system comparison, retaining raw
+  first-attempt and accepted final scores, failures, regressions and generation cost.
+- [ ] Run the full v0.4 checks and record the observed count and result.
+- [ ] Recheck the current browser flows, including an actual local-model request,
+  and retain current screenshots or recording.
+- [ ] Verify the updated setup and standalone package before the release checkpoint.
+
+The old holdout remains unchanged and is no longer unseen. The new comparison
+changes several pipeline components together, so it cannot isolate a prompt change
+or demonstrate a training benefit. Replace these pending items only with observed
+results and links to the retained evidence.
 
 ## What this portfolio demonstrates
 

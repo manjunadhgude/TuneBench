@@ -71,7 +71,7 @@ def main():
             page.get_by_role("textbox", name="Your request", exact=True).fill(
                 "Check the status of order TB-9999."
             )
-            run_and_wait("order_id is not one of the fictional demo orders")
+            run_and_wait("order_id is not in the fictional demo order store")
             page.screenshot(path=str(args.assets / "tunebench-blocked.png"), full_page=True)
             checks.append("Unknown fictional order blocked before execution")
 

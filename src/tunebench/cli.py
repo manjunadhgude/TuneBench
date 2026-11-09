@@ -92,7 +92,7 @@ def main(argv=None) -> int:
     infer.add_argument("--output", required=True)
     infer.add_argument("--model", default="Qwen/Qwen2.5-1.5B-Instruct")
     infer.add_argument(
-        "--prompt-style", choices=["minimal", "strong", "strong-v2"], default="strong"
+        "--prompt-style", choices=["minimal", "strong", "strong-v2", "strong-v3"], default="strong"
     )
     infer.add_argument("--device", default="cpu")
     infer.add_argument("--adapter")

@@ -11,7 +11,7 @@ model mistakes so that an attractive demo cannot silently inflate research score
 flowchart TD
     UI[Streamlit: request and explicit backend selection] --> Router{Backend}
     Router --> Rules[Rules: deterministic Python, no LLM]
-    Router --> Qwen[Live Qwen: actual local model generation]
+    Router --> Qwen[Live Qwen: strong-v3 and JSON-constrained generation]
     Router --> Replay[Replay: previously recorded response]
     Rules --> Raw[Raw response and backend identity]
     Qwen --> Raw
@@ -20,6 +20,9 @@ flowchart TD
     Parse --> Validate[Output schema and tool argument validation]
     Validate --> Ground[Grounding guard: check values against request]
     Ground --> Decision{Accepted decision?}
+    Validate -->|model failure and repair budget remains| Repair[One visible repair with validation feedback]
+    Ground -->|evidence failure and repair budget remains| Repair
+    Repair --> Qwen
     Decision --> Clarify[Clarification: ask for unresolved information]
     Decision --> None[No tool: explain supported scope]
     Decision --> Execute[Execute one nonmutating mock tool]
@@ -95,6 +98,13 @@ Keep these three objects distinct:
 3. **Application result:** the clarification, blocked request, or mock-tool result shown
    after application checks.
 
+In v0.4 the live backend uses `strong-v3` and optional `lm-format-enforcer` token
+constraints to guide generation toward the decision JSON schema. The package
+reuses tokenizer data but creates a fresh constraint parser for each generation.
+Constraints improve output structure; the library does not enforce every numeric
+or array restriction. Strict parsing and complete post-generation validation
+therefore remain required.
+
 If an assistant flow offers a repair or fallback, retain the first response and label
 that intervention. A repaired final answer does not retroactively make the original
 model prediction correct. The retained baseline and paired prompt experiments use
@@ -106,7 +116,7 @@ be replaced by assistant-demo outcomes.
 | Choice | Reason and trade-off |
 | --- | --- |
 | Python package with CLI | Run data, scoring and tests without depending on a web session |
-| JSON Schema plus semantic checks | Give outputs an explicit contract; separately check request meaning |
+| JSON Schema, constrained generation and semantic checks | Guide JSON structure, validate the complete contract, then check request evidence |
 | Streamlit | Provide a small inspectable portfolio interface without a separate frontend build |
 | Mock tools | Demonstrate execution and policy handling with reproducible local data |
 | Optional model dependencies | Keep the core install light; make real inference an explicit operation |
@@ -126,6 +136,13 @@ scored **5/12**, including four improvements and one regression. Those are small
 constructed sets; they do not establish general accuracy or a training benefit.
 No LoRA/QLoRA training or trained-adapter evaluation has been performed.
 
+The historical v0.3 portfolio holdout scored **7/20** raw first-attempt strict
+successes and **3/20** accepted final successes. Its guard rejected four correct
+contextual or derived answers, which motivated the v0.4 changes. These results
+remain [retained evidence](../artifacts/portfolio-evaluation/README.md); they are
+not measurements of the revised implementation. The fresh v0.3/v0.4 comparison
+has not completed at this checkpoint.
+
 See the [initial experiment](../artifacts/baseline-smoke/README.md),
 [paired prompt experiment](../artifacts/prompt-development-v2/README.md),
 [dataset notes](dataset.md), and [implementation status](status.md).
@@ -140,18 +157,35 @@ window; a not-received request requires a shipped order past its expected date.
 A delivered-order dispute is not treated as proof of nonreceipt. A proposal cannot
 exceed the remaining refundable amount and does not mutate that amount.
 
-The interactive execution guard requires an explicit supported action, a known
-order reference present in the request, a grounded reason and an explicit positive
-amount where needed. It conservatively blocks unsupported substitutions and guessed
-arguments. This is a narrower acceptance policy than all possible research examples:
-a model may be asked to derive an amount in evaluation, while the interactive guard
-can require the amount to be explicitly stated before execution.
+The v0.4 evidence extractor checks the requested action, literal order references,
+reason evidence and monetary values. It handles explicit corrections and context
+within one submitted request, including quoted or punctuation-rich references.
+It can derive a refund from supplied quantity and unit price or a supplied
+percentage and base using `Decimal`; absent or conflicting inputs require
+clarification. It does not look up benchmark labels or silently replace the model's
+decision with a rules answer. Execution separately requires a known demo order and
+passes through the mock tool's independent policy checks.
+
+These are bounded language rules, so both false acceptance and false rejection
+remain possible. A correct calculation is not permission for a real payment;
+`propose_refund` always returns a simulation. Requests remain stateless across UI
+submissions, even when the text of one submission contains earlier context.
 
 The assistant API is `respond(message, backend="rules", ...)`. It returns a status
 (`executed`, `clarification`, `no_tool`, `blocked` or `error`), backend identity,
 raw attempts, accepted outcome, validation errors, optional tool result, user-facing
 message and elapsed time. The model backend loads a local snapshot lazily; it does
 not silently download weights or fall back to rules. It allows at most one visible
-repair attempt for a parse/schema failure. Grounding or action-policy failure blocks
-execution directly. These interactive interventions do not change the original
-one-attempt research protocol.
+repair attempt for a parse/schema error or an explicit request-evidence mismatch.
+Evidence repair feeds back extracted request facts, not gold labels. Both raw
+attempts and their schema/grounding errors remain available. The model must generate
+the corrected answer itself; application code never rewrites its output. A failed
+final decision is blocked. Store lookup and business-policy failures are separate
+execution gates and do not trigger generation retries.
+
+The v0.3 and v0.4 comparison changes the prompt, generation constraints, guard and
+repair trigger together. It is a system-version comparison, not a prompt-only
+ablation or evidence of model training. The same fresh questions and pinned model
+are used for both versions; raw first-attempt and accepted final scores must both
+be reported. That new comparison is pending at this documentation checkpoint.
+Earlier one-attempt research evidence remains unchanged.

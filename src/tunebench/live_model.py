@@ -6,6 +6,7 @@ This is separate from the unchanged research runner. It never downloads weights.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 import threading
 from copy import deepcopy
@@ -88,6 +89,20 @@ class _LocalSession:
             torch_dtype=torch.float32,
         ).to("cpu")
         self.model.eval()
+        try:
+            from importlib.metadata import version
+
+            from lmformatenforcer.integrations.transformers import (
+                build_token_enforcer_tokenizer_data,
+            )
+
+            from tunebench.structured import generation_schema
+        except ImportError as exc:
+            raise RuntimeError(
+                "Install TuneBench's [model] extra for structured local inference"
+            ) from exc
+        self.constraint_tokenizer_data = build_token_enforcer_tokenizer_data(self.tokenizer)
+        schema = generation_schema()
         self.config = deepcopy(self.model.generation_config)
         self.config.update(
             do_sample=False,
@@ -114,9 +129,22 @@ class _LocalSession:
             "effective_generation_config": self.config.to_dict(),
             "downloads": False,
             "seed": 42,
+            "prompt_version": "strong-v3",
+            "structured_output": {
+                "enabled": True,
+                "library": "lm-format-enforcer",
+                "library_version": version("lm-format-enforcer"),
+                "schema_sha256": hashlib.sha256(
+                    json.dumps(schema, sort_keys=True).encode()
+                ).hexdigest(),
+                "post_validation_required": True,
+            },
         }
 
     def generate(self, messages: list[dict[str, str]]) -> str:
+        from tunebench.structured import make_prefix_constraint
+
+        constraint = make_prefix_constraint(self.constraint_tokenizer_data)
         inputs = self.tokenizer.apply_chat_template(
             messages, tokenize=True, add_generation_prompt=True, return_tensors="pt"
         ).to("cpu")
@@ -128,6 +156,7 @@ class _LocalSession:
                 inputs,
                 attention_mask=self.torch.ones_like(inputs),
                 generation_config=self.config,
+                prefix_allowed_tokens_fn=constraint,
             )
         return self.tokenizer.decode(outputs[0, inputs.shape[1] :], skip_special_tokens=True)
 

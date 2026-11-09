@@ -1,79 +1,92 @@
 # Implementation and research status
 
-## Portfolio v0.3
+## Portfolio v0.4 checkpoint
 
-The interview portfolio prototype now includes a guarded assistant, three working
-nonmutating mock tools, a Streamlit workbench with rules/live/replay modes, a frozen
-60-case dataset, browser-tested flows, a recorded demo and interview documentation.
-The full application suite passes 274 tests; see [completion evidence](portfolio-completion.md).
+The current source extends the CPU tool-calling workbench with `strong-v3`,
+optional `lm-format-enforcer` JSON-constrained generation, evidence checks for
+references/corrections and exact derived amounts, and at most one visible repair
+for a schema or explicit request-evidence failure. Complete post-generation
+validation remains required. The model generates every attempt; application code
+never rewrites its answer into a rules result.
 
-The held-out model result remains weak: raw Qwen is correct on 7/20; accepted final
-decisions are correct on 3/20 because conservative guards reject correct answers
-and still miss some ambiguities. This is an evaluation workbench and experimental
-prototype, not a production-ready assistant. GPU training remains unperformed.
-See [the complete results](../artifacts/portfolio-evaluation/README.md).
+The app still offers clearly labeled deterministic rules, actual local Qwen and
+saved replay modes. Three nonmutating mock tools provide fictional order lookup,
+refund eligibility and refund proposals. No real payment or customer system is
+connected, and no GPU or paid API is needed for the fast rules demo.
 
-## Earlier foundation and remaining research
+The fresh matched v0.3/v0.4 20-case model comparison and final v0.4 release checks
+are pending at this documentation checkpoint. No new quality score or current
+browser-verification claim is made here. See the
+[completion checklist](portfolio-completion.md) for the evidence required before
+marking the revised portfolio checkpoint complete.
 
-This implementation follows the two user-supplied project documents: the TuneBench
-prior-work review conversation (184 messages) and the P4 post-analysis plan.
-Their embedded shell commands were treated as historical source material, not
-executed as instructions. Earlier Notion updates and test results were not assumed
-to establish the state of this checkout.
+## Historical portfolio v0.3 evidence
 
-The original remote `main` was the initial README/.gitignore commit
-`33ef493fbd715c8fe778f50b375849648364e20d`. The history showed all later Codespaces
-files were untracked. This is a reconstructed and extended implementation, not
-access to or recovery of the old Codespace itself.
+The preceding checkpoint included the guarded assistant, Streamlit workbench,
+frozen 40-development/20-holdout dataset, browser-tested flows, demo recording
+and interview documentation. Its full app suite passed 274 tests.
 
-## Implemented
+On that holdout, raw Qwen first attempts were strictly correct on **7/20**;
+accepted final decisions were correct on **3/20**. Conservative guards rejected
+four correct contextual or derived answers and still accepted one incorrect
+ambiguous-reference decision. This motivated the revised evidence checks. The
+old cases and results remain unchanged and must not be called unseen again.
+See the [complete v0.3 results](../artifacts/portfolio-evaluation/README.md).
 
-- Installable core Python package and portable wheel resource loading.
-- Final three-outcome contracts and canonical mock tools; schema-version report fix.
-- Deterministic evaluator, strict parsing, invalid-output diagnostics, paired comparison.
-- Deterministic smoke and full candidate generation, provenance, manifests, checksums,
-  family/scenario/ID leakage checks, and duplicate-template review warnings.
-- Prompt baselines and actual optional Transformers inference with raw output capture.
-- Train/validation export, completion-only token masking, and GPU LoRA/QLoRA runners.
-- Unit/CLI integration tests, locked CPU dependencies, setup/check scripts, and CI.
+Earlier experiments remain separate: the initial smoke run scored **7/20**,
+and a paired 12-case prompt-development run changed **2/12 to 5/12**, with four
+gains and one regression. Different datasets cannot support a direct before/after
+accuracy claim. None of these runs establishes production reliability or a
+fine-tuning benefit.
 
-## Still required for the research experiment
+## Implemented foundation
 
-1. Independently review synthetic labels, template diversity, semantic overlap, and
-   difficulty distribution. The blueprint's difficulty quotas conflict with several
-   family definitions; the generator reports actual labels rather than fabricating compliance.
-2. Review/version the final benchmark and freeze a test snapshot with hashes. Current
-   manifests explicitly say candidate/unreviewed/unfrozen and do not enforce a freeze.
-3. Public model access, revision, Apache-2.0 license, file hashes, and CPU loading are
-   now verified for the candidate. Preserve the pinned revision for later comparisons;
-   GPU training feasibility remains unverified.
-4. Improve the instructions using reviewed development data, then measure minimal/strong
-   baselines. The initial strong-prompt smoke run completed at 7/20 strict task success;
-   its format/decision/reason errors require investigation before training.
-   A first versioned revision, `strong-v2`, has now been paired with legacy `strong`
-   on 12 fresh reviewed validation cases: 2/12 to 5/12 strict success, four gains and
-   one regression. JSON parsing fell from 11/12 to 10/12, and seven cases still fail
-   fully. The final research baseline remains unresolved; keep developing it on
-   development data. See `artifacts/prompt-development-v2/` for the frozen protocol.
-5. Obtain a CUDA GPU, test the real training stack, train an adapter, and evaluate with
-   the matched strong-prompt and inference policy.
-6. Run the final paired comparison once, inspect regressions, and report quality,
-   latency, memory, and measured training cost. No positive or negative training
-   conclusion can be drawn from synthetic fixture scores.
+- Installable Python package, CLI, portable packaged contracts and wheel resources.
+- Explicit tool-call, clarification and no-tool contracts for three mock tools.
+- Strict parsing, deterministic scoring, per-example diagnostics and paired reports.
+- Versioned prompts and actual optional Transformers CPU inference with raw output.
+- Synthetic candidate generation, provenance, manifests, checksums and structural
+  family/scenario/ID leakage checks.
+- Train/validation export, completion-only token masking and optional GPU LoRA/QLoRA
+  runners; these are training support, not evidence that a model was trained.
+- Offline tests, dependency locks, setup/check scripts, CI and a Streamlit interface.
 
-The 139 offline tests use controlled generation and tokenizer test doubles. A separate
-actual Hugging Face/Qwen CPU smoke run has now completed; its raw outputs and metadata
-are retained in `artifacts/baseline-smoke/`. No model fine-tuning or GPU training was
-performed, and no adapter was produced. The earlier `artifacts/validation.json`
-records the initial framework checks before model access became available.
+The revised system comparison changes prompt, constraints, guard and repair
+trigger together. Both versions must use the same fresh cases, pinned model,
+CPU settings, token budget and maximum repair count. Report raw first-attempt
+quality separately from final accepted decisions. It is a system-version
+comparison, not a prompt-only ablation.
 
-The prompt-revision work adds legacy-message hash regressions, prompt leakage checks,
-validated examples, callback failure/mutation checks, complete generation-setting
-metadata, and paired-condition guards. The current full offline suite passes 155 tests.
+## Research work outside the portfolio checkpoint
 
-## Continuing development
+1. Independently review labels, semantic overlap, template diversity and difficulty.
+   Portfolio data is assistant-authored/reviewed; it is not independently human
+   annotated. Structural leakage checks cannot establish semantic independence.
+2. Review and freeze the larger research benchmark. Its 1,250 synthetic records
+   remain candidate/unreviewed/unfrozen; this is separate from portfolio snapshots.
+3. Establish a credible baseline on development data and preserve fresh final test
+   data for frozen comparisons. Inspect errors and regressions as well as gains.
+4. Obtain and test a CUDA training environment only if pursuing the separate
+   fine-tuning experiment; train an adapter and measure it under matched conditions.
+5. Report quality, latency, memory and actual training cost. No adapter has been
+   produced, and no positive or negative training conclusion is supported yet.
 
-Run `bash scripts/setup.sh`, then `bash scripts/check.sh`. Keep progress in tracked
-source/docs rather than relying on an untracked Codespace or external chat. Inspect
-the Git diff before committing, then push reviewed source changes to preserve progress
-beyond the local development session.
+Authentication, real integrations, operational monitoring and production deployment
+are outside the present fictional customer-support simulation.
+
+## Origin and continuing development
+
+The implementation follows the user-supplied TuneBench review conversation and
+P4 post-analysis plan. Embedded shell commands were treated as historical source
+material, not executed as instructions. The original remote `main` contained only
+the initial README/.gitignore commit
+`33ef493fbd715c8fe778f50b375849648364e20d`; the available history indicated later
+Codespaces files were untracked. This is a reconstructed and extended
+implementation, not recovery of the old Codespace.
+
+Keep current progress in tracked source, docs and raw evidence. Run
+`bash scripts/setup.sh --app`, then `bash scripts/check.sh`, inspect the diff and
+preserve reviewed changes in Git. Historical validation files and test counts do
+not establish that the latest code has passed. Use the
+[interview guide](interview-guide.md) and [demo script](demo-script.md) to study and
+present only behavior and contributions you can explain.
