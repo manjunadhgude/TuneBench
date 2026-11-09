@@ -77,7 +77,7 @@ def respond(
             "model": "Actual local Qwen model",
             "injected": "Injected test backend",
         }.get(used_backend, "Unknown backend"),
-        "prompt": prompt_style if used_backend != "rules" else "rules-v3",
+        "prompt": prompt_style if used_backend != "rules" else "rules-v4",
         "model_profile": (
             None if used_backend == "rules" else "qwen3-4b-gguf" if gguf else "qwen2.5-1.5b"
         ),
@@ -90,7 +90,7 @@ def respond(
         "elapsed_ms": 0,
         "execution_mode": "simulated_tools" if execute_tools else "validation_only",
         "execute_tools": execute_tools,
-        "execution_guard_policy": "evidence-grounding-v3",
+        "execution_guard_policy": "evidence-grounding-v4",
         "non_execution_grounding_policy": "advisory_only_no_evidence_repair",
         "advisory_grounding_warnings": [],
         "policy_override": False,
