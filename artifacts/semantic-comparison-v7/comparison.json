@@ -1,0 +1,71 @@
+{
+  "comparison_type": "semantic_review_pipeline_same_primary_model_and_prompt",
+  "examples": 40,
+  "protocol_sha256": "fee884dea9409c9cf935efac35279b9c9049cd5c88b8ee6ec409105670aac48e",
+  "results": {
+    "raw-first": {
+      "legacy": {
+        "correct": 34,
+        "total": 40,
+        "accuracy": 0.85
+      },
+      "candidate": {
+        "correct": 34,
+        "total": 40,
+        "accuracy": 0.85
+      },
+      "improvements": [],
+      "regressions": [],
+      "schema_valid_decisions": {
+        "legacy": 40,
+        "candidate": 40
+      }
+    },
+    "final": {
+      "legacy": {
+        "correct": 23,
+        "total": 40,
+        "accuracy": 0.575
+      },
+      "candidate": {
+        "correct": 30,
+        "total": 40,
+        "accuracy": 0.75
+      },
+      "improvements": [
+        "portfolio-v5-holdout-14",
+        "portfolio-v5-holdout-10",
+        "portfolio-v5-holdout-02",
+        "portfolio-v5-holdout-04",
+        "portfolio-v5-holdout-03",
+        "portfolio-v5-holdout-07",
+        "portfolio-v5-holdout-16",
+        "portfolio-v5-holdout-06",
+        "portfolio-v5-holdout-08",
+        "portfolio-v5-holdout-05",
+        "portfolio-v5-holdout-13",
+        "portfolio-v5-holdout-11"
+      ],
+      "regressions": [
+        "portfolio-v5-holdout-40",
+        "portfolio-v5-holdout-36",
+        "portfolio-v5-holdout-27",
+        "portfolio-v5-holdout-35",
+        "portfolio-v5-holdout-21"
+      ],
+      "schema_valid_decisions": {
+        "legacy": 34,
+        "candidate": 34
+      }
+    }
+  },
+  "limitations": [
+    "Review and bounded critique retry change; primary model/prompt remain fixed.",
+    "Same pinned weights, runtime, prompt and generation settings.",
+    "Small assistant-authored holdout; no production reliability claim.",
+    "Execution disabled; execution safety checked separately."
+  ],
+  "shared_first_request_hashes_verified": true,
+  "raw_first_outcomes_identical": 40,
+  "quality_claims_validated": true
+}

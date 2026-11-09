@@ -1,0 +1,56 @@
+"""Recompute scores from original text and check all persisted review arithmetic."""
+import sys,json,hashlib,importlib.util
+from pathlib import Path
+from decimal import Decimal
+root=Path(sys.argv[1]).resolve();sys.path.insert(0,str(root/'src'))
+from tunebench.inference import parse_output
+from tunebench.evaluator import evaluate
+from tunebench.safe_calculator import calculate
+out=root/'artifacts/semantic-comparison-v7'
+s=importlib.util.spec_from_file_location('semantic_runner',root/'scripts/compare_semantic_versions.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+p=json.loads((out/'protocol.json').read_text());m.verify(p,out,full_model=True)
+tasks=[json.loads(x) for x in (out/'tasks.jsonl').read_text().splitlines()]
+audit={'status':'pass','examples':40,'generation_reruns':0,'reviewer_is_independent_model':False,'human_annotation':False,'method':'Same assistant reparses original model text, recomputes canonical scores and review arithmetic, and verifies frozen source/model/data/runtime hashes. This is a separate computational check, not external independent review.','versions':{}}
+for version in ['legacy','candidate']:
+ cases=m.read_journal(out/version/'cases.partial.jsonl',tasks,expected_prompt_hashes=p['first_attempt_message_hashes'])
+ m.verify_checkpoint(out/version,out/version/'cases.partial.jsonl',cases)
+ assert len(cases)==40
+ raw=[];final=[];review_count=0;calc_count=0;review_tokens=0
+ for t,c in zip(tasks,cases,strict=True):
+  r=c['response'];a=r['attempts'];first=parse_output(t['example_id'],a[0]['raw_output'])['outcome'] if a else None
+  last=parse_output(t['example_id'],a[-1]['raw_output'])['outcome'] if a else None
+  accepted=r.get('accepted_outcome')
+  if accepted is not None:assert m.json_equal(last,accepted)
+  raw.append({'example_id':t['example_id'],'outcome':first});final.append({'example_id':t['example_id'],'outcome':accepted})
+  for review in r.get('semantic_verifications',[]):
+   review_count+=1;review_tokens+=(review.get('usage') or {}).get('completion_tokens',0)
+   decision=a[review['primary_attempt']-1]['parsed_outcome']
+   from tunebench.semantic_guard import _POLICY
+   messages=[{'role':'system','content':_POLICY},{'role':'user','content':json.dumps({'customer_message':t['prompt'],'proposed_call':decision},ensure_ascii=False)}]
+   assert review['prompt_sha256']==hashlib.sha256(json.dumps(messages,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+   assert review['model_id']==m.SHARED_MODEL['model_id'] and review['max_tokens']==256
+   assert review['kind']=='probabilistic_model_review'
+   assert (review.get('usage') or {}).get('completion_tokens',0)<=256
+   if decision['type']=='tool_call' and decision['tool_name']=='propose_refund':
+    calc_count+=1
+    try:
+     value=calculate(review['calculation'],t['prompt'],decision['arguments']['order_id'])
+    except (ValueError,SyntaxError):
+     assert review['calculation_error'] and review['calculation_result'] is None
+    else:
+     assert str(value)==review['calculation_result']
+     assert bool(review['calculation_error']) is (value!=Decimal(str(decision['arguments']['refund_amount'])))
+ stats={}
+ reports={}
+ for stage,preds in [('raw-first',raw),('final',final)]:
+  report=evaluate(tasks,preds);saved=json.loads((out/version/(stage+'.report.json')).read_text());assert report=={k:v for k,v in saved.items() if k!='inference_metadata'}
+  reports[stage]=report
+  stats[stage]={'correct':report['task_success']['correct'],'total':40,'schema_valid':40-report['invalid_predictions'],'correct_tool_calls':report['tool_call']['joint_exact_match']['correct'],'tool_call_cases':report['tool_call']['total'],'correct_clarifications':report['clarification']['joint_exact_match']['correct'],'clarification_cases':report['clarification']['total'],'correct_no_tool':report['no_tool']['reason_code_accuracy']['correct'],'no_tool_cases':report['no_tool']['total']}
+ first_ok={x['example_id']:x['task_success'] for x in reports['raw-first']['per_example']}
+ final_ok={x['example_id']:x['task_success'] for x in reports['final']['per_example']}
+ accepted_calls=[(c,final_ok[c['example_id']]) for c in cases if (c['response'].get('accepted_outcome') or {}).get('type')=='tool_call']
+ stats['pipeline']={'primary_generations':sum(len(c['response']['attempts']) for c in cases),'review_generations':review_count,'total_generation_records':sum(len(c['response']['attempts']) for c in cases)+review_count,'review_completion_tokens':review_tokens,'refund_calculations':calc_count,'active_seconds':sum(c['response']['elapsed_ms'] for c in cases)/1000,'incorrect_accepted_calls':[c['example_id'] for c,ok in accepted_calls if not ok],'accepted_calls':len(accepted_calls),'lost_correct_first':[key for key in first_ok if first_ok[key] and not final_ok[key]],'repaired_first_errors':[key for key in first_ok if not first_ok[key] and final_ok[key]],'runtime_errors':sum(c['response']['status']=='error' for c in cases)}
+ stats['failures']=[{'example_id':t['example_id'],'prompt':t['prompt'],'expected':t['expected_outcome'],'accepted':c['response']['accepted_outcome'],'status':c['response']['status'],'errors':c['response']['validation_errors'],'reviews':c['response'].get('semantic_verifications',[])} for t,c in zip(tasks,cases,strict=True) if not final_ok[t['example_id']]]
+ audit['versions'][version]=stats
+(out/'score-and-review-audit.json').write_text(json.dumps(audit,indent=2)+'\n')
+print(json.dumps({v:{k:d for k,d in x.items() if k!='failures'} for v,x in audit['versions'].items()},indent=2))

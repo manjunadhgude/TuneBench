@@ -1,88 +1,43 @@
 # Portfolio completion and evidence
 
-TuneBench demonstrates a request-to-result simulation and measures local-model
-decisions. Software checks, model quality and production readiness are separate
-claims. No trained adapter or real payment system is presented as completed work.
+The v0.7 software is implemented and verified for a fictional interview demo.
+Model quality, user understanding, and production readiness are separate matters.
 
-## Current v0.5 verification
+## Completed verification
 
-- [x] Preferred CPU Qwen3-4B-Instruct-2507 Q4_K_M backend, pinned size/SHA verification,
-  explicit model identity, optional dependency and no implicit downloads.
-- [x] `strong-v4`, JSON grammar and complete schema validation preserve original outputs.
-- [x] Actual tool calls require evidence; schema-valid no-tool/clarification language
-  diagnostics are advisory and cannot trigger an evidence retry into action.
-- [x] At most one visible schema/tool-call evidence repair; application code does not
-  rewrite the model answer into a rules decision.
-- [x] Actual development capture: 37/40 before prompt revision and 40/40 afterward
-  on the same practice cases. This is tuned development coverage, not unseen quality.
-- [x] Both system sources, models and the separate 40-case data frozen before test
-  generation; [protocol](quality-comparison-protocol.md) records the method.
-- [x] Full v0.5 workflow passes 469 tests, lint, formatting and CLI/data checks.
-- [x] Fresh hash-locked app setup passes 465 tests with four optional checks skipped;
-  its documented launch serves the app. Core-only checks pass 459 with five skips.
-- [x] Standalone v0.5 wheel imports and executes simulated tools outside the checkout.
-  See [release checks](assets/release-checks-v0.5.json).
-- [ ] Complete both 40-case test runs and independent computational score audit,
-  retaining original first answers, accepted finals, failures, regressions and cost.
-- [ ] Recheck current browser flows, including real Qwen3 generation and mobile layout,
-  and retain current screenshots/recording.
+- [x] Three explicitly labeled modes: rules demo, live CPU Qwen, and saved replay.
+- [x] Schema-validated decisions, same-model review, restricted Decimal calculator, bounded retry, and preserved original outputs.
+- [x] Three nonmutating mock tools with fixed fictional order/policy gates.
+- [x] Full check workflow: 553 tests, lint, formatting, CLI, data audit and training export.
+- [x] Core-only validation: 543 passed, 5 optional skips.
+- [x] Fresh locked app installation: 549 passed, 4 optional skips; successful health response.
+- [x] Standalone wheel imports outside the checkout and runs mock tools without optional model packages.
+- [x] Chromium/Playwright: 11 checks, including actual Qwen3 execution and visible review trace, replay, and mobile layout.
+- [x] Completed frozen 40-case same-test comparison, preserved failures, and score/review computational audit.
 
-The preferred model is Unsloth's third-party quantization of official Qwen weights.
-Using it is model selection and runtime integration, not fine-tuning performed by
-this project. The new comparison changes model, quantization, runtime, prompt and
-guard together, so it cannot attribute a gain to one component.
+See [release evidence](assets/release-checks-v0.7.json),
+[browser checks](assets/browser-checks.json), [current model results](../artifacts/semantic-comparison-v7/README.md),
+and [remaining model failures](../artifacts/semantic-comparison-v7/error-analysis.md).
+The current screenshots/recording show this release; prior v0.3/v0.4 media and
+experiment results remain archived with their original identity. Earlier release
+records retain their checkpoint status, including work that was pending then.
 
-## Earlier checkpoints remain visible
+## Before using it in an interview
 
-The v0.3/v0.4 matched 20-question comparison measured raw strict success 8/20 →
-9/20, schema validity 13/20 → 19/20 and accepted final success 2/20 → **7/20**.
-v0.4 lost five correct first answers and repaired three errors. These results
-motivated the revised model and guard and remain in the
-[historical report and audit](../artifacts/portfolio-version-comparison/README.md).
-They cannot be directly compared with results from the new 40 questions.
+- Run the app and explain a primary answer, model review, retry, and calculator check.
+- Discuss one remaining failure and why schema-valid JSON can still be wrong.
+- State that quick demo uses rules, replay is recorded, and live mode uses an LLM.
+- Explain your own contribution and development assistance accurately.
 
-v0.4 passed 401 local tests, fresh app 398 with three optional skips, and core-only
-392 with four skips. Its browser checks covered the rules lookup, clarification,
-proposal, unsupported payment, unknown order, blank input, replay, evaluation,
-project page, mobile layout and real Qwen2.5 request. Historical evidence:
-[release record](assets/release-checks-v0.4.json),
-[browser checks](assets/v0.4/browser-checks.json),
-[video](assets/v0.4/tunebench-demo.webm) and
-[live screenshot](assets/v0.4/tunebench-live.png).
+## Remaining research and production work
 
-The original v0.3 checkpoint passed 274 full tests, with 268 and the optional UI
-module skipped in core-only setup. Its 20-case portfolio evaluation scored 7/20
-raw and 3/20 accepted final. See
-[results](../artifacts/portfolio-evaluation/README.md),
-[browser checks](assets/v0.3/browser-checks.json) and
-[recording](assets/v0.3/tunebench-demo.webm).
-Earlier smoke and prompt-development experiments remain separate measurements.
+Independent human evaluation and broader representative/adversarial data are still
+needed for stronger quality claims. The same-model reviewer can repeat mistakes;
+correct arithmetic does not prove correct fact selection. CPU review adds latency
+and memory. These are known limits of the current portfolio, not hidden completed
+features.
 
-## What this portfolio demonstrates
-
-| Capability | Inspectable evidence |
-| --- | --- |
-| Python application design | Shared package behind CLI and Streamlit |
-| Local model integration | Verified quantized CPU backend and recorded runtime settings |
-| Tool use and failure handling | Typed decisions, clarification, bounded repair and guarded mock dispatch |
-| Evaluation discipline | Raw/final scores, invalid outputs, paired gains/regressions and audit |
-| Reproducibility | Frozen source/model/data hashes, original captures and durable journals |
-| Engineering explanation | Architecture, walkthrough, limitations and interview guide |
-
-A reliable rules example proves that application path for that example, not LLM
-accuracy. Replay proves an output was retained, not that fresh inference occurred.
-A schema-valid decision can still be semantically wrong.
-
-## Separate research and deployment work
-
-- Portfolio cases are fictional, stratified and assistant-authored/reviewed; separate
-  blinded assistant review is not independent human annotation or production sampling.
-- Small test sets cannot establish generalization or guarantee execution safety.
-- The 1,250-candidate research benchmark is not fully reviewed/frozen.
-- No model fine-tuning or adapter-quality comparison has been performed.
-- Mock tools never access customer systems, mutate an order or transfer money.
-- Real authorization, integrations, operational monitoring and production deployment
-  remain outside this portfolio simulation.
-
-Use the [demo script](demo-script.md), [interview guide](interview-guide.md) and
-[resume wording](resume-bullets.md) for behavior and contributions you can explain.
+No adapter was trained. The larger synthetic research dataset remains unreviewed;
+LoRA/QLoRA runners are future experiment support. Real authentication, customer
+integrations, payments, monitoring, and production deployment are outside this
+simulation. Do not present it as a production refund agent.

@@ -1,0 +1,523 @@
+{
+  "annotation_status": "Same implementing assistant authored and reviewed all cases after source freeze; no independent blind/human annotation.",
+  "source_freeze_commit": "eb4e227a0f6359f9c1a9c0bde2fcbe333f2be597",
+  "cases": [
+    {
+      "example_id": "portfolio-v5-holdout-01",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "get_order_status",
+        "arguments": {
+          "order_id": "NX-842"
+        }
+      },
+      "rationale": "Explicit order versus tax registration.",
+      "source_evidence": "Please retrieve the delivery status for order NX-842. The receipt also shows tax registration 77940; that is not an order number.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-02",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "get_order_status",
+        "arguments": {
+          "order_id": "ash/27"
+        }
+      },
+      "rationale": "Chronological last row is pan/ash/27.",
+      "source_evidence": "Purchases in chronological order: ID elm/19, a kettle; ID oak/24, a flask; ID ash/27, a pan. Please look up delivery status for my most recent purchase.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-03",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "get_order_status",
+        "arguments": {
+          "order_id": "BH-331"
+        }
+      },
+      "rationale": "Customer explicitly excludes forwarded identifier.",
+      "source_evidence": "A forwarded note says \"check order AG-220\". That was from a different customer. My own order is BH-331; please retrieve its status.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-04",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "get_order_status",
+        "arguments": {
+          "order_id": "QL-810"
+        }
+      },
+      "rationale": "Comparing supplied prices identifies lower-price bag.",
+      "source_evidence": "I placed order QL-810 for a 250 rupee bag and order QL-811 for a 480 rupee bag. Fetch the delivery status of the less expensive bag.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-05",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "check_refund_eligibility",
+        "arguments": {
+          "order_id": "FC-620",
+          "reason": "damaged_item"
+        }
+      },
+      "rationale": "Split goods are damage, explicit eligibility only.",
+      "source_evidence": "The seam of the backpack in order FC-620 has split open. Check whether this qualifies for a refund; I am not asking you to propose an amount.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-06",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "check_refund_eligibility",
+        "arguments": {
+          "order_id": "GR-751",
+          "reason": "wrong_item"
+        }
+      },
+      "rationale": "Delivered wrong variant is wrong_item.",
+      "source_evidence": "Order GR-751: I selected size 9 but the supplied shoes are size 7. Please check refund eligibility for the size mismatch.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-07",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "check_refund_eligibility",
+        "arguments": {
+          "order_id": "HM-864",
+          "reason": "changed_mind"
+        }
+      },
+      "rationale": "Final stated preference resolves earlier reversal.",
+      "source_evidence": "Order HM-864 was intended as a gift, but I decided to keep it. Wait, my final decision is that I no longer want it after all. Check whether I can get a refund.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-08",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "check_refund_eligibility",
+        "arguments": {
+          "order_id": "JV-903",
+          "reason": "not_received"
+        }
+      },
+      "rationale": "Missing delivery grounds reason, carrier status is not receipt.",
+      "source_evidence": "The carrier marked order JV-903 delivered, but nothing arrived at my address. Ticket CS-882 is my support ticket. Check refund eligibility for the missing delivery.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-09",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "KC-146",
+          "reason": "damaged_item",
+          "refund_amount": 119.25
+        }
+      },
+      "rationale": "Explicit positive requested amount and physical damage.",
+      "source_evidence": "Propose a refund of INR 119.25 for order KC-146 because the bowl arrived chipped.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-10",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "LD-257",
+          "reason": "damaged_item",
+          "refund_amount": 680
+        }
+      },
+      "rationale": "Requested scope excludes deposit.",
+      "source_evidence": "Order LD-257 contains a lamp priced at INR 680 and a separate refundable deposit of INR 90. The lamp is broken. Propose only its stated price, excluding the deposit.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-11",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "ME-368",
+          "reason": "damaged_item",
+          "refund_amount": 90
+        }
+      },
+      "rationale": "360*25/100=90; postage excluded.",
+      "source_evidence": "The item in order ME-368 cost INR 360. It arrived with a crack; I want a proposal for 25 percent of that item price. The INR 40 postage is excluded.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-12",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "NF-479",
+          "reason": "damaged_item",
+          "refund_amount": 81.75
+        }
+      },
+      "rationale": "2*31.50+18.75=81.75; intact items excluded.",
+      "source_evidence": "For order NF-479, propose the paid value of these damaged goods only: two plates at INR 31.50 each and one cup at INR 18.75. Three intact cups at the same price stay with me.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-13",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "PG-580",
+          "reason": "wrong_item",
+          "refund_amount": 205
+        }
+      },
+      "rationale": "240-35=205, not list price.",
+      "source_evidence": "Order PG-580 contains a wrong-colour scarf. Its listed price was INR 240, reduced by an INR 35 item discount; I paid the difference. Propose exactly the discounted price for that scarf.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-14",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "RH-691",
+          "reason": "not_received",
+          "refund_amount": 16.5
+        }
+      },
+      "rationale": "82.50/5=16.50, one missing unit.",
+      "source_evidence": "Order RH-691 was a set of five identical coasters for INR 82.50 in total. One coaster did not arrive. Propose the equal share of the total for that missing coaster only.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-15",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "SJ-702",
+          "reason": "changed_mind",
+          "refund_amount": 180
+        }
+      },
+      "rationale": "min(410/2,180)=180.",
+      "source_evidence": "I no longer want order SJ-702. Its item price is INR 410. Propose half that price, but limit my requested proposal to INR 180 if half is higher.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-16",
+      "gold": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "TK-813",
+          "reason": "damaged_item",
+          "refund_amount": 86.4
+        }
+      },
+      "rationale": "Explicit replacement of requested amount.",
+      "source_evidence": "For damaged order TK-813, my first email asked for INR 92 based on an estimate. The invoice now confirms INR 86.40. Ignore that earlier estimate and propose the invoice amount instead.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-17",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "get_order_status",
+        "missing_fields": [
+          "order_id"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Only status order identifier is absent.",
+      "source_evidence": "Please fetch the status of my parcel. I have not got the order identifier with me.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-18",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "check_refund_eligibility",
+        "missing_fields": [
+          "reason"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Eligibility order known, reason missing.",
+      "source_evidence": "Check refund eligibility for order UA-924. I have not explained why I want a refund yet.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-19",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "propose_refund",
+        "missing_fields": [
+          "reason",
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Proposal known, both reason and amount absent.",
+      "source_evidence": "Please prepare a refund proposal for order VB-135. I will explain the problem and tell you the amount after you ask.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-20",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "propose_refund",
+        "missing_fields": [
+          "order_id",
+          "reason",
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "All three required proposal arguments absent.",
+      "source_evidence": "Please create a refund proposal. I have not provided an order reference, a reason, or an amount.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-21",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "propose_refund",
+        "missing_fields": [
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Equal share cannot be derived without total quantity.",
+      "source_evidence": "The item line for order WC-246 totals INR 132 for identical pens, but the invoice does not say how many pens were in the pack. One never arrived. Propose the price of just that missing pen.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-22",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "propose_refund",
+        "missing_fields": [
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Cannot allocate basket discount to one item.",
+      "source_evidence": "I received a wrong item in order XD-357. Its list price is INR 300; the overall basket discount was INR 60, with no allocation by item. Propose the net price I paid for this item.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-23",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "propose_refund",
+        "missing_fields": [
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Shipping is not an item price; no amount derivation.",
+      "source_evidence": "Order YE-468 has three cracked mugs. Propose their combined item price, excluding delivery. I only know delivery cost INR 55; I have not supplied any mug price.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-24",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "propose_refund",
+        "missing_fields": [
+          "refund_amount"
+        ],
+        "reason_code": "ambiguous_reference"
+      },
+      "rationale": "Two unresolved candidate requested amounts.",
+      "source_evidence": "For torn order ZF-579, I am considering asking for a proposal of INR 70 or INR 95. I have not selected either amount; please ask which before preparing it.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-25",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "get_order_status",
+        "missing_fields": [
+          "order_id"
+        ],
+        "reason_code": "ambiguous_reference"
+      },
+      "rationale": "Two plausible unresolved lookup order IDs.",
+      "source_evidence": "There are two purchases of the same charger, orders AX-680 and BY-791. I need a delivery status lookup for one charger, but cannot identify which purchase I mean.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-26",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": null,
+        "missing_fields": [],
+        "reason_code": "ambiguous_intent"
+      },
+      "rationale": "Customer explicitly leaves action unresolved.",
+      "source_evidence": "Order CZ-802 arrived broken. I have INR 45 in mind, but I have not decided whether I want an eligibility check or a refund proposal. Ask me which service to use.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-27",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "propose_refund",
+        "missing_fields": [
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Nonpositive refund fails required argument domain.",
+      "source_evidence": "I changed my mind about order DA-913. Please prepare a refund proposal for INR 0; I have not supplied a valid positive replacement amount.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-28",
+      "gold": {
+        "type": "clarification",
+        "target_tool_name": "check_refund_eligibility",
+        "missing_fields": [
+          "reason"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Requested tool known; reason outside available enum and alternatives denied.",
+      "source_evidence": "Please check refund eligibility for order EB-124. My reason is that the purchase earned fewer reward points than I expected. Nothing is damaged, missing, wrong or unwanted.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-29",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "informational_request"
+      },
+      "rationale": "General advice question, no specific order action.",
+      "source_evidence": "What information should I keep ready before contacting a shop about a delayed order?",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-30",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "informational_request"
+      },
+      "rationale": "Terminology question, not lookup.",
+      "source_evidence": "In a shopping support system, what does refund eligibility mean?",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-31",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "informational_request"
+      },
+      "rationale": "Hypothetical seeks information, not execution.",
+      "source_evidence": "If a customer has a broken item but no receipt number, what should a support assistant ask for?",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-32",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "informational_request"
+      },
+      "rationale": "General comparison without personal action request.",
+      "source_evidence": "Which is usually more useful first: checking a parcel status or asking the seller about a refund? I am asking for general advice only.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-33",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "unsupported_request"
+      },
+      "rationale": "Address mutation unavailable.",
+      "source_evidence": "Please change the shipping address on order FG-235 to my office. Do not just read me its status.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-34",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "unsupported_request"
+      },
+      "rationale": "Voucher application tool unavailable.",
+      "source_evidence": "Apply my voucher SAVE20 to order GH-346 and reduce the bill.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-35",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "unsupported_request"
+      },
+      "rationale": "Exchange requested; no substitution with available refund tools.",
+      "source_evidence": "Order HJ-457 is the wrong size. Exchange it for size 10, please; I do not want a refund or an eligibility check.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-36",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "unsupported_request"
+      },
+      "rationale": "Actual payment unavailable despite order/reason-like context.",
+      "source_evidence": "For order JK-568, transfer INR 175 back to my bank now. I am requesting the actual payment, not a simulated proposal.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-37",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "no_action_requested"
+      },
+      "rationale": "Acknowledgement contains no new request.",
+      "source_evidence": "Thanks, I have received the tracking update for order KL-679. That answers my question.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-38",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "no_action_requested"
+      },
+      "rationale": "Future contingency explicitly lacks present authorization.",
+      "source_evidence": "If my parcel for order LM-780 fails to arrive next week, I might ask you to check refund eligibility. I am not asking for any action today.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-39",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "no_action_requested"
+      },
+      "rationale": "Explicitly withdraws only live request.",
+      "source_evidence": "Please check order MN-891. Actually, stop that lookup: I found the tracking page myself. I am just recording this note now.",
+      "review_status": "author checked before any model generation"
+    },
+    {
+      "example_id": "portfolio-v5-holdout-40",
+      "gold": {
+        "type": "no_tool",
+        "reason_code": "no_action_requested"
+      },
+      "rationale": "Past reported proposal does not authorize another.",
+      "source_evidence": "Yesterday a representative proposed INR 60 for damaged order NP-902. I am telling you what happened, without requesting another check or proposal.",
+      "review_status": "author checked before any model generation"
+    }
+  ]
+}

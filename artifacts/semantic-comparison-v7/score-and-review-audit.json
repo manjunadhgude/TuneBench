@@ -1,0 +1,993 @@
+{
+  "status": "pass",
+  "examples": 40,
+  "generation_reruns": 0,
+  "reviewer_is_independent_model": false,
+  "human_annotation": false,
+  "method": "Same assistant reparses original model text, recomputes canonical scores and review arithmetic, and verifies frozen source/model/data/runtime hashes. This is a separate computational check, not external independent review.",
+  "versions": {
+    "legacy": {
+      "raw-first": {
+        "correct": 34,
+        "total": 40,
+        "schema_valid": 40,
+        "correct_tool_calls": 14,
+        "tool_call_cases": 16,
+        "correct_clarifications": 8,
+        "clarification_cases": 12,
+        "correct_no_tool": 12,
+        "no_tool_cases": 12
+      },
+      "final": {
+        "correct": 23,
+        "total": 40,
+        "schema_valid": 34,
+        "correct_tool_calls": 3,
+        "tool_call_cases": 16,
+        "correct_clarifications": 8,
+        "clarification_cases": 12,
+        "correct_no_tool": 12,
+        "no_tool_cases": 12
+      },
+      "pipeline": {
+        "primary_generations": 51,
+        "review_generations": 0,
+        "total_generation_records": 51,
+        "review_completion_tokens": 0,
+        "refund_calculations": 0,
+        "active_seconds": 272.6076640320389,
+        "incorrect_accepted_calls": [],
+        "accepted_calls": 3,
+        "lost_correct_first": [
+          "portfolio-v5-holdout-14",
+          "portfolio-v5-holdout-10",
+          "portfolio-v5-holdout-02",
+          "portfolio-v5-holdout-04",
+          "portfolio-v5-holdout-03",
+          "portfolio-v5-holdout-07",
+          "portfolio-v5-holdout-16",
+          "portfolio-v5-holdout-06",
+          "portfolio-v5-holdout-08",
+          "portfolio-v5-holdout-05",
+          "portfolio-v5-holdout-11"
+        ],
+        "repaired_first_errors": [],
+        "runtime_errors": 0
+      },
+      "failures": [
+        {
+          "example_id": "portfolio-v5-holdout-14",
+          "prompt": "Order RH-691 was a set of five identical coasters for INR 82.50 in total. One coaster did not arrive. Propose the equal share of the total for that missing coaster only.",
+          "expected": {
+            "arguments": {
+              "order_id": "RH-691",
+              "reason": "not_received",
+              "refund_amount": 16.5
+            },
+            "tool_name": "propose_refund",
+            "type": "tool_call"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-10",
+          "prompt": "Order LD-257 contains a lamp priced at INR 680 and a separate refundable deposit of INR 90. The lamp is broken. Propose only its stated price, excluding the deposit.",
+          "expected": {
+            "arguments": {
+              "order_id": "LD-257",
+              "reason": "damaged_item",
+              "refund_amount": 680
+            },
+            "tool_name": "propose_refund",
+            "type": "tool_call"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-22",
+          "prompt": "I received a wrong item in order XD-357. Its list price is INR 300; the overall basket discount was INR 60, with no allocation by item. Propose the net price I paid for this item.",
+          "expected": {
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "propose_refund",
+            "type": "clarification"
+          },
+          "accepted": {
+            "type": "no_tool",
+            "reason_code": "unsupported_request"
+          },
+          "status": "no_tool",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-02",
+          "prompt": "Purchases in chronological order: ID elm/19, a kettle; ID oak/24, a flask; ID ash/27, a pan. Please look up delivery status for my most recent purchase.",
+          "expected": {
+            "arguments": {
+              "order_id": "ash/27"
+            },
+            "tool_name": "get_order_status",
+            "type": "tool_call"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "order_id must match the resolved literal order reference"
+          ],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-04",
+          "prompt": "I placed order QL-810 for a 250 rupee bag and order QL-811 for a 480 rupee bag. Fetch the delivery status of the less expensive bag.",
+          "expected": {
+            "arguments": {
+              "order_id": "QL-810"
+            },
+            "tool_name": "get_order_status",
+            "type": "tool_call"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "Should I retrieve the status for order QL-810 or QL-811?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-03",
+          "prompt": "A forwarded note says \"check order AG-220\". That was from a different customer. My own order is BH-331; please retrieve its status.",
+          "expected": {
+            "arguments": {
+              "order_id": "BH-331"
+            },
+            "tool_name": "get_order_status",
+            "type": "tool_call"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "order_id must match the resolved literal order reference"
+          ],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-07",
+          "prompt": "Order HM-864 was intended as a gift, but I decided to keep it. Wait, my final decision is that I no longer want it after all. Check whether I can get a refund.",
+          "expected": {
+            "arguments": {
+              "order_id": "HM-864",
+              "reason": "changed_mind"
+            },
+            "tool_name": "check_refund_eligibility",
+            "type": "tool_call"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "order_id"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the order ID you would like to check for refund eligibility?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-16",
+          "prompt": "For damaged order TK-813, my first email asked for INR 92 based on an estimate. The invoice now confirms INR 86.40. Ignore that earlier estimate and propose the invoice amount instead.",
+          "expected": {
+            "arguments": {
+              "order_id": "TK-813",
+              "reason": "damaged_item",
+              "refund_amount": 86.4
+            },
+            "tool_name": "propose_refund",
+            "type": "tool_call"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "refund_amount must match explicit or exactly derived monetary evidence"
+          ],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-06",
+          "prompt": "Order GR-751: I selected size 9 but the supplied shoes are size 7. Please check refund eligibility for the size mismatch.",
+          "expected": {
+            "arguments": {
+              "order_id": "GR-751",
+              "reason": "wrong_item"
+            },
+            "tool_name": "check_refund_eligibility",
+            "type": "tool_call"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the correct reason for refund eligibility?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-08",
+          "prompt": "The carrier marked order JV-903 delivered, but nothing arrived at my address. Ticket CS-882 is my support ticket. Check refund eligibility for the missing delivery.",
+          "expected": {
+            "arguments": {
+              "order_id": "JV-903",
+              "reason": "not_received"
+            },
+            "tool_name": "check_refund_eligibility",
+            "type": "tool_call"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the reason for the refund eligibility check?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-19",
+          "prompt": "Please prepare a refund proposal for order VB-135. I will explain the problem and tell you the amount after you ask.",
+          "expected": {
+            "missing_fields": [
+              "reason",
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "propose_refund",
+            "type": "clarification"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What amount should I use for the refund proposal?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-23",
+          "prompt": "Order YE-468 has three cracked mugs. Propose their combined item price, excluding delivery. I only know delivery cost INR 55; I have not supplied any mug price.",
+          "expected": {
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "propose_refund",
+            "type": "clarification"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount",
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the price of each mug and what is the reason for the refund?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-05",
+          "prompt": "The seam of the backpack in order FC-620 has split open. Check whether this qualifies for a refund; I am not asking you to propose an amount.",
+          "expected": {
+            "arguments": {
+              "order_id": "FC-620",
+              "reason": "damaged_item"
+            },
+            "tool_name": "check_refund_eligibility",
+            "type": "tool_call"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "reason is not supported by the resolved request evidence"
+          ],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-28",
+          "prompt": "Please check refund eligibility for order EB-124. My reason is that the purchase earned fewer reward points than I expected. Nothing is damaged, missing, wrong or unwanted.",
+          "expected": {
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "check_refund_eligibility",
+            "type": "clarification"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "What is the correct reason for refund eligibility? The only valid reasons are damaged_item, wrong_item, not_received, or changed_mind."
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-13",
+          "prompt": "Order PG-580 contains a wrong-colour scarf. Its listed price was INR 240, reduced by an INR 35 item discount; I paid the difference. Propose exactly the discounted price for that scarf.",
+          "expected": {
+            "arguments": {
+              "order_id": "PG-580",
+              "reason": "wrong_item",
+              "refund_amount": 205
+            },
+            "tool_name": "propose_refund",
+            "type": "tool_call"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "order_id",
+              "refund_amount",
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the correct order ID and refund amount for the wrong-colour scarf?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-11",
+          "prompt": "The item in order ME-368 cost INR 360. It arrived with a crack; I want a proposal for 25 percent of that item price. The INR 40 postage is excluded.",
+          "expected": {
+            "arguments": {
+              "order_id": "ME-368",
+              "reason": "damaged_item",
+              "refund_amount": 90
+            },
+            "tool_name": "propose_refund",
+            "type": "tool_call"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What is the exact refund amount you would like to propose based on 25 percent of the item price (INR 360)?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        },
+        {
+          "example_id": "portfolio-v5-holdout-12",
+          "prompt": "For order NF-479, propose the paid value of these damaged goods only: two plates at INR 31.50 each and one cup at INR 18.75. Three intact cups at the same price stay with me.",
+          "expected": {
+            "arguments": {
+              "order_id": "NF-479",
+              "reason": "damaged_item",
+              "refund_amount": 81.75
+            },
+            "tool_name": "propose_refund",
+            "type": "tool_call"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What should the refund amount be based on the damaged goods?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": []
+        }
+      ]
+    },
+    "candidate": {
+      "raw-first": {
+        "correct": 34,
+        "total": 40,
+        "schema_valid": 40,
+        "correct_tool_calls": 14,
+        "tool_call_cases": 16,
+        "correct_clarifications": 8,
+        "clarification_cases": 12,
+        "correct_no_tool": 12,
+        "no_tool_cases": 12
+      },
+      "final": {
+        "correct": 30,
+        "total": 40,
+        "schema_valid": 34,
+        "correct_tool_calls": 15,
+        "tool_call_cases": 16,
+        "correct_clarifications": 6,
+        "clarification_cases": 12,
+        "correct_no_tool": 9,
+        "no_tool_cases": 12
+      },
+      "pipeline": {
+        "primary_generations": 48,
+        "review_generations": 47,
+        "total_generation_records": 95,
+        "review_completion_tokens": 2753,
+        "refund_calculations": 9,
+        "active_seconds": 751.6778846891248,
+        "incorrect_accepted_calls": [
+          "portfolio-v5-holdout-40"
+        ],
+        "accepted_calls": 16,
+        "lost_correct_first": [
+          "portfolio-v5-holdout-40",
+          "portfolio-v5-holdout-36",
+          "portfolio-v5-holdout-27",
+          "portfolio-v5-holdout-35",
+          "portfolio-v5-holdout-21"
+        ],
+        "repaired_first_errors": [
+          "portfolio-v5-holdout-13"
+        ],
+        "runtime_errors": 0
+      },
+      "failures": [
+        {
+          "example_id": "portfolio-v5-holdout-40",
+          "prompt": "Yesterday a representative proposed INR 60 for damaged order NP-902. I am telling you what happened, without requesting another check or proposal.",
+          "expected": {
+            "reason_code": "no_action_requested",
+            "type": "no_tool"
+          },
+          "accepted": {
+            "type": "tool_call",
+            "tool_name": "propose_refund",
+            "arguments": {
+              "order_id": "NP-902",
+              "refund_amount": 60,
+              "reason": "damaged_item"
+            }
+          },
+          "status": "validated",
+          "errors": [],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"Customer explicitly states a representative proposed INR 60 for a damaged order, indicating a clear request for refund action. The no_tool decision ignores this active request.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "Customer explicitly states a representative proposed INR 60 for a damaged order, indicating a clear request for refund action. The no_tool decision ignores this active request.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "cc432820542988d701684cd5822ce9348b4a94c17fba5c5a4f25675b0b857cce",
+              "usage": {
+                "prompt_tokens": 856,
+                "completion_tokens": 52,
+                "total_tokens": 908
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            },
+            {
+              "raw_output": "{\"reason\": \"Customer confirms a prior proposal of INR 60 for damaged item in order NP-902 and states no further check or proposal is requested. The reason 'damaged_item' matches the stated event, and the amount aligns with the proposed value.\", \"calculation\": \"60\", \"verdict\": \"supported\"}",
+              "calculation": "60",
+              "calculation_result": "60",
+              "calculation_error": null,
+              "verdict": "supported",
+              "reason": "Customer confirms a prior proposal of INR 60 for damaged item in order NP-902 and states no further check or proposal is requested. The reason 'damaged_item' matches the stated event, and the amount aligns with the proposed value.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "c25d4fb0114215146a159294a6ac2d01789da05d397901e9ae3292fcc679471e",
+              "usage": {
+                "prompt_tokens": 888,
+                "completion_tokens": 72,
+                "total_tokens": 960
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 2
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-22",
+          "prompt": "I received a wrong item in order XD-357. Its list price is INR 300; the overall basket discount was INR 60, with no allocation by item. Propose the net price I paid for this item.",
+          "expected": {
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "propose_refund",
+            "type": "clarification"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "Semantic review: The customer specifies a wrong item but does not explicitly state the reason code or provide clarity on whether this qualifies for refund eligibility. The missing 'reason' field and ambiguous reference prevent qualification of refund eligibility."
+          ],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"The customer specifies a wrong item and requests the net price paid, which requires calculating the item's price after discount. This involves order details and pricing logic, not an unsupported action.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "The customer specifies a wrong item and requests the net price paid, which requires calculating the item's price after discount. This involves order details and pricing logic, not an unsupported action.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "a18fa789af1e810653e54497845f30d4b77ea16302c52bab7b2790a9db6822cd",
+              "usage": {
+                "prompt_tokens": 875,
+                "completion_tokens": 55,
+                "total_tokens": 930
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            },
+            {
+              "raw_output": "{\"reason\": \"The customer specifies a wrong item but does not explicitly state the reason code or provide clarity on whether this qualifies for refund eligibility. The missing 'reason' field and ambiguous reference prevent qualification of refund eligibility.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "The customer specifies a wrong item but does not explicitly state the reason code or provide clarity on whether this qualifies for refund eligibility. The missing 'reason' field and ambiguous reference prevent qualification of refund eligibility.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "3205596387a469b5d99ff8e665761c39a252c07096342225b42a3d0870b92e63",
+              "usage": {
+                "prompt_tokens": 923,
+                "completion_tokens": 59,
+                "total_tokens": 982
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 2
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-36",
+          "prompt": "For order JK-568, transfer INR 175 back to my bank now. I am requesting the actual payment, not a simulated proposal.",
+          "expected": {
+            "reason_code": "unsupported_request",
+            "type": "no_tool"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "Semantic review: The customer explicitly requests actual payment transfer, which is not supported as no tool exists for real refunds or payments. Only simulated proposals are allowed via propose_refund."
+          ],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"The customer explicitly requests actual payment transfer, which is not supported as no tool exists for real payments or order modifications. Only simulated proposals are allowed via propose_refund.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "The customer explicitly requests actual payment transfer, which is not supported as no tool exists for real payments or order modifications. Only simulated proposals are allowed via propose_refund.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "24d999219b9872e2b306d338a58a73f325570da5d8f2f8659fcf0a3a781af507",
+              "usage": {
+                "prompt_tokens": 856,
+                "completion_tokens": 52,
+                "total_tokens": 908
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            },
+            {
+              "raw_output": "{\"reason\": \"The customer explicitly requests actual payment transfer, which is not supported as no tool exists for real refunds or payments. Only simulated proposals are allowed via propose_refund.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "The customer explicitly requests actual payment transfer, which is not supported as no tool exists for real refunds or payments. Only simulated proposals are allowed via propose_refund.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "24d999219b9872e2b306d338a58a73f325570da5d8f2f8659fcf0a3a781af507",
+              "usage": {
+                "prompt_tokens": 856,
+                "completion_tokens": 51,
+                "total_tokens": 907
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 2
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-27",
+          "prompt": "I changed my mind about order DA-913. Please prepare a refund proposal for INR 0; I have not supplied a valid positive replacement amount.",
+          "expected": {
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "propose_refund",
+            "type": "clarification"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "outcome.arguments/refund_amount: 0 is less than or equal to the minimum of 0"
+          ],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"Customer explicitly states a refund of INR 0 and confirms no positive replacement amount is supplied. The proposed clarification asks for the refund amount, which is already specified in the message.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "Customer explicitly states a refund of INR 0 and confirms no positive replacement amount is supplied. The proposed clarification asks for the refund amount, which is already specified in the message.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "e11073790acc1531952651a75a4c8e6d7353164b1ae3c59f6de2071ad683c743",
+              "usage": {
+                "prompt_tokens": 890,
+                "completion_tokens": 55,
+                "total_tokens": 945
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-19",
+          "prompt": "Please prepare a refund proposal for order VB-135. I will explain the problem and tell you the amount after you ask.",
+          "expected": {
+            "missing_fields": [
+              "reason",
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "propose_refund",
+            "type": "clarification"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What amount should I use for the refund proposal?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"The customer has not specified a refund amount or provided enough detail to determine one, and the proposed action requests missing required information.\", \"calculation\": null, \"verdict\": \"supported\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "supported",
+              "reason": "The customer has not specified a refund amount or provided enough detail to determine one, and the proposed action requests missing required information.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "990b87a36cdf5b51a1f53540ce5d93461d25b201ed65fa918460f2663e56dffe",
+              "usage": {
+                "prompt_tokens": 885,
+                "completion_tokens": 42,
+                "total_tokens": 927
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-23",
+          "prompt": "Order YE-468 has three cracked mugs. Propose their combined item price, excluding delivery. I only know delivery cost INR 55; I have not supplied any mug price.",
+          "expected": {
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "propose_refund",
+            "type": "clarification"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "Semantic review: Customer mentions cracked mugs (damaged_item) but provides no mug prices or refund amount. Proposal requests missing data without a valid calculation or price source."
+          ],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"Customer mentions cracked mugs (damaged_item) but provides no mug prices or refund amount. Proposal requests missing data without grounding in supplied facts.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "Customer mentions cracked mugs (damaged_item) but provides no mug prices or refund amount. Proposal requests missing data without grounding in supplied facts.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "16b7a04537302b1f5d1553e3403846a4c0e392ceb0b9e38c397310aeb42a9a96",
+              "usage": {
+                "prompt_tokens": 908,
+                "completion_tokens": 48,
+                "total_tokens": 956
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            },
+            {
+              "raw_output": "{\"reason\": \"Customer mentions cracked mugs (damaged_item) but provides no mug prices or refund amount. Proposal requests missing data without a valid calculation or price source.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "Customer mentions cracked mugs (damaged_item) but provides no mug prices or refund amount. Proposal requests missing data without a valid calculation or price source.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "a92b3a2ac0f1e4edfb16ba4d2273ae7f0ef6088f0fa5d84b8b360602ad0f91be",
+              "usage": {
+                "prompt_tokens": 907,
+                "completion_tokens": 50,
+                "total_tokens": 957
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 2
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-28",
+          "prompt": "Please check refund eligibility for order EB-124. My reason is that the purchase earned fewer reward points than I expected. Nothing is damaged, missing, wrong or unwanted.",
+          "expected": {
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "check_refund_eligibility",
+            "type": "clarification"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "check_refund_eligibility",
+            "missing_fields": [
+              "reason"
+            ],
+            "reason_code": "ambiguous_reference",
+            "question": "What is the correct reason for refund eligibility? The only valid reasons are damaged_item, wrong_item, not_received, or changed_mind."
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"The customer's stated reason 'earned fewer reward points than expected' is not a valid refund reason per policy; only damaged_item, wrong_item, not_received, or changed_mind are eligible. The proposed clarification correctly identifies the missing/ambiguous reference to a valid reason.\", \"calculation\": null, \"verdict\": \"supported\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "supported",
+              "reason": "The customer's stated reason 'earned fewer reward points than expected' is not a valid refund reason per policy; only damaged_item, wrong_item, not_received, or changed_mind are eligible. The proposed clarification correctly identifies the missing/ambiguous reference to a valid reason.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "7623afa27f656c8e0596992cfaad27af9fb4c651eeda20701fe3bce29e908653",
+              "usage": {
+                "prompt_tokens": 912,
+                "completion_tokens": 71,
+                "total_tokens": 983
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-35",
+          "prompt": "Order HJ-457 is the wrong size. Exchange it for size 10, please; I do not want a refund or an eligibility check.",
+          "expected": {
+            "reason_code": "unsupported_request",
+            "type": "no_tool"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "Semantic review: Customer requests an exchange, not a refund or eligibility check. Exchanges are unsupported as no tool exists for them. The proposed no_tool is incorrect because the request clearly demands action (exchange), which cannot be fulfilled."
+          ],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"Customer requests an exchange, not a refund or eligibility check. Exchanges are unsupported as no tool exists for them. The proposed no_tool is incorrect because the request clearly demands action (exchange), which cannot be fulfilled.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "Customer requests an exchange, not a refund or eligibility check. Exchanges are unsupported as no tool exists for them. The proposed no_tool is incorrect because the request clearly demands action (exchange), which cannot be fulfilled.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "1423af8f40a65d04118064971b16fc64af0a04ad2075003a534849f99e3960e1",
+              "usage": {
+                "prompt_tokens": 856,
+                "completion_tokens": 62,
+                "total_tokens": 918
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            },
+            {
+              "raw_output": "{\"reason\": \"Customer requests an exchange, not a refund or eligibility check. Exchanges are unsupported as no tool exists for them. The proposed no_tool is incorrect because the request clearly demands action (exchange), which cannot be fulfilled.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "Customer requests an exchange, not a refund or eligibility check. Exchanges are unsupported as no tool exists for them. The proposed no_tool is incorrect because the request clearly demands action (exchange), which cannot be fulfilled.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "1423af8f40a65d04118064971b16fc64af0a04ad2075003a534849f99e3960e1",
+              "usage": {
+                "prompt_tokens": 856,
+                "completion_tokens": 62,
+                "total_tokens": 918
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 2
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-21",
+          "prompt": "The item line for order WC-246 totals INR 132 for identical pens, but the invoice does not say how many pens were in the pack. One never arrived. Propose the price of just that missing pen.",
+          "expected": {
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "target_tool_name": "propose_refund",
+            "type": "clarification"
+          },
+          "accepted": null,
+          "status": "blocked",
+          "errors": [
+            "Semantic review: The customer states one pen never arrived (not_received), but requests only the price of a single missing pen, not the full INR 132. The proposed refund amount does not calculate the unit price from the total.",
+            "Calculator: Calculation uses an unsupported or unsupplied number"
+          ],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"The customer specifies a missing pen from an order with total INR 132 for identical pens, implying the price per pen can be derived. The refund amount is not explicitly stated but logically follows from dividing the total by the number of pens (unspecified). A calculation is needed to derive the per-pen price.\", \"calculation\": null, \"verdict\": \"contradicted\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "contradicted",
+              "reason": "The customer specifies a missing pen from an order with total INR 132 for identical pens, implying the price per pen can be derived. The refund amount is not explicitly stated but logically follows from dividing the total by the number of pens (unspecified). A calculation is needed to derive the per-pen price.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "737313a76a30ee74c6a77a422e89569c9607aa793c7c7a052a3476cf3ed60bab",
+              "usage": {
+                "prompt_tokens": 908,
+                "completion_tokens": 84,
+                "total_tokens": 992
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            },
+            {
+              "raw_output": "{\"reason\": \"The customer states one pen never arrived (not_received), but requests only the price of a single missing pen, not the full INR 132. The proposed refund amount does not calculate the unit price from the total.\", \"calculation\": \"132/2\", \"verdict\": \"contradicted\"}",
+              "calculation": "132/2",
+              "calculation_result": null,
+              "calculation_error": "Calculation uses an unsupported or unsupplied number",
+              "verdict": "contradicted",
+              "reason": "The customer states one pen never arrived (not_received), but requests only the price of a single missing pen, not the full INR 132. The proposed refund amount does not calculate the unit price from the total.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "e592a0015bbdd23840e2a38b21a2e10b887a15edb1f6d2e5bfd186701ba021ee",
+              "usage": {
+                "prompt_tokens": 905,
+                "completion_tokens": 70,
+                "total_tokens": 975
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 2
+            }
+          ]
+        },
+        {
+          "example_id": "portfolio-v5-holdout-12",
+          "prompt": "For order NF-479, propose the paid value of these damaged goods only: two plates at INR 31.50 each and one cup at INR 18.75. Three intact cups at the same price stay with me.",
+          "expected": {
+            "arguments": {
+              "order_id": "NF-479",
+              "reason": "damaged_item",
+              "refund_amount": 81.75
+            },
+            "tool_name": "propose_refund",
+            "type": "tool_call"
+          },
+          "accepted": {
+            "type": "clarification",
+            "target_tool_name": "propose_refund",
+            "missing_fields": [
+              "refund_amount"
+            ],
+            "reason_code": "missing_required_information",
+            "question": "What should the refund amount be based on the damaged goods?"
+          },
+          "status": "clarification",
+          "errors": [],
+          "reviews": [
+            {
+              "raw_output": "{\"reason\": \"The customer specifies damaged goods (two plates and one cup) with exact prices, enabling a clear refund calculation. The missing field is the refund amount, which can be derived from the stated values.\", \"calculation\": null, \"verdict\": \"supported\"}",
+              "calculation": null,
+              "calculation_result": null,
+              "calculation_error": null,
+              "verdict": "supported",
+              "reason": "The customer specifies damaged goods (two plates and one cup) with exact prices, enabling a clear refund calculation. The missing field is the refund amount, which can be derived from the stated values.",
+              "model_id": "unsloth/Qwen3-4B-Instruct-2507-GGUF",
+              "weights_sha256": "3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597",
+              "prompt_sha256": "2bb6d4acabe6eb489744764dbce32bdcc969bf181bbbd5d408a95f818f3607b5",
+              "usage": {
+                "prompt_tokens": 914,
+                "completion_tokens": 56,
+                "total_tokens": 970
+              },
+              "kind": "probabilistic_model_review",
+              "max_tokens": 256,
+              "primary_attempt": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

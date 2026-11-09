@@ -124,8 +124,13 @@ def main():
                 page.get_by_role("button", name="Run request →", exact=True).click()
                 page.get_by_text("Live local Qwen ·", exact=False).first.wait_for(timeout=180000)
                 assert "The request could not run" not in page.locator("body").inner_text()
+                assert "Demo order TB-1001 is shipped." in page.locator("body").inner_text()
                 page.get_by_text("Raw responses & validation trace", exact=True).click()
                 assert page.get_by_text("Attempt 1", exact=True).is_visible()
+                assert page.get_by_text("Model review · attempt 1", exact=True).is_visible()
+                assert "probabilistic" in page.locator("body").inner_text() or (
+                    "Fallible model judgement" in page.locator("body").inner_text()
+                )
                 page.screenshot(path=str(args.assets / "tunebench-live.png"), full_page=True)
                 checks.append("Actual local Qwen response and its raw attempt are visible")
             assert not errors, errors

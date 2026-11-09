@@ -1,19 +1,15 @@
 # TuneBench
 
-**A CPU tool-calling workbench with a local language model, validated mock tools and reproducible evaluation.**
+**A CPU-based GenAI tool-calling workbench with model review, refund arithmetic checks, and reproducible evaluation.**
 
-TuneBench turns a fictional customer-support request into a tool call, a
-clarification, or a no-tool decision. Its Streamlit app shows the original model
-answer, validation, any repair and the simulated result. The evaluation framework
-keeps wrong, invalid and blocked answers in its reports.
+A fictional customer-support request becomes a tool call, a clarification, or a
+no-tool decision. The app shows the original model output, validation, any retry,
+and the simulated result. No GPU, paid API, or real customer account is needed.
 
-![TuneBench Playground: backend choice, request and inspectable result](docs/assets/tunebench-playground.png)
+![TuneBench Playground](docs/assets/tunebench-playground.png)
 
-[Demo recording](docs/assets/tunebench-demo.webm) ·
-[Architecture](docs/architecture.md) · [Interview guide](docs/interview-guide.md)
-
-The screenshot and recording currently show the retained v0.4 demo; v0.5 browser
-verification and replacement media are pending.
+[Demo recording](docs/assets/tunebench-demo.webm) · [Architecture](docs/architecture.md) ·
+[Interview guide](docs/interview-guide.md)
 
 ## Start the app
 
@@ -44,90 +40,71 @@ the design and limitations.
 
 | Mode | What runs |
 | --- | --- |
-| **Quick demo** | Deterministic Python rules and mock execution. This is not an LLM. |
-| **Live local Qwen** | Actual CPU generation, preferably Qwen3-4B-Instruct-2507 Q4_K_M through llama.cpp; the verified legacy Qwen2.5 snapshot is also supported. |
-| **Saved model replay** | Historical Qwen2.5 smoke responses. No new generation or tool execution. |
+| Quick demo | Deterministic Python rules; instant, no LLM |
+| Live local Qwen | Verified Qwen3-4B-Instruct-2507 Q4_K_M on CPU; legacy Qwen2.5 also supported |
+| Saved model replay | Historical Qwen2.5 answers to fixed inputs; no new generation or execution |
 
-The live backend never downloads a model implicitly or falls back to rules.
-Replay uses only its recorded questions. A rules result or replay must not be
-presented as current model accuracy or live generation.
+## How a live request works
 
-## Decision and execution
+1. Qwen generates one of three structured decisions using a JSON grammar.
+2. Python strictly parses the output and checks its complete JSON Schema.
+3. For Qwen3, a separate call to the same model reviews the decision against the
+   customer message. This review is probabilistic and can make mistakes.
+4. Refund proposals additionally require a bounded arithmetic expression. A Python
+   AST interpreter computes it using Decimal and compares it with the proposed
+   amount. It accepts only supplied numeric operands and restricted operators;
+   the model still has to select the correct facts and scope.
+5. A rejected decision can receive one primary retry. Every primary answer and
+   review remains visible; application code never substitutes a rules answer.
+6. Accepted tool calls pass the fictional store's policy checks before simulation.
 
-| Mock tool | Purpose |
-| --- | --- |
-| `get_order_status` | Read a fictional order's status |
-| `check_refund_eligibility` | Check the versioned mock refund policy |
-| `propose_refund` | Return a nonmutating simulated refund proposal |
+The three tools retrieve order status, check refund eligibility, and prepare a
+simulated refund proposal. Five demo orders use INR balances, a 30-day policy,
+and a fixed policy date of **9 November 2026**. Proposals never change balances
+or transfer money. Unknown orders and invalid policy requests are blocked.
 
-Five fictional orders use INR balances and a fixed policy date, **9 November 2026**.
-The policy checks a 30-day refund window, delivery conditions, remaining balance
-and monetary precision. No tool contacts a customer system, changes an order or
-transfers money.
+Qwen3 can use at most two primary generations and two review generations per
+request. The reviewer uses the same pinned weights in a separate cached session.
+It adds CPU latency and memory. The legacy model and quick rules mode retain their
+older evidence guards. A schema-valid decision is not necessarily correct.
 
-The live v0.5 path is **request → Qwen3/strong-v4 → constrained JSON → complete
-schema validation → tool-call grounding → mock execution or non-executing result**.
-The guard checks the requested action, references, reasons and monetary evidence,
-including exact calculations from supplied quantity/price or percentage/base facts.
-A tool call can use at most one visible schema or evidence repair. Failed calls
-are blocked; mock store and business-policy checks remain separate execution gates.
+## Measured results
 
-For a **schema-valid clarification or no-tool answer**, language-rule disagreements
-are advisory. They cannot trigger an evidence retry that turns the answer into an
-action. Schema errors can still use the bounded repair. The model generates every
-attempt; application code never replaces its answer with a rules result. Advisory
-notes and original outputs remain visible in the trace. These policies reduce
-unnecessary intervention but do not prove that the model's decision is correct.
+On the latest matched 40-question test, accepted final correctness changed from **23/40 to 30/40**, and correct final tool calls from **3/16 to 15/16**. Original first answers scored 34/40 and 34/40 respectively.
 
-## Quality evaluation
+The latest comparison is recorded in
+[semantic comparison](artifacts/semantic-comparison-v7/README.md), including all
+40 first answers, reviews, retries and final outcomes. It compares the same
+Qwen3 primary model and prompt, with and without the new review pipeline.
+Total compute is **not matched**: v0.7 adds review calls.
 
-The v0.5 system was selected using development data. Its first Qwen3 run scored
-37/40 strict successes; after revising public prompt examples it scored 40/40 on
-those **same practice cases**, with no repairs. This is tuned development coverage,
-not unseen accuracy. [Practice captures](artifacts/quality-development-v5/)
-retain the observed result.
+The model and implementation were frozen before the new 40 questions were
+written and run. The implementing assistant also authored/reviewed these
+fictional cases; there was no independent blind or human annotation. This is
+small portfolio evidence, not a production accuracy estimate. All failed and
+blocked cases stay in the denominator. Tool execution is disabled during scoring.
 
-The separate comparison runs frozen v0.4 and v0.5 on the **same 40 new fictional
-questions**. Its sources, data and model assets were frozen before either run.
-The full comparison and independent score audit are in progress; no new held-out
-score is claimed at this documentation checkpoint. See the
-[comparison protocol](docs/quality-comparison-protocol.md).
+Earlier measured comparisons remain visible:
 
-Model weights, quantization, runtime, prompt and guard change together. This is a
-comparison of complete systems, not a prompt/model ablation or evidence of
-fine-tuning. Raw first answers and accepted final decisions must both be reported.
-All questions remain in the denominator, including failures. The stratified data
-was authored and reviewed by assistants, with separate reviews blinded to the
-implementation; it has no independent human annotation. Scoring disables tool
-execution, so it does not measure real transaction success or establish production
-reliability. Further tuning after test results requires a new final test set.
+| Separate test cohort | Versions | First answers correct | Accepted final correct |
+| --- | --- | --- | --- |
+| 20 questions | v0.3 → v0.4 | 8 → 9 | 2 → **7** |
+| 40 questions, portfolio-v3 | v0.4 → v0.5 | 21 → 37 | 16 → 32 |
+| 40 harder questions, portfolio-v4 | v0.5 → v0.6 | 33 → 33 | 22 → 22 |
 
-Report tool-call, clarification and no-tool performance separately. A high overall
-score can hide correct tool calls being blocked. Accepted-call correctness, false
-blocks and incorrect accepted calls matter alongside the total score.
+The **7/20 result is retained**, together with its failure analysis. The stronger
+CPU model improved a separate matched system comparison, but the regex guard
+still rejected too many correct tool calls. On portfolio-v4, only 1/16 expected
+tool calls survived correctly in either version. That failure motivated semantic
+review and arithmetic validation. Different cohorts cannot support a direct
+7/20-to-new-score improvement claim.
 
-### Earlier measured result: why v0.5 was needed
+[Original 20-case comparison](artifacts/portfolio-version-comparison/README.md) ·
+[Stronger-model comparison](artifacts/quality-comparison-v5/README.md) ·
+[Unsuccessful guard revision](artifacts/guard-comparison-v6/README.md)
 
-On the earlier matched 20-question test, the same Qwen2.5 weights produced:
-
-| Decision evaluation | v0.3 | v0.4 |
-| --- | ---: | ---: |
-| Strictly correct first answer | 8/20 | 9/20 |
-| Schema-valid first answer | 13/20 | 19/20 |
-| Strictly correct accepted final decision | 2/20 | **7/20** |
-
-v0.4 lost five correct first answers through guard/repair intervention and repaired
-three errors. That weak 7/20 final result motivated the stronger CPU model and
-revised guard policy. It remains visible in the
-[historical comparison and audit](artifacts/portfolio-version-comparison/README.md).
-It must not be compared directly with a score from different questions.
-
-Other historical evidence is separate: the original v0.3 portfolio holdout scored
-7/20 raw and 3/20 final; the first smoke scored 7/20; a paired 12-case development
-prompt experiment changed 2/12 to 5/12. See the
-[portfolio results](artifacts/portfolio-evaluation/README.md),
-[smoke evidence](artifacts/baseline-smoke/README.md) and
-[paired prompt experiment](artifacts/prompt-development-v2/README.md).
+Development captures, including the 35/40 exploration on already observed cases,
+are labeled as development and kept separate. No fine-tuning was performed.
 
 ## Optional: run the actual CPU model
 
@@ -149,8 +126,8 @@ CC=/usr/bin/gcc CXX=/usr/bin/g++ CMAKE_BUILD_PARALLEL_LEVEL=4 \
 
 In **Live local Qwen**, enter the downloaded GGUF file or its containing directory
 in **Local model path**. The first native-library build can take a few minutes.
-Allow additional RAM for context and runtime beyond the weight file; timing and
-memory depend on hardware and request length. The backend uses zero GPU layers,
+Use a machine with at least 16 GB RAM for live primary generation plus semantic
+review. The quick demo needs no model. Timing depends on hardware and request length. The backend uses zero GPU layers,
 four generation threads, an 8192-token context and at most 256 new tokens per
 attempt. It uses `strong-v4`, ChatML and llama.cpp JSON-schema grammar, followed by
 complete application validation. No Hugging Face token or paid API is required.
@@ -165,36 +142,32 @@ experiment support.
 ```bash
 .venv/bin/tunebench orders
 .venv/bin/tunebench assist --message 'Check the status of order TB-1001.'
-.venv/bin/tunebench evaluate --gold GOLD.jsonl --predictions PREDICTIONS.jsonl \
-  --output REPORT.json
 bash scripts/check.sh
 ```
 
-The current v0.5 local suite passes **469 tests**, lint, formatting and CLI/data
-workflows. Core-only checks pass 459 with five optional modules/checks skipped.
-Fresh app setup passes 465 tests with four optional checks skipped; its documented
-launch serves the app. A standalone v0.5 wheel also runs outside the checkout.
-Current browser verification remains pending. See the
-[v0.5 release record](docs/assets/release-checks-v0.5.json); historical v0.4 checks
-remain in [their retained record](docs/assets/release-checks-v0.4.json).
-CI runs CPU checks without model downloads or a GPU. Gold-derived fixtures test
-the evaluator; their perfect score is not model accuracy.
+The completed source checks pass **553 tests**, lint, formatting, CLI execution,
+synthetic-data auditing, and completion-only training export. Unit tests check
+software behavior; their count is not model accuracy. See the
+[v0.7 release evidence](docs/assets/release-checks-v0.7.json) for package and browser checks.
+CI runs without model downloads or a GPU. Native llama.cpp inference is optional.
 
-## Explore and present
+## Explore the project
 
-| Path | What to inspect |
+| Path | Contents |
 | --- | --- |
-| `app.py` | Playground, Evaluation and Project tabs |
-| `src/tunebench/` | Shared assistant, grounding, mock tools, local backends and scoring |
-| `datasets/portfolio-v1/` | Earlier 40-development / 20-holdout data |
-| `datasets/portfolio-v2/` | Evaluated earlier 20-case matched comparison |
-| `datasets/portfolio-v3/` | Frozen, separately reviewed 40-case comparison |
-| `tests/` | Offline unit, integration and UI checks |
-| `artifacts/` | Original outputs, protocols, metrics and failures |
-| `docs/` | Architecture, walkthrough and interview preparation |
+| `app.py` | Playground, Evaluation, and Project tabs |
+| `src/tunebench/assistant.py` | Shared decision, review, retry, and mock dispatch pipeline |
+| `src/tunebench/semantic_guard.py` | Model judgement, preserved raw review, runtime identity |
+| `src/tunebench/safe_calculator.py` | Restricted AST/Decimal arithmetic; no Python eval |
+| `datasets/portfolio-v5/` | Frozen new cases, author rationale, hashes and limitations |
+| `artifacts/` | Original outputs, protocols, failures, scores, computational audits |
+| `tests/` | Offline contracts, scoring, tools, CLI, and UI checks |
 
-Use the [walkthrough](docs/demo-script.md), [interview guide](docs/interview-guide.md),
-[resume wording](docs/resume-bullets.md) and [completion checklist](docs/portfolio-completion.md).
-Describe contributions you understand and can demonstrate, including assistance
-used during development. The original 1,250-record synthetic research benchmark
-remains candidate/unreviewed; it is separate from these portfolio datasets.
+Use the [demo walkthrough](docs/demo-script.md), [resume wording](docs/resume-bullets.md),
+and [completion record](docs/portfolio-completion.md). Present contributions you
+understand and can demonstrate, including development assistance.
+
+The original research framework includes unreviewed synthetic candidates and
+optional LoRA/QLoRA runners. Those are future experiments; no adapter was trained.
+Human evaluation, broad adversarial testing, real integrations, monitoring, and
+production deployment remain outside this portfolio simulation.

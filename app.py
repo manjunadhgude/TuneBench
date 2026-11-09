@@ -270,6 +270,10 @@ with playground:
                     "Local model path", value=default_model_path(), key="model_path"
                 )
                 st.caption("Choose a downloaded Qwen3 GGUF file or legacy Qwen snapshot directory.")
+                st.caption(
+                    "Qwen3 adds model review and refund arithmetic checks. "
+                    "Allow extra CPU time and at least 16 GB RAM."
+                )
             st.selectbox(
                 "Start with an example", list(PRESETS), key="preset", on_change=choose_preset
             )
@@ -417,6 +421,22 @@ with evaluation:
                 rows.append(row)
             st.caption("Final correctness by expected decision; every case stays in its group.")
             st.dataframe(rows, hide_index=True, use_container_width=True)
+            if directory == "artifacts/semantic-comparison-v7":
+                costs = []
+                for version, report in final_reports.items():
+                    metadata = report["inference_metadata"]
+                    pipeline = metadata["pipeline"]
+                    costs.append(
+                        {
+                            "Version": version,
+                            "Primary generations": pipeline["generation_attempts"],
+                            "Review generations": pipeline["review_generations"],
+                            "Total model generations": pipeline["total_generation_records"],
+                            "Recorded CPU seconds": round(metadata["active_seconds"], 1),
+                        }
+                    )
+                st.caption("Recorded cost across all 40 cases; includes loading and retries.")
+                st.dataframe(costs, hide_index=True, use_container_width=True)
         st.caption(
             "Final answers include validation and at most one repair; blocked cases count "
             "as failures. These are small, assistant-authored test data. No tool executed "
@@ -500,6 +520,7 @@ with project:
             "- Strict parsing, validation, and raw-response capture.\n"
             "- Deterministic simulated order tools.\n"
             "- Real local Qwen inference and versioned prompts.\n"
+            "- Qwen3 decision review and checked refund arithmetic.\n"
             "- Repeatable evaluation, tests, and continuous integration."
         )
     with second:
