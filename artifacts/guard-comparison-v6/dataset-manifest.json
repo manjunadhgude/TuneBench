@@ -1,0 +1,28 @@
+{
+  "dataset_id": "tunebench-portfolio-v4",
+  "status": "frozen_before_guard_comparison",
+  "author": "assistant",
+  "review": "Author annotation ledger; parent semantic review after inference-source freeze. No independent human annotation. No model outputs observed.",
+  "files": {
+    "holdout": {
+      "path": "holdout.jsonl",
+      "sha256": "0a9790136ccd9d1b8b3b6cc3f7453791271e9e899cac1c51699a6d900e47aafa",
+      "bytes": 75488,
+      "examples": 40,
+      "outcomes": {
+        "clarification": 12,
+        "tool_call": 16,
+        "no_tool": 12
+      }
+    }
+  },
+  "semantic_review_ledger": {
+    "path": "annotation-ledger.json",
+    "sha256": "773ef2ae24afb3c39f48aaeef5b515006d90110cd043e9ebed11c7a53c767aca",
+    "bytes": 29796
+  },
+  "limitations": [
+    "Small targeted fictional set; no production or human-annotation claim.",
+    "Broader reasoning cases include multiple item lines and derived amounts. No code changes after source freeze or test inspection."
+  ]
+}

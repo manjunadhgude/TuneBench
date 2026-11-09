@@ -52,6 +52,7 @@ def main():
             "execute_tools": False,
         },
     )
+    frozen_sources = {path: hashlib.sha256(path.read_bytes()).hexdigest() for path in sources}
     raw, final, cases = [], [], []
     with (args.output / "cases.jsonl").open("x") as handle:
         for index, task in enumerate(tasks, 1):
@@ -69,6 +70,11 @@ def main():
             first = result["attempts"][0] if result["attempts"] else {}
             raw.append({"example_id": task["example_id"], "outcome": first.get("parsed_outcome")})
             final.append({"example_id": task["example_id"], "outcome": result["accepted_outcome"]})
+            if any(
+                hashlib.sha256(path.read_bytes()).hexdigest() != digest
+                for path, digest in frozen_sources.items()
+            ):
+                raise RuntimeError("Development source changed during the run; captures preserved")
             print(f"{index}/{len(tasks)}: {result['status']}", flush=True)
             if result["status"] == "error":
                 raise RuntimeError(result["user_message"])

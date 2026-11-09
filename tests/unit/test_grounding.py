@@ -533,3 +533,191 @@ def test_currency_policy_is_an_execution_gate_not_a_canonical_decision_restricti
         analysis,
         execute_tools=False,
     )
+
+
+def test_direct_value_selection_excludes_a_negated_earlier_amount():
+    analysis = analyze(
+        "Prepare a refund proposal for damaged order Cedar-62. "
+        "Use 18.40, not the earlier amount of 23.90."
+    )
+    assert analysis["amounts"] == [Decimal("18.40")]
+    assert (
+        ground_outcome(
+            call("propose_refund", order_id="Cedar-62", reason="damaged_item", refund_amount=18.4),
+            analysis,
+            execute_tools=False,
+        )
+        == []
+    )
+    assert ground_outcome(
+        call("propose_refund", order_id="Cedar-62", reason="damaged_item", refund_amount=23.9),
+        analysis,
+        execute_tools=False,
+    )
+    rejected = next(x for x in analysis["evidence"]["amounts"] if x["value"] == "23.90")
+    assert rejected["excluded"]
+
+
+@pytest.mark.parametrize(
+    "rejection",
+    [
+        "Do not use 23.90.",
+        "Don't choose the amount of 23.90.",
+        "Never select the earlier amount of 23.90.",
+        "Not$23.90.",
+    ],
+)
+def test_a_rejected_amount_is_not_authorized_by_a_selection_keyword(rejection):
+    analysis = analyze(
+        "Prepare a refund proposal for damaged order Cedar-62. "
+        + rejection
+        + " No refund amount is specified."
+    )
+    assert analysis["amounts"] == []
+    assert ground_outcome(
+        call("propose_refund", order_id="Cedar-62", reason="damaged_item", refund_amount=23.9),
+        analysis,
+        execute_tools=False,
+    )
+
+
+def test_correct_order_confirmation_selects_current_literal_reference():
+    analysis = analyze(
+        "My previous message gave Cedar-26. The correct order is Cedar-62. "
+        "Please track the correct order."
+    )
+    assert analysis["order_ids"] == ["Cedar-62"]
+    assert ground_outcome(call(order_id="Cedar-62"), analysis, execute_tools=False) == []
+    assert ground_outcome(call(order_id="Cedar-26"), analysis, execute_tools=False)
+
+
+@pytest.mark.parametrize(
+    "description",
+    [
+        "Use order Cedar-26 or Cedar-62.",
+        "Use order Cedar-26 and use order Cedar-62.",
+        "The correct order is Cedar-26 or Cedar-62; I cannot confirm which.",
+    ],
+)
+def test_selection_words_do_not_choose_between_competing_current_references(description):
+    analysis = analyze("Check the order status. " + description)
+    assert len(analysis["order_ids"]) == 2
+    assert analysis["ambiguities"]["order_id"]
+    assert ground_outcome(call(order_id="Cedar-26"), analysis, execute_tools=False)
+    assert ground_outcome(call(order_id="Cedar-62"), analysis, execute_tools=False)
+
+
+def test_later_explicit_replacement_can_supersede_an_earlier_selection():
+    analysis = analyze("Check status: use order Cedar-26. Correction: use order Cedar-62 instead.")
+    assert analysis["order_ids"] == ["Cedar-62"]
+
+
+@pytest.mark.parametrize(
+    "description", ["binding is torn", "cover is ripped", "rim arrived chipped"]
+)
+def test_supplied_physical_damage_supports_the_damage_reason(description):
+    analysis = analyze(f"Check refund eligibility for order Cedar-62; its {description}.")
+    assert analysis["reasons"] == ["damaged_item"]
+    assert (
+        ground_outcome(
+            call("check_refund_eligibility", order_id="Cedar-62", reason="damaged_item"),
+            analysis,
+            execute_tools=False,
+        )
+        == []
+    )
+
+
+@pytest.mark.parametrize("description", ["binding is not torn", "cover was not actually ripped"])
+def test_negated_physical_damage_is_not_positive_reason_evidence(description):
+    analysis = analyze(f"Check refund eligibility for order Cedar-62; its {description}.")
+    assert analysis["reasons"] == []
+    assert ground_outcome(
+        call("check_refund_eligibility", order_id="Cedar-62", reason="damaged_item"),
+        analysis,
+        execute_tools=False,
+    )
+
+
+def test_received_none_is_nonreceipt_and_not_an_ordered_product_contrast():
+    analysis = analyze(
+        "I ordered a lamp for order Cedar-62 but received none of the order. "
+        "Check refund eligibility."
+    )
+    assert analysis["reasons"] == ["not_received"]
+
+
+def test_percentage_can_use_a_typed_price_with_an_intervening_order_reference():
+    analysis = analyze(
+        "The total item price for order Cedar-62 was 180.00, before shipping. "
+        "I received nothing. Prepare a refund proposal for 15 percent of that item price."
+    )
+    assert analysis["amounts"] == [Decimal("27.00")]
+    expected = call("propose_refund", order_id="Cedar-62", reason="not_received", refund_amount=27)
+    assert ground_outcome(expected, analysis, execute_tools=False) == []
+    assert ground_outcome(
+        call("propose_refund", order_id="Cedar-62", reason="not_received", refund_amount=180),
+        analysis,
+        execute_tools=False,
+    )
+
+
+def test_per_product_price_binds_to_a_following_supplied_count():
+    analysis = analyze(
+        "I paid 6.40 per notebook for four notebooks in order Cedar-62, "
+        "but all delivered items were calendars. Propose a refund equal to "
+        "the full price of those four notebooks, excluding delivery."
+    )
+    assert analysis["reasons"] == ["wrong_item"]
+    assert analysis["amounts"] == [Decimal("25.60")]
+    assert (
+        ground_outcome(
+            call("propose_refund", order_id="Cedar-62", reason="wrong_item", refund_amount=25.6),
+            analysis,
+            execute_tools=False,
+        )
+        == []
+    )
+
+
+def test_per_product_price_does_not_authorize_an_unmatched_product_or_larger_count():
+    for scope in ["two bowls", "seven notebooks"]:
+        analysis = analyze(
+            "I paid 6.40 per notebook for four notebooks in order Cedar-62, "
+            "but received calendars. Prepare a refund for " + scope + "."
+        )
+        assert analysis["ambiguities"]["refund_amount"]
+        assert ground_outcome(
+            call("propose_refund", order_id="Cedar-62", reason="wrong_item", refund_amount=44.8),
+            analysis,
+            execute_tools=False,
+        )
+
+
+def test_negated_purchase_description_does_not_supply_wrong_item_evidence():
+    analysis = analyze(
+        "I never paid 6.40 per notebook for four notebooks, but the delivered items "
+        "were calendars. Check refund eligibility for order Cedar-62."
+    )
+    assert analysis["reasons"] == []
+
+
+def test_just_those_subset_count_uses_its_price_without_refunding_inventory():
+    analysis = analyze(
+        "Order Cedar-62 contained seven bowls priced at 6.25 each. "
+        "Only three arrived chipped. Propose a refund covering just those three damaged bowls."
+    )
+    assert analysis["amounts"] == [Decimal("18.75")]
+    assert (
+        ground_outcome(
+            call("propose_refund", order_id="Cedar-62", reason="damaged_item", refund_amount=18.75),
+            analysis,
+            execute_tools=False,
+        )
+        == []
+    )
+    assert ground_outcome(
+        call("propose_refund", order_id="Cedar-62", reason="damaged_item", refund_amount=43.75),
+        analysis,
+        execute_tools=False,
+    )

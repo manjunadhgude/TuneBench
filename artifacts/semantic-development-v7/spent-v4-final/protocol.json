@@ -1,0 +1,32 @@
+{
+  "purpose": "Development model selection; not an unseen quality estimate",
+  "examples": 40,
+  "data_sha256": "0263103c80d9942051dc9c2d13ebd70b867ca2adeb808d08aa17c145ea3b35ce",
+  "source_sha256": {
+    "src/tunebench/dataset.py": "846872dd6771b8c872ad5930d2e3aec9239c86f3a59b42259b4666a02d940c8e",
+    "src/tunebench/cli.py": "0a9c3c46d6a1de1ed29476f80e29e9fb4d1a7937a3d9e74894f155e5066c416b",
+    "src/tunebench/__init__.py": "9309015562edb879267bbbe0c0c5b9588b8dd07e844ed3f0ca4ceaf2a8be80b1",
+    "src/tunebench/contracts.py": "4246d9b002a8d948482e3849072487a588c687f23f73bc3101f5bedcbfe2f462",
+    "src/tunebench/training.py": "389accbef18526fce4ffe9b2febc25cd7fe6e6ac9108327b9c7489a825856a98",
+    "src/tunebench/io.py": "580c7a3365256368afc1fc2e377a342e9d887d97ff4d10b614128ba0c30a7156",
+    "src/tunebench/prompts_v4.py": "0597fb26087175e23c28e1194d07a494413c109d06343eb076ee05dd9d64f009",
+    "src/tunebench/evaluator.py": "a289a596fd2db60e1431e3533b28daaf7386c1a4e8f4c3774d09d6ec6fc6aa54",
+    "src/tunebench/grounding.py": "7220ceb76974da0458802e4f959d467487c8885e5345c4adc1b9983c52e15645",
+    "src/tunebench/live_model.py": "ec7d07043c2e63d279c719269c998263917d0d1605d79713f7649adecba66b9b",
+    "src/tunebench/gguf_model.py": "74d7bad0d63a2b5a2b55800a670e7ea5b589b12121cd5a28d486237cbd9daede",
+    "src/tunebench/assistant.py": "7a9f4206f8966e87d813b882fc9094f2cc31407e68e047104992e9610de4bb27",
+    "src/tunebench/structured.py": "f3ffc28de80610a0c03ef33bdbf71746349d6d3c39026ea8b0df2b4b0f318810",
+    "src/tunebench/inference.py": "72ee11e00dd631bd9cf95e929c898357254dac0f04e9f2bafdc83162d2c5b843",
+    "src/tunebench/semantic_guard.py": "8a9f808800df142f3e4fd375372bea5dd42daa0b733161f7c63a392930ae8d34",
+    "src/tunebench/dashboard.py": "dc5e42b32814ebf9c21ce0c61a0443a804532136fde60f272a8aeac559163868",
+    "src/tunebench/prompts_v3.py": "6f9e67eb3652e8cf7b06aa0141f753f3cef186c6dcd854f220ef6b052e806afe",
+    "src/tunebench/mock_tools.py": "278e35d29ab403d04a066166e84cc0195508cbd8871156411e376a37a4ed1031",
+    "src/tunebench/__main__.py": "9a9898be7ee76a6eaf065d94e64a7d6a97ae0f27923688637f244d0b2354f1e4",
+    "src/tunebench/comparison.py": "e689d983cfa7411481473f6cc415bd555a04eff1741a07d5923d25fdd436094e",
+    "pyproject.toml": "dca028e43e98a0fb768e8c26d6e541e0c4d30e15bd4bf4a6af86b2dcbee43287",
+    "/workspace/TuneBench-v07/scripts/evaluate_development.py": "c619046ffe33f56d86cbbafe90a3943e018c6ec0c7c9c153f31fb73e896e75e7"
+  },
+  "model_path": "/workspace/models/Qwen3-4B-Instruct-2507-GGUF/a06e946bb6b655725eafa393f4a9745d460374c9/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+  "max_repairs": 1,
+  "execute_tools": false
+}

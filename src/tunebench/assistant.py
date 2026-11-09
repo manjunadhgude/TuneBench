@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import time
 from collections.abc import Callable
 from copy import deepcopy
@@ -55,19 +56,22 @@ def respond(
     generate: Callable[[list[dict[str, str]]], str] | None = None,
     max_repairs: int = 1,
     execute_tools: bool = True,
+    verify=None,
 ) -> dict[str, Any]:
     """Validate a decision and ground every tool execution; retain all raw attempts.
 
     ``generate`` is an injected test backend and is always labelled as such.
     ``execute_tools=False`` validates without looking up fictional demo orders.
     Interactive schema/evidence repair is separate from the single-attempt research API.
-    Grounding diagnostics for non-executing decisions are advisory: heuristic
-    disagreements cannot turn a safe refusal or clarification into an action.
+    Regex diagnostics remain advisory for non-executing decisions. The GGUF
+    profile separately reviews every decision with the model and checks refund
+    arithmetic with Decimal; rejected reviews can trigger one primary retry.
     """
     start = time.perf_counter()
     used_backend = "injected" if generate is not None else backend
     gguf = used_backend != "rules" and _uses_gguf(model_path)
     prompt_style = "strong-v4" if gguf else "strong-v3"
+    semantic_review = gguf and (used_backend == "model" or verify is not None)
     result: dict[str, Any] = {
         "status": "error",
         "backend": used_backend,
@@ -77,7 +81,7 @@ def respond(
             "model": "Actual local Qwen model",
             "injected": "Injected test backend",
         }.get(used_backend, "Unknown backend"),
-        "prompt": prompt_style if used_backend != "rules" else "rules-v3",
+        "prompt": prompt_style if used_backend != "rules" else "rules-v4",
         "model_profile": (
             None if used_backend == "rules" else "qwen3-4b-gguf" if gguf else "qwen2.5-1.5b"
         ),
@@ -90,9 +94,16 @@ def respond(
         "elapsed_ms": 0,
         "execution_mode": "simulated_tools" if execute_tools else "validation_only",
         "execute_tools": execute_tools,
-        "execution_guard_policy": "evidence-grounding-v3",
-        "non_execution_grounding_policy": "advisory_only_no_evidence_repair",
+        "execution_guard_policy": (
+            "schema-literal-and-semantic-review-v1" if semantic_review else "evidence-grounding-v4"
+        ),
+        "non_execution_grounding_policy": (
+            "heuristic_advisory; separate_model_review"
+            if semantic_review
+            else "advisory_only_no_evidence_repair"
+        ),
         "advisory_grounding_warnings": [],
+        "semantic_verifications": [],
         "policy_override": False,
         "user_message": "",
         "simulated": True,
@@ -162,7 +173,31 @@ def respond(
         )
         is_call = not schema_errors and prediction["outcome"]["type"] == "tool_call"
         semantic_errors = grounding_diagnostics if is_call else []
+        if semantic_review and is_call:
+            order_id = prediction["outcome"]["arguments"]["order_id"]
+            semantic_errors = (
+                []
+                if re.search(r"(?<!\w)" + re.escape(order_id) + r"(?!\w)", message)
+                else ["Order ID is not literally supplied in the request"]
+            )
         advisory = grounding_diagnostics if not is_call else []
+        review_failure = None
+        if semantic_review and not schema_errors and not semantic_errors:
+            try:
+                if verify is None:
+                    from tunebench.semantic_guard import verify_decision
+
+                    review = verify_decision(message, prediction["outcome"], model_path)
+                else:
+                    review = verify(message, deepcopy(prediction["outcome"]))
+                review["primary_attempt"] = index + 1
+                result["semantic_verifications"].append(review)
+                if review["verdict"] != "supported":
+                    semantic_errors.append("Semantic review: " + review["reason"])
+                if review.get("calculation_error"):
+                    semantic_errors.append("Calculator: " + review["calculation_error"])
+            except (ValueError, RuntimeError, ImportError, OSError, KeyError, TypeError) as exc:
+                review_failure = str(exc)
         errors.extend(semantic_errors)
         attempt = {
             "attempt": index + 1,
@@ -180,11 +215,16 @@ def respond(
         result["outcome"] = prediction["outcome"]
         result["validation_errors"] = list(errors)
         result["advisory_grounding_warnings"] = list(advisory)
+        if review_failure is not None:
+            result["status"] = "error"
+            result["validation_errors"] = [review_failure]
+            result["user_message"] = "No tool ran: semantic review was unavailable."
+            return finish()
         if not errors:
             break
         if index + 1 < attempts_allowed:
             feedback = "Your output failed validation: " + "; ".join(errors)[:2000]
-            if semantic_errors:
+            if semantic_errors and not semantic_review:
                 evidence = {
                     key: result["grounding_evidence"][key]
                     for key in ("intent", "order_ids", "reasons", "amounts", "ambiguities")
@@ -204,8 +244,9 @@ def respond(
     result["repair_attempted"] = len(result["attempts"]) > 1
     result["raw_first_attempt_valid"] = result["attempts"][0]["schema_valid"]
     result["repair_policy"] = (
-        "at most one schema or tool-call evidence repair; "
-        "non-executing grounding is advisory; no output rewriting"
+        "At most one primary retry and two recorded semantic reviews; no output rewriting"
+        if semantic_review
+        else "At most one schema/tool-call evidence retry; non-executing heuristics are advisory"
     )
     if used_backend == "model":
         result["model_metadata"] = model_status()
@@ -217,7 +258,7 @@ def respond(
     outcome = result["outcome"]
     errors = (
         _grounding_errors(outcome, analysis, execute_tools=execute_tools)
-        if outcome["type"] == "tool_call"
+        if outcome["type"] == "tool_call" and not semantic_review
         else []
     )
     if errors:
@@ -225,6 +266,16 @@ def respond(
         result["policy_override"] = True
         result["validation_errors"] = errors
         result["user_message"] = "No tool ran: " + "; ".join(errors)
+        return finish()
+    if (
+        semantic_review
+        and execute_tools
+        and outcome["type"] == "tool_call"
+        and outcome["tool_name"] == "propose_refund"
+        and analysis["foreign_currency"]
+    ):
+        result["status"] = "blocked"
+        result["validation_errors"] = ["Demo proposals use INR only"]
         return finish()
     result["accepted_outcome"] = deepcopy(outcome)
     if outcome["type"] == "clarification":

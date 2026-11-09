@@ -1,0 +1,757 @@
+{
+  "annotation_status": "assistant-authored and assistant-reviewed; not human annotation",
+  "cases": [
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "new order, RE-621",
+        "replacement is the one I am still waiting for"
+      ],
+      "example_id": "portfolio-v4-holdout-01",
+      "family_id": "PV4_STATUS_REORDER_RELATION",
+      "gold": {
+        "arguments": {
+          "order_id": "RE-621"
+        },
+        "tool_name": "get_order_status",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Selection by original/replacement relation; not a corrected identifier or a support-case identifier.",
+      "rationale": "The requested live progress belongs to the explicitly identified replacement, not the original order."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "order moss+83 — green rain barrel",
+        "current delivery status of the green rain barrel"
+      ],
+      "example_id": "portfolio-v4-holdout-02",
+      "family_id": "PV4_STATUS_ATTRIBUTE_JOIN",
+      "gold": {
+        "arguments": {
+          "order_id": "moss+83"
+        },
+        "tool_name": "get_order_status",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Two-attribute selection among three explicit purchase rows, rather than a single cross-turn reference.",
+      "rationale": "Joining the requested product and colour to the list yields exactly one order."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "clock:37 is the seed tray",
+        "current status of the seed tray purchase"
+      ],
+      "example_id": "portfolio-v4-holdout-03",
+      "family_id": "PV4_STATUS_TRANSPOSED_ITEM_MAPPING",
+      "gold": {
+        "arguments": {
+          "order_id": "clock:37"
+        },
+        "tool_name": "get_order_status",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Corrects a two-row mapping and then resolves the requested item through it; prior reference corrections replaced one scalar identifier.",
+      "rationale": "The authoritative correction replaces the item-to-order mapping. The seed tray now maps to clock:37."
+    },
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "GZ-492 is still awaiting delivery",
+        "fetch a live status"
+      ],
+      "example_id": "portfolio-v4-holdout-04",
+      "family_id": "PV4_STATUS_PENDING_ROW_FILTER",
+      "gold": {
+        "arguments": {
+          "order_id": "GZ-492"
+        },
+        "tool_name": "get_order_status",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Filters a short list by supplied delivery facts before selecting the order.",
+      "rationale": "Only GZ-492 satisfies the customer-provided not-yet-received filter. A status lookup, rather than a refund, is requested."
+    },
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "order MD-447",
+        "I no longer want my purchase",
+        "whether mine qualifies for a refund"
+      ],
+      "example_id": "portfolio-v4-holdout-05",
+      "family_id": "PV4_ELIGIBILITY_SURPLUS_GIFT",
+      "gold": {
+        "arguments": {
+          "order_id": "MD-447",
+          "reason": "changed_mind"
+        },
+        "tool_name": "check_refund_eligibility",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "A surplus-gift motivation supplies the reason through a concrete causal story, rather than an explicit reason label.",
+      "rationale": "An unwanted but not defective purchase after receiving a duplicate gift expresses a change of mind."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "SH-414 was for a left-handed pruning shear",
+        "shear that arrived is the right-handed version"
+      ],
+      "example_id": "portfolio-v4-holdout-06",
+      "family_id": "PV4_ELIGIBILITY_HANDEDNESS_MISMATCH",
+      "gold": {
+        "arguments": {
+          "order_id": "SH-414",
+          "reason": "wrong_item"
+        },
+        "tool_name": "check_refund_eligibility",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Combines item-to-order mapping with a variant mismatch while excluding a correct second order.",
+      "rationale": "The selected purchase is SH-414. A supplied version with the opposite handedness is the wrong item."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "VT-429 — nothing delivered",
+        "order with no delivery qualifies for a refund"
+      ],
+      "example_id": "portfolio-v4-holdout-07",
+      "family_id": "PV4_ELIGIBILITY_DELIVERY_LOG_SELECTION",
+      "gold": {
+        "arguments": {
+          "order_id": "VT-429",
+          "reason": "not_received"
+        },
+        "tool_name": "check_refund_eligibility",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Selects an eligibility target by a supplied delivery-log row instead of presenting a single missing parcel.",
+      "rationale": "The delivery log uniquely identifies VT-429 as the unreceived order."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "definitely weave=53, and its fabric is torn",
+        "Using what I have now confirmed"
+      ],
+      "example_id": "portfolio-v4-holdout-08",
+      "family_id": "PV4_ELIGIBILITY_CORRECTED_PACKAGE_OWNERSHIP",
+      "gold": {
+        "arguments": {
+          "order_id": "weave=53",
+          "reason": "damaged_item"
+        },
+        "tool_name": "check_refund_eligibility",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "A package-ownership discovery changes both receipt state and applicable problem, with a separate unaffected purchase.",
+      "rationale": "The confirmed receipt retracts nonreceipt; the current established problem is torn fabric on weave=53."
+    },
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "delivered paint is the wrong shade",
+        "amount I have chosen for a refund proposal is 6.50"
+      ],
+      "example_id": "portfolio-v4-holdout-09",
+      "family_id": "PV4_PROPOSAL_AGREED_KEEP_ITEM_AMOUNT",
+      "gold": {
+        "arguments": {
+          "order_id": "MT-468",
+          "reason": "wrong_item",
+          "refund_amount": 6.5
+        },
+        "tool_name": "propose_refund",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "A keep-the-item settlement context separates physical return from a fully specified proposal request.",
+      "rationale": "Keeping the wrong product does not erase the stated wrong-item reason; the proposal amount is explicitly chosen."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "damaged sign in order SN-473",
+        "58.40",
+        "proposal for 13.20",
+        "only the remainder"
+      ],
+      "example_id": "portfolio-v4-holdout-10",
+      "family_id": "PV4_PROPOSAL_UNPROPOSED_REMAINDER",
+      "gold": {
+        "arguments": {
+          "order_id": "SN-473",
+          "reason": "damaged_item",
+          "refund_amount": 45.2
+        },
+        "tool_name": "propose_refund",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Subtracts an existing proposal from an explicitly stated same-base total; earlier benchmarks used direct amounts, products, or percentages.",
+      "rationale": "The customer explicitly requests the remaining item value: 58.40 minus 13.20 equals 45.20."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "Two lanterns and three hooks arrived bent",
+        "12.40",
+        "4.60",
+        "adding the two line totals and no fees"
+      ],
+      "example_id": "portfolio-v4-holdout-11",
+      "family_id": "PV4_PROPOSAL_MIXED_DAMAGED_LINES",
+      "gold": {
+        "arguments": {
+          "order_id": "CR-476",
+          "reason": "damaged_item",
+          "refund_amount": 38.6
+        },
+        "tool_name": "propose_refund",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Adds two differently priced damaged-item lines, rather than multiplying one homogeneous damaged subset.",
+      "rationale": "Both selected lines have the same damaged-item reason. The instructed sum is 2×12.40 + 3×4.60 = 38.60."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "four cushions",
+        "17.50 each",
+        "paid exactly 20% less",
+        "half of the amount I actually paid"
+      ],
+      "example_id": "portfolio-v4-holdout-12",
+      "family_id": "PV4_PROPOSAL_DISCOUNT_THEN_FRACTION",
+      "gold": {
+        "arguments": {
+          "order_id": "lounge[81]",
+          "reason": "changed_mind",
+          "refund_amount": 28
+        },
+        "tool_name": "propose_refund",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Composes quantity, discount, and requested fraction with an explicitly defined paid-price base.",
+      "rationale": "The request gives every factor and the order of operations: 4×17.50 = 70; 70×0.80 = 56 paid; half is 28."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "keep five and return the other three",
+        "do not need so many",
+        "paid price of 3.30 each"
+      ],
+      "example_id": "portfolio-v4-holdout-13",
+      "family_id": "PV4_PROPOSAL_COUNT_COMPLEMENT",
+      "gold": {
+        "arguments": {
+          "order_id": "BD-486",
+          "reason": "changed_mind",
+          "refund_amount": 9.9
+        },
+        "tool_name": "propose_refund",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Uses a kept-versus-returned partition for a change-of-mind proposal rather than a damaged subset.",
+      "rationale": "The returned complement is explicitly three items. Three times the paid unit price 3.30 is 9.90."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "wrong accessory",
+        "paid item price was 84.00",
+        "half that price, capped at 35.00",
+        "choose the smaller"
+      ],
+      "example_id": "portfolio-v4-holdout-14",
+      "family_id": "PV4_PROPOSAL_CUSTOMER_DEFINED_CAP",
+      "gold": {
+        "arguments": {
+          "order_id": "LN-494",
+          "reason": "wrong_item",
+          "refund_amount": 35
+        },
+        "tool_name": "propose_refund",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Applies an explicit customer-defined numeric cap instead of assuming a store policy or using an uncapped percentage.",
+      "rationale": "The customer-defined calculation is min(84×0.5, 35) = 35. No external refund rule is needed."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "six equally priced pouches costing 45.00 in total",
+        "Only five pouches were delivered",
+        "allocating that bundle price equally"
+      ],
+      "example_id": "portfolio-v4-holdout-15",
+      "family_id": "PV4_PROPOSAL_EQUAL_BUNDLE_ALLOCATION",
+      "gold": {
+        "arguments": {
+          "order_id": "PC-496",
+          "reason": "not_received",
+          "refund_amount": 7.5
+        },
+        "tool_name": "propose_refund",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Derives a missing bundle component price by division from an explicitly equal allocation.",
+      "rationale": "The missing one-sixth of the explicitly equally allocated bundle costs 45÷6 = 7.50."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "baking tray — paid line total 32.15 — delivered a sieve instead",
+        "full paid line total of the product that was substituted"
+      ],
+      "example_id": "portfolio-v4-holdout-16",
+      "family_id": "PV4_PROPOSAL_ITEMIZED_MISMATCH_SELECTION",
+      "gold": {
+        "arguments": {
+          "order_id": "tray;98",
+          "reason": "wrong_item",
+          "refund_amount": 32.15
+        },
+        "tool_name": "propose_refund",
+        "type": "tool_call"
+      },
+      "novelty_rationale": "Selects a paid amount from an itemized issue table, avoiding confusing a whole-order total with the affected line.",
+      "rationale": "The substituted product is the baking-tray line; its provided line total is 32.15. No multiplication or delivery inclusion is needed."
+    },
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "read only the beginning, dock-",
+        "incomplete reference"
+      ],
+      "example_id": "portfolio-v4-holdout-17",
+      "family_id": "PV4_CLARIFY_PARTIAL_RECEIPT_REFERENCE",
+      "gold": {
+        "missing_fields": [
+          "order_id"
+        ],
+        "reason_code": "missing_required_information",
+        "target_tool_name": "get_order_status",
+        "type": "clarification"
+      },
+      "novelty_rationale": "The reference is physically partial rather than simply not supplied or one of two complete candidates.",
+      "rationale": "An explicitly incomplete identifier is not a resolved required order ID."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "30% of what I paid",
+        "do not have the paid item total"
+      ],
+      "example_id": "portfolio-v4-holdout-18",
+      "family_id": "PV4_CLARIFY_PERCENT_WITHOUT_BASE",
+      "gold": {
+        "missing_fields": [
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information",
+        "target_tool_name": "propose_refund",
+        "type": "clarification"
+      },
+      "novelty_rationale": "A superficially numeric request lacks the percentage base; not a direct request with no amount selected.",
+      "rationale": "The percentage is supplied but its numeric base is absent, so no amount can be computed."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "list price is 21.00 each",
+        "discount whose amount I cannot find",
+        "what I actually paid"
+      ],
+      "example_id": "portfolio-v4-holdout-19",
+      "family_id": "PV4_CLARIFY_LIST_VERSUS_PAID_PRICE",
+      "gold": {
+        "missing_fields": [
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information",
+        "target_tool_name": "propose_refund",
+        "type": "clarification"
+      },
+      "novelty_rationale": "Tests unresolved price basis despite available quantity and list price, with the missing discount made explicit.",
+      "rationale": "The requested base is paid price. List price and quantity cannot establish it without the unknown discount."
+    },
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "Could you check whether order ARCH-623 qualifies for a refund?",
+        "This purchase was disappointing; I expected better."
+      ],
+      "example_id": "portfolio-v4-holdout-20",
+      "family_id": "PV4_CLARIFY_UNSPECIFIED_UNSATISFACTORY_REASON",
+      "gold": {
+        "missing_fields": [
+          "reason"
+        ],
+        "reason_code": "missing_required_information",
+        "target_tool_name": "check_refund_eligibility",
+        "type": "clarification"
+      },
+      "novelty_rationale": "A natural opaque free-text return-form comment needs clarification before it can be assigned a reason; the prompt does not announce that a reason is absent.",
+      "rationale": "The opaque return-form comment expresses dissatisfaction but does not establish damage, a wrong item, nonreceipt, or a change of mind. The required refund reason remains unresolved."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "cracked base",
+        "forgot to attach that receipt",
+        "neither its ID nor its prices appear"
+      ],
+      "example_id": "portfolio-v4-holdout-21",
+      "family_id": "PV4_CLARIFY_UNAVAILABLE_RECEIPT_ATTACHMENT",
+      "gold": {
+        "missing_fields": [
+          "order_id",
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information",
+        "target_tool_name": "propose_refund",
+        "type": "clarification"
+      },
+      "novelty_rationale": "Two required fields are delegated to an absent attachment, while a supported reason is available in the message.",
+      "rationale": "Damage resolves the reason, but the unprovided receipt leaves both order ID and requested paid line price unresolved."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "separate support chat",
+        "not included here",
+        "not repeated the purchase reference or described the issue"
+      ],
+      "example_id": "portfolio-v4-holdout-22",
+      "family_id": "PV4_CLARIFY_INACCESSIBLE_PRIOR_CHAT",
+      "gold": {
+        "missing_fields": [
+          "order_id",
+          "reason"
+        ],
+        "reason_code": "missing_required_information",
+        "target_tool_name": "check_refund_eligibility",
+        "type": "clarification"
+      },
+      "novelty_rationale": "References explicitly inaccessible context instead of expecting a prior turn that is actually present.",
+      "rationale": "The current request clearly selects eligibility, but inaccessible context supplies neither the order ID nor the refund reason."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "not established which record is mine",
+        "pine(31), shattered item, paid line value 19.80",
+        "cedar(32), wrong item, paid line value 24.60"
+      ],
+      "example_id": "portfolio-v4-holdout-23",
+      "family_id": "PV4_CLARIFY_ALTERNATIVE_CLAIM_RECORDS",
+      "gold": {
+        "missing_fields": [
+          "order_id",
+          "refund_amount",
+          "reason"
+        ],
+        "reason_code": "ambiguous_reference",
+        "target_tool_name": "propose_refund",
+        "type": "clarification"
+      },
+      "novelty_rationale": "Competing complete claim records jointly affect all proposal fields, unlike prior single-field conflicts.",
+      "rationale": "Both complete claim records remain viable, so order ID, reason, and full-line amount are all competing unresolved required values."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "both the identical timestamp",
+        "no other record showing which came first"
+      ],
+      "example_id": "portfolio-v4-holdout-24",
+      "family_id": "PV4_CLARIFY_TIED_TEMPORAL_SELECTOR",
+      "gold": {
+        "missing_fields": [
+          "order_id"
+        ],
+        "reason_code": "ambiguous_reference",
+        "target_tool_name": "get_order_status",
+        "type": "clarification"
+      },
+      "novelty_rationale": "An explicit selection rule fails due to a tie rather than a bare unexplained choice between identifiers.",
+      "rationale": "The stated temporal selection rule cannot break the supplied tie between two identifiers."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "Order RD-645 was delivered with a broken handle.",
+        "Order RH-646 never arrived.",
+        "cannot remember which of those two purchases I meant by \"it\""
+      ],
+      "example_id": "portfolio-v4-holdout-25",
+      "family_id": "PV4_CLARIFY_PRONOUN_ACROSS_DIFFERENT_ISSUES",
+      "gold": {
+        "missing_fields": [
+          "order_id",
+          "reason"
+        ],
+        "reason_code": "ambiguous_reference",
+        "target_tool_name": "check_refund_eligibility",
+        "type": "clarification"
+      },
+      "novelty_rationale": "A pronoun spans two records with different issue types, jointly leaving target and reason unresolved.",
+      "rationale": "The unresolved pronoun chooses between purchases with different supported reasons, so both order ID and reason must be clarified."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "just one of those two lines",
+        "have not chosen which line",
+        "different product and cost 18.00",
+        "broken and cost 26.00"
+      ],
+      "example_id": "portfolio-v4-holdout-26",
+      "family_id": "PV4_CLARIFY_UNSELECTED_AFFECTED_LINE",
+      "gold": {
+        "missing_fields": [
+          "refund_amount",
+          "reason"
+        ],
+        "reason_code": "ambiguous_reference",
+        "target_tool_name": "propose_refund",
+        "type": "clarification"
+      },
+      "novelty_rationale": "Competing product lines within one order jointly affect reason and amount without making the order itself ambiguous.",
+      "rationale": "Order ID is fixed. The unresolved affected line changes both full-line amount and reason, which must both be clarified."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "Could you sort it out for me?",
+        "have not said what help or action I want"
+      ],
+      "example_id": "portfolio-v4-holdout-27",
+      "family_id": "PV4_CLARIFY_OPAQUE_ASSISTANCE_ACTION",
+      "gold": {
+        "missing_fields": [],
+        "reason_code": "ambiguous_intent",
+        "target_tool_name": null,
+        "type": "clarification"
+      },
+      "novelty_rationale": "Open-ended assistance request without listing candidate services; prior undecided-service examples explicitly offered two tools.",
+      "rationale": "The action is unspecified. There is no basis to choose a target tool or invent required-field labels."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "if the delivery window I agreed to has ended, check refund eligibility for nonreceipt",
+        "if it has not ended, fetch the current status",
+        "not supplied that window or said which condition holds"
+      ],
+      "example_id": "portfolio-v4-holdout-28",
+      "family_id": "PV4_CLARIFY_UNRESOLVED_ACTION_BRANCH",
+      "gold": {
+        "missing_fields": [],
+        "reason_code": "ambiguous_intent",
+        "target_tool_name": null,
+        "type": "clarification"
+      },
+      "novelty_rationale": "The unresolved choice is a missing branch condition, not an unchosen menu of services; no deadline or policy is inferred.",
+      "rationale": "Two supported actions are conditionally requested, but the user-defined branch condition is unresolved. No single target tool has been selected."
+    },
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "what information should I collect"
+      ],
+      "example_id": "portfolio-v4-holdout-29",
+      "family_id": "PV4_INFORMATION_PREPARING_NONRECEIPT_REPORT",
+      "gold": {
+        "reason_code": "informational_request",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "Requests a practical report-preparation checklist rather than refund or tracking terminology.",
+      "rationale": "The customer asks for preparation guidance, not investigation or an order action."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "Is it clearer to describe each order and its problem in separate bullet points"
+      ],
+      "example_id": "portfolio-v4-holdout-30",
+      "family_id": "PV4_INFORMATION_MULTI_ORDER_MESSAGE_FORMAT",
+      "gold": {
+        "reason_code": "informational_request",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "Communication-format guidance rather than definitions, arithmetic, or an individual order lookup.",
+      "rationale": "This is a question about organizing a support message; no operation on either purchase is requested."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "sample receipt",
+        "support form specifically asks for the order reference"
+      ],
+      "example_id": "portfolio-v4-holdout-31",
+      "family_id": "PV4_INFORMATION_LABELLED_REFERENCE_FIELD",
+      "gold": {
+        "reason_code": "informational_request",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "Explains field-label matching in a form, without inferring identifier patterns or store-specific rules.",
+      "rationale": "The question asks how to match explicitly named fields; no identifiers or order action are present."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "does \"quantity\" refer to the count of items on that line?",
+        "before I decide whether to contact support"
+      ],
+      "example_id": "portfolio-v4-holdout-32",
+      "family_id": "PV4_INFORMATION_ITEMIZED_RECEIPT_QUANTITY",
+      "gold": {
+        "reason_code": "informational_request",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "Receipt-reading question about item counts, not an already-covered order-status or refund concept.",
+      "rationale": "The customer seeks an explanation of a receipt field and has not requested an order operation."
+    },
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "remove the pencil case from the order but keep the other items"
+      ],
+      "example_id": "portfolio-v4-holdout-33",
+      "family_id": "PV4_UNSUPPORTED_REMOVE_ONE_ORDER_LINE",
+      "gold": {
+        "reason_code": "unsupported_request",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "Partial order amendment rather than whole-order cancellation, address change, account deletion, or refund.",
+      "rationale": "Removing an order line requires an order-edit operation absent from the three available tools."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "generate a prepaid return-shipping label"
+      ],
+      "example_id": "portfolio-v4-holdout-34",
+      "family_id": "PV4_UNSUPPORTED_RETURN_LABEL_CREATION",
+      "gold": {
+        "reason_code": "unsupported_request",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "A logistics-document creation request absent from the prior input scenarios.",
+      "rationale": "None of the available tools creates or delivers a return label."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "physically combined into a single parcel",
+        "make that packing change"
+      ],
+      "example_id": "portfolio-v4-holdout-35",
+      "family_id": "PV4_UNSUPPORTED_COMBINE_SEPARATE_SHIPMENTS",
+      "gold": {
+        "reason_code": "unsupported_request",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "A cross-order packing operation rather than single-order delivery, payment, or account changes.",
+      "rationale": "The requested physical packing and shipment merge cannot be performed by status, eligibility, or proposal tools."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "replace the payment method",
+        "make that payment-method change now"
+      ],
+      "example_id": "portfolio-v4-holdout-36",
+      "family_id": "PV4_UNSUPPORTED_CHANGE_PAYMENT_INSTRUMENT",
+      "gold": {
+        "reason_code": "unsupported_request",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "A payment-instrument update, distinct from prior requests for actual refund transfers.",
+      "rationale": "Changing the payment instrument is unavailable. A refund proposal does not perform that requested change."
+    },
+    {
+      "difficulty": "easy",
+      "evidence": [
+        "For my own notes",
+        "simply recording that observation"
+      ],
+      "example_id": "portfolio-v4-holdout-37",
+      "family_id": "PV4_NO_ACTION_PREFERENCE_NOTE",
+      "gold": {
+        "reason_code": "no_action_requested",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "A product-preference note rather than a delivery-status report, acknowledgment, or withdrawn request.",
+      "rationale": "The message is an observation with no request for information or action."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "will say what help I want in a later message"
+      ],
+      "example_id": "portfolio-v4-holdout-38",
+      "family_id": "PV4_NO_ACTION_DETAILS_BEFORE_LATER_REQUEST",
+      "gold": {
+        "reason_code": "no_action_requested",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "Context staging before a future request, without an active ambiguous request or a canceled earlier request.",
+      "rationale": "The customer is supplying preliminary context and explicitly defers making a request."
+    },
+    {
+      "difficulty": "medium",
+      "evidence": [
+        "only fixes that word in my account of events"
+      ],
+      "example_id": "portfolio-v4-holdout-39",
+      "family_id": "PV4_NO_ACTION_TRANSCRIPT_WORD_CORRECTION",
+      "gold": {
+        "reason_code": "no_action_requested",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "A correction that changes wording but creates no tool intent, unlike prior authoritative corrections attached to explicit operations.",
+      "rationale": "This is a lexical correction to context with no current request to retrieve or change order data."
+    },
+    {
+      "difficulty": "hard",
+      "evidence": [
+        "not taking up either suggestion today",
+        "will decide later whether to request help",
+        "just a note"
+      ],
+      "example_id": "portfolio-v4-holdout-40",
+      "family_id": "PV4_NO_ACTION_AGENT_SUGGESTION_DEFERRED",
+      "gold": {
+        "reason_code": "no_action_requested",
+        "type": "no_tool"
+      },
+      "novelty_rationale": "Distinguishes an unaccepted agent suggestion from a user request whose action needs clarification.",
+      "rationale": "The earlier agent merely suggested actions, and the customer declines to request either now. There is no active ambiguous action request."
+    }
+  ],
+  "dataset": "portfolio-v4",
+  "decision_quota_predefined": {
+    "clarification": 12,
+    "no_tool": 12,
+    "tool_call": 16
+  },
+  "difficulty_quota_predefined": {
+    "easy": 9,
+    "hard": 11,
+    "medium": 20
+  },
+  "fictional_data": true,
+  "review_revisions": [
+    {
+      "before_freeze": true,
+      "change": "Independent review recommended replacing explicit missing-reason metacommentary with an opaque return-form comment in case 20; gold and difficulty unchanged. Converted most order references to ordinary fictional identifiers while retaining a small punctuation subset.",
+      "reason": "Improve scenario novelty and naturalness without changing the fixed decision/difficulty quotas.",
+      "revision": 1
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "examples": 40,
+  "generation_reruns": 0,
+  "method": "Reparse original model text and independently recompute canonical scores; verify frozen source/model/data/runtime hashes.",
+  "versions": {
+    "legacy": {
+      "raw-first": {
+        "correct": 33,
+        "total": 40,
+        "schema_valid": 40,
+        "correct_tool_calls": 12,
+        "tool_call_cases": 16
+      },
+      "final": {
+        "correct": 22,
+        "total": 40,
+        "schema_valid": 36,
+        "correct_tool_calls": 1,
+        "tool_call_cases": 16
+      }
+    },
+    "candidate": {
+      "raw-first": {
+        "correct": 33,
+        "total": 40,
+        "schema_valid": 40,
+        "correct_tool_calls": 12,
+        "tool_call_cases": 16
+      },
+      "final": {
+        "correct": 22,
+        "total": 40,
+        "schema_valid": 35,
+        "correct_tool_calls": 1,
+        "tool_call_cases": 16
+      }
+    }
+  }
+}

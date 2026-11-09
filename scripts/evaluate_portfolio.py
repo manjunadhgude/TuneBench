@@ -284,7 +284,7 @@ def run_evaluation(
         "source_package_version": __version__,
         "source_worktree_dirty": bool(_git("status", "--porcelain")),
         "source_files_sha256": source_hashes,
-        "prompt_style": "strong-v3" if backend == "model" else "rules-v3",
+        "prompt_style": "strong-v3" if backend == "model" else "rules-v4",
         "first_attempt_messages_sha256": _json_hash(messages),
         "structured_output": {
             "enabled": backend == "model",
@@ -296,7 +296,7 @@ def run_evaluation(
             else None,
             "post_validation_required": True,
         },
-        "execution_guard_policy": "evidence-grounding-v3",
+        "execution_guard_policy": "evidence-grounding-v4",
         "non_execution_grounding_policy": "advisory_only_no_evidence_repair",
         "evidence_policy_version": POLICY_VERSION,
         "libraries": _versions(),

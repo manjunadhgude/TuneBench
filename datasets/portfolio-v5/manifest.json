@@ -1,0 +1,37 @@
+{
+  "dataset_id": "tunebench-portfolio-v5",
+  "status": "frozen_before_semantic_comparison",
+  "source_freeze_commit": "eb4e227a0f6359f9c1a9c0bde2fcbe333f2be597",
+  "author": "assistant",
+  "review": "Same implementing assistant author review after implementation freeze. No independent blind or human review. No model output observed on these cases.",
+  "files": {
+    "holdout": {
+      "path": "holdout.jsonl",
+      "sha256": "d5e08cb5274182b4adaefe33e0c7ab3adecceea6e81e35977a8cef46a0f64f4a",
+      "bytes": 75071,
+      "examples": 40,
+      "outcomes": {
+        "tool_call": 16,
+        "no_tool": 12,
+        "clarification": 12
+      }
+    }
+  },
+  "semantic_review_ledger": {
+    "path": "annotation-ledger.json",
+    "sha256": "9c6b470e114b7d64bce9f74887abaac869612eb3b4b25700ab597539b9e65fb0",
+    "bytes": 21650
+  },
+  "difficulty_counts": {
+    "easy": 8,
+    "medium": 22,
+    "hard": 10
+  },
+  "exact_prior_prompt_overlap": 0,
+  "prior_prompt_records_checked": 160,
+  "limitations": [
+    "Small targeted synthetic set, not a production accuracy estimate.",
+    "Author and implementer are the same assistant; exact overlap check does not establish semantic independence.",
+    "No label or implementation changes allowed after generation starts. Clarification wording is not human-graded."
+  ]
+}

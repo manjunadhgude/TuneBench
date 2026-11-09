@@ -194,7 +194,7 @@ def test_protocol_precedes_responder_and_existing_output_is_preserved(tmp_path, 
         assert protocol["source_files_sha256"]["src/tunebench/prompts_v3.py"]
         assert protocol["source_files_sha256"]["src/tunebench/structured.py"]
         assert "lm-format-enforcer" in protocol["libraries"]
-        assert protocol["prompt_style"] == "rules-v3"
+        assert protocol["prompt_style"] == "rules-v4"
         assert protocol["structured_output"]["enabled"] is False
         assert protocol["repair_policy"]["max_repairs"] == 0
         assert json.loads((output / "first-attempt.messages.json").read_text()) == []
@@ -263,7 +263,7 @@ def test_model_protocol_freezes_actual_v3_messages_and_bounded_evidence_repair(
         assert protocol["repair_policy"]["max_repairs"] == 1
         assert "tool_call_evidence_error" in protocol["repair_policy"]["triggers"]
         assert protocol["repair_policy"]["output_rewriting"] is False
-        assert protocol["execution_guard_policy"] == "evidence-grounding-v3"
+        assert protocol["execution_guard_policy"] == "evidence-grounding-v4"
         assert protocol["non_execution_grounding_policy"] == "advisory_only_no_evidence_repair"
         return response(example["expected_outcome"])
 

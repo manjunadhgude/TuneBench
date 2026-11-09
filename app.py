@@ -150,6 +150,16 @@ def show_result(result: dict, mode: str) -> None:
                 st.json(advisory)
         st.caption("Submitted request")
         st.code(result.get("input", ""), language=None, wrap_lines=True)
+        for review in result.get("semantic_verifications", []):
+            st.markdown(f"**Model review · attempt {review['primary_attempt']}**")
+            st.caption("Fallible model judgement; refund arithmetic is checked separately.")
+            st.code(review.get("raw_output", ""), language="json", wrap_lines=True)
+            st.json(
+                {
+                    key: review.get(key)
+                    for key in ("verdict", "calculation_result", "calculation_error", "usage")
+                }
+            )
 
 
 def metric_row(summary: dict) -> None:
@@ -342,6 +352,21 @@ with evaluation:
     st.write("Actual saved model runs. Deterministic demo scores are kept separate.")
     comparisons = [
         (
+            "artifacts/semantic-comparison-v7",
+            "Semantic review comparison · the same 40 fresh test questions",
+            ("v0.6 · evidence rules", "v0.7 · model review + calculator"),
+            "Same primary model and prompt. v0.7 adds up to two model reviews, "
+            "a bounded retry using their feedback, and refund arithmetic checks. "
+            "The extra model calls add latency; total compute is not matched.",
+        ),
+        (
+            "artifacts/guard-comparison-v6",
+            "Guard comparison · the same 40 new test questions",
+            ("v0.5", "v0.6"),
+            "Both versions use the same Qwen3 model, prompt, JSON grammar and CPU "
+            "settings. This comparison changes the evidence guard and its repair feedback.",
+        ),
+        (
             "artifacts/quality-comparison-v5",
             "System comparison · the same 40 test questions",
             ("v0.4 · Qwen2.5 1.5B", "v0.5 · Qwen3 4B"),
@@ -362,6 +387,7 @@ with evaluation:
             continue
         st.markdown(f"**{heading}**")
         st.caption(explanation)
+        final_reports = {}
         for stage, label in (("raw-first", "Raw first answer"), ("final", "Accepted final answer")):
             st.markdown(f"**{label}**")
             for column, (key, title) in zip(
@@ -369,9 +395,28 @@ with evaluation:
             ):
                 report = read_artifact(f"{directory}/{key}/{stage}.report.json")
                 if report:
+                    if stage == "final":
+                        final_reports[title] = report
                     with column, st.container(border=True):
                         st.markdown(f"**{title}**")
                         metric_row(report_summary(report))
+        if len(final_reports) == 2:
+            rows = []
+            for kind, title in (
+                ("tool_call", "Tool calls"),
+                ("clarification", "Clarifications"),
+                ("no_tool", "No tool"),
+            ):
+                row = {"Expected decision": title}
+                for version, report in final_reports.items():
+                    section = report[kind]
+                    metric = section[
+                        "reason_code_accuracy" if kind == "no_tool" else "joint_exact_match"
+                    ]
+                    row[version] = f"{metric['correct']}/{section['total']}"
+                rows.append(row)
+            st.caption("Final correctness by expected decision; every case stays in its group.")
+            st.dataframe(rows, hide_index=True, use_container_width=True)
         st.caption(
             "Final answers include validation and at most one repair; blocked cases count "
             "as failures. These are small, assistant-authored test data. No tool executed "

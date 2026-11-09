@@ -15,7 +15,7 @@ from typing import Any
 from tunebench.contracts import load_tool_registry, validate_prediction
 from tunebench.mock_tools import load_demo_orders
 
-POLICY_VERSION = "structured-evidence-v3"
+POLICY_VERSION = "structured-evidence-v4"
 _NUM = r"-?\d+(?:,\d{3})*(?:\.\d+)?"
 _WORDS = {
     "one": 1,
@@ -54,7 +54,7 @@ _UNCERTAIN = re.compile(
 _REASON_PATTERNS = {
     "damaged_item": (
         r"\bdamaged(?:_item)?\b|\bdamage\b|\bbroken\b|\bcracked\b|"
-        r"\bshattered\b|\bdented\b|\bdefective\b"
+        r"\bshattered\b|\bdented\b|\bdefective\b|\btorn\b|\bripped\b|\bchipped\b"
     ),
     "wrong_item": (
         r"\bwrong[_ ](?:item|product|model|size|colour|color)\b|\bincorrect item\b|"
@@ -64,7 +64,8 @@ _REASON_PATTERNS = {
         r"\bnot[_ ]received\b|\bnon[- ]?receipt\b|"
         r"\bnever\s+(?:arrived|received|reached(?: me| us)?|delivered)\b|"
         r"\b(?:has not|hasn't|did not|didn't|not)\s+(?:arrive(?:d)?|been delivered|received)\b|"
-        r"\bno\s+(?:item|parcel|package|part)\b.{0,50}\b(?:arrived|delivered|received)\b"
+        r"\bno\s+(?:item|parcel|package|part)\b.{0,50}\b(?:arrived|delivered|received)\b|"
+        r"\b(?:received|got)\s+(?:none|nothing)\b"
     ),
     "changed_mind": (
         r"\bchanged[_ ](?:my[_ ]|their[_ ]|our[_ ])?mind\b|"
@@ -297,11 +298,36 @@ def _references(text: str) -> list[dict[str, Any]]:
             or re.search(r"^\s*(?:is\s+)?(?:only\s+)?a support\b", suffix, re.I)
         )
         record["excluded"] = excluded
+        record["excluded"] = _excluded_value(record, text)
     return sorted(records, key=lambda r: r["start"])
 
 
+def _excluded_value(record: dict[str, Any], text: str) -> bool:
+    """Exclude the value named by a direct rejection, not nearby uncertainty.
+
+    A field label may intervene in ``not the earlier amount of 12``. The scope
+    must still end immediately before this value; an unrelated earlier ``not``
+    is insufficient. This applies equally to references and monetary values.
+    """
+    before = text[max(0, record["start"] - 110) : record["start"]]
+    return bool(
+        record.get("excluded")
+        or re.search(
+            r"\b(?:(?:do not|don't|never)\s+(?:use|choose|select)|"
+            r"not|ignore|disregard|rather than|instead of)\s*"
+            r"(?:the\s+)?(?:(?:old|earlier|previous|superseded|incorrect|mistaken|"
+            r"correct|corrected|current|new|requested)\s+)*"
+            r"(?:(?:(?:refund\s+)?amount|order(?:\s+(?:id|reference))?|reference|identifier|"
+            r"(?:(?:item|order)\s+)?(?:price|total|subtotal)|base)"
+            r"\s*(?:of|is|was)?\s*)?(?:INR|₹|USD|\$|EUR|€|GBP|£)?\s*[\"']?$",
+            before,
+            re.I,
+        )
+    )
+
+
 def _selected(records: list[dict[str, Any]], text: str) -> list[dict[str, Any]]:
-    active = [record for record in records if not record.get("excluded")]
+    active = [record for record in records if not _excluded_value(record, text)]
     choices = []
     for record in active:
         before = text[max(0, record["start"] - 140) : record["start"]]
@@ -310,13 +336,27 @@ def _selected(records: list[dict[str, Any]], text: str) -> list[dict[str, Any]]:
             r"\b(?:use|choose|select|only)\s+(?:only\s+)?(?:order\s+)?[\"']?$|"
             r"\breplace\b.{0,100}\bwith\s+(?:order\s+)?[\"']?$|"
             r"\b(?:correction|actually)\s*:\s*(?:order\s+)?[\"']?$|"
-            r"\b(?:new|corrected|current)\s+(?:amount|order(?: id)?)\s*(?:is|:)?\s*[\"']?$",
+            r"\b(?:new|correct|corrected|current)\s+(?:amount|order(?: id)?)"
+            r"\s*(?:is|:)?\s*[\"']?$",
             before,
             re.I,
         ) or re.search(r"^\s*[\"']?\s+instead\b", after, re.I)
-        if cue and not _UNCERTAIN.search(before[-60:] + after):
+        competing = re.match(r"^\s*[\"']?\s*,?\s*or\b", after, re.I)
+        if cue and not competing and not _UNCERTAIN.search(before[-60:] + after):
             choices.append(record)
-    return [choices[-1]] if choices else active
+    if not choices:
+        return active
+    if len({record["value"] for record in choices}) == 1:
+        return [choices[-1]]
+    # Separate positive instructions are not corrections. Only an explicit
+    # replacement/confirmation between them can authorize choosing the last.
+    last = choices[-1]
+    intervening = text[choices[-2]["end"] : last["start"]]
+    if re.search(
+        r"\b(?:correction|actually|instead|replace|correct|corrected|current)\b", intervening, re.I
+    ):
+        return [last]
+    return active
 
 
 def _product_tokens(description: str) -> list[str]:
@@ -336,9 +376,15 @@ def _product_tokens(description: str) -> list[str]:
             "only",
             "out",
             "but",
+            "per",
+            "arrived",
+            "were",
+            "was",
+            "are",
+            "is",
         }:
             break
-        if word not in {"a", "an", "the", "of", "pair", "identical", *_WORDS}:
+        if word not in {"a", "an", "the", "of", "pair", "identical", "all", "both", *_WORDS}:
             product.append(word.removesuffix("s"))
     return product
 
@@ -354,6 +400,10 @@ def _product_contrasts(text: str) -> list[dict[str, Any]]:
         r"\b(?:ordered|paid for|bought|purchased|expected)\s+(?P<ordered>[^.;\n]{2,85}?)"
         r"\s*,?\s*(?:but|yet)\s+(?:I\s+)?(?:received|got)\s+"
         r"(?P<received>[^.;\n]{2,85})",
+        rf"\b(?:paid|purchased at)\s+(?:INR|₹|USD|\$|EUR|€|GBP|£)?\s*{_NUM}\s+per\s+"
+        r"(?P<ordered>[A-Za-z-]+)\b[^.;\n]{0,120}?\b(?:but|yet)\b[^.;\n]{0,40}?"
+        r"\b(?:delivered|supplied|received)\s+(?:items?|products?|goods)\s+"
+        r"(?:were|was|are)\s+(?P<received>[^.;\n]{2,85})",
         r"\b(?:ordered|paid for|bought|purchased|expected)\s+(?P<ordered>[^.;\n]{2,85}?)"
         r"\s*,?\s*(?:but|yet)\s+what\s+(?:actually\s+)?"
         r"(?:arrived|was delivered|was supplied)\s+was\s+"
@@ -361,13 +411,18 @@ def _product_contrasts(text: str) -> list[dict[str, Any]]:
     )
     for pattern in patterns:
         for match in re.finditer(pattern, text, re.I):
+            prefix = text[max(0, match.start() - 45) : match.start()]
+            if re.search(r"\b(?:not|never|didn't)\s+(?:actually\s+)?$", prefix, re.I):
+                continue
             ordered = _product_words(match.group("ordered"))
             received = _product_words(match.group("received"))
             financial = {"refund", "money", "receipt", "confirmation", "status"}
             # An expanded description of the same product is not a mismatch.
+            absence = re.match(r"\s*(?:none|nothing|no\b|not\b)", match.group("received"), re.I)
             if (
                 ordered
                 and received
+                and not absence
                 and not (ordered <= received or received <= ordered)
                 and not (received & financial)
             ):
@@ -462,6 +517,82 @@ def _currency(before: str, after: str) -> str | None:
     )
 
 
+def _quantity_mentions(
+    text: str,
+    references: list[dict[str, Any]],
+    money: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Keep item counts distinct from IDs, prices, percentages and fee amounts."""
+    quantities = []
+    for match in re.finditer(
+        rf"(?=(?<![\w.-])(?P<qty>{_QTY})\s+"
+        rf"(?P<rest>(?:[A-Za-z-]+\s+){{0,4}}[A-Za-z-]+))",
+        text,
+        re.I,
+    ):
+        start = match.start("qty")
+        if any(record["start"] <= start < record["end"] for record in references):
+            continue
+        if any(
+            record["start"] == start
+            and record["role"] in {"unit_price", "base_total", "percentage", "excluded_charge"}
+            for record in money
+        ):
+            continue
+        if re.match(
+            r"(?:equally\s+)?(?:invoices?|prices?|reports?|notes?|days?|percent|charges?|"
+            r"INR|rupees?|dollars?|USD|EUR|GBP)\b",
+            match.group("rest"),
+            re.I,
+        ):
+            continue
+        product = _product_tokens(match.group("rest"))
+        if product:
+            quantities.append(
+                {
+                    "value": _matched_quantity(match, text, "qty"),
+                    "product": product,
+                    "start": start,
+                    "end": match.end(),
+                    "text": match.group(),
+                }
+            )
+    return quantities
+
+
+def _requested_item_counts(text: str) -> list[dict[str, Any]]:
+    """Extract the explicitly requested subset, including scoped price requests."""
+    requested = []
+    for match in re.finditer(
+        rf"\b(?:propos(?:e|al)|refund)\b[^.;\n]{{0,90}}?"
+        rf"\b(?:for|cover(?:ing)?|(?:price|cost|value)\s+of)\s+"
+        rf"(?:(?:only|all|the|these|those|just|selected|affected)\s+)*"
+        rf"(?P<qty>{_QTY})\s+(?P<item>(?:[A-Za-z-]+\s+){{0,3}}[A-Za-z-]+)",
+        text,
+        re.I,
+    ):
+        if match.group("item").split()[0].casefold() in {
+            "inr",
+            "rupees",
+            "percent",
+            "dollars",
+            "usd",
+            "eur",
+            "gbp",
+        }:
+            continue
+        requested.append(
+            {
+                "value": _matched_quantity(match, text, "qty"),
+                "product": _product_tokens(match.group("item")),
+                "start": match.start("qty"),
+                "end": match.end(),
+                "text": match.group(),
+            }
+        )
+    return requested
+
+
 def _amounts(
     text: str,
     references: list[dict[str, Any]],
@@ -476,16 +607,31 @@ def _amounts(
         value = Decimal(match.group().replace(",", ""))
         before = text[max(0, match.start() - 110) : match.start()]
         before_clause = re.split(r"(?<!\d)\.(?!\d)|[;\n]", before)[-1]
+        # An order reference can intervene between a field label and its value.
+        # Mask it for role classification while preserving evidence positions.
+        clean_before = list(before)
+        beginning = match.start() - len(before)
+        for reference in references:
+            left = max(beginning, reference["start"])
+            right = min(match.start(), reference["end"])
+            if left < right:
+                clean_before[left - beginning : right - beginning] = " " * (right - left)
+        clean_before = "".join(clean_before)
         after = text[match.end() : match.end() + 55]
         currency = _currency(before, after)
         role = "background"
+        per_product = re.match(r"\s*per\s+(?P<product>[A-Za-z-]+)\b", after, re.I)
         if re.match(r"\s*(?:%|percent\b|per cent\b)", after, re.I):
             role = "percentage"
-        elif re.match(r"\s*(?:each\b|apiece\b|per\s+(?:item|unit)\b)", after, re.I) or re.search(
-            r"\b(?:unit price|price per unit|each (?:costs|priced at))"
-            r"\s*(?:is|of|:)?\s*(?:INR|₹)?\s*$",
-            before,
-            re.I,
+        elif (
+            per_product
+            or re.match(r"\s*(?:each\b|apiece\b)", after, re.I)
+            or re.search(
+                r"\b(?:unit price|price per unit|each (?:costs|priced at))"
+                r"\s*(?:is|of|:)?\s*(?:INR|₹)?\s*$",
+                before,
+                re.I,
+            )
         ):
             role = "unit_price"
         elif re.search(
@@ -497,12 +643,22 @@ def _amounts(
         ):
             role = "excluded_charge"
         elif re.search(
-            r"\b(?:subtotal|total|base|order price|item price)"
-            r"\s*(?:is|of|:|was)?\s*(?:INR|₹)?\s*$",
-            before,
+            r"\b(?:subtotal|total|base|price)"
+            r"\s*(?:(?:for|of)\s+(?:the\s+)?(?:order\s*)?)?"
+            r"\s*(?:is|of|:|was|=)?\s*(?:INR|₹|USD|\$|EUR|€|GBP|£)?\s*$",
+            clean_before,
             re.I,
-        ) or re.match(r"\s*(?:(?:item|order)\s+)?(?:subtotal|total)\b", after, re.I):
+        ) or re.match(r"\s*(?:(?:item|order)\s+)?(?:subtotal|total|price|base)\b", after, re.I):
             role = "base_total"
+        elif intent == "propose_refund" and re.search(
+            r"\b(?:use|choose|select)\s+(?:the\s+)?"
+            r"(?:(?:correct|corrected|new|requested)\s+)?"
+            r"(?:(?:refund\s+)?amount\s*(?:of|is|:)?\s*)?"
+            r"(?:INR|₹|USD|\$|EUR|€|GBP|£)?\s*$",
+            before_clause,
+            re.I,
+        ):
+            role = "requested"
         elif re.search(
             r"\b(?:amounts?|refund|proposal|propose|requested)\b[^;\n]{0,85}$",
             before_clause,
@@ -519,16 +675,19 @@ def _amounts(
             )
         ):
             role = "requested"
-        records.append(
-            {
-                "value": value,
-                "text": match.group(),
-                "start": match.start(),
-                "end": match.end(),
-                "role": role,
-                "currency": currency,
-            }
-        )
+        record = {
+            "value": value,
+            "text": match.group(),
+            "start": match.start(),
+            "end": match.end(),
+            "role": role,
+            "currency": currency,
+            "unit_product": per_product.group("product").casefold().removesuffix("s")
+            if per_product and role == "unit_price"
+            else None,
+        }
+        record["excluded"] = _excluded_value(record, text)
+        records.append(record)
     calculations = []
     calculation_ambiguity = False
     percent_pattern = rf"(?<![\w.-])(?P<pct>{_QTY})(?:\s*%|\s+percent|\s+per cent)\s+of\b"
@@ -586,63 +745,42 @@ def _amounts(
         for record in records:
             if match.start() <= record["start"] < base_record["end"] or record is base_record:
                 record["role"] = "calculation_operand"
+    quantities = _quantity_mentions(text, references, records)
+    requested_quantities = _requested_item_counts(text)
     for unit in [record for record in records if record["role"] == "unit_price"]:
-        beginning = max(0, unit["start"] - 150)
-        before_chars = list(text[beginning : unit["start"]])
-        for reference in references:
-            left = max(beginning, reference["start"])
-            right = min(unit["start"], reference["end"])
-            if left < right:
-                before_chars[left - beginning : right - beginning] = " " * (right - left)
-        before = "".join(before_chars)
-        quantities = list(
-            re.finditer(
-                rf"(?<![\w.-])(?P<qty>{_QTY})\s+"
-                rf"(?P<rest>(?:[A-Za-z-]+\s+){{0,4}}[A-Za-z-]+)",
-                before,
-                re.I,
-            )
-        )
-        quantities = [
-            match
-            for match in quantities
-            if not re.match(
-                r"(?:equally\s+)?(?:invoices?|prices?|reports?|notes?|days?|percent|charges?)\b",
-                match.group("rest"),
+        product = unit["unit_product"]
+        matching = [q for q in quantities if not product or q["product"][-1] == product]
+        preceding = [
+            q for q in matching if max(0, unit["start"] - 150) <= q["start"] < unit["start"]
+        ]
+        following = [
+            q
+            for q in matching
+            if unit["end"] <= q["start"] <= unit["end"] + 100
+            and re.fullmatch(
+                r"\s*(?:per\s+[A-Za-z-]+|each|apiece)\s+for\s+",
+                text[unit["end"] : q["start"]],
                 re.I,
             )
         ]
-        if quantities:
-            quantity = _matched_quantity(quantities[-1], before, "qty")
-            count_offsets = {beginning + quantities[-1].start("qty")}
-            # The requested subset takes precedence over the inventory count.
-            # If its product or quantity cannot be reconciled, ask rather than
-            # treating every item on the order as authorized for a refund.
-            requested_quantities = list(
-                re.finditer(
-                    rf"\b(?:propos(?:e|al)|refund)\b[^.;\n]{{0,90}}?"
-                    rf"\b(?:for|cover(?:ing)?)\s+"
-                    rf"(?:(?:only|all|the|these|those)\s+)*"
-                    rf"(?P<qty>{_QTY})\s+"
-                    rf"(?P<item>(?:[A-Za-z-]+\s+){{0,3}}[A-Za-z-]+)",
-                    text,
-                    re.I,
-                )
-            )
-            requested_quantities = [
-                requested
-                for requested in requested_quantities
-                if requested.group("item").split()[0].casefold()
-                not in {"inr", "rupees", "percent", "dollars", "usd", "eur", "gbp"}
+        # A 'per product for N products' phrase binds the amount to a following
+        # count. Otherwise retain the nearest supplied preceding inventory count.
+        inventory = following[0] if following else preceding[-1] if preceding else None
+        if inventory is None and product:
+            supplied = [
+                q for q in requested_quantities if q["product"] and q["product"][-1] == product
             ]
+            if len({q["value"] for q in supplied}) == 1:
+                inventory = supplied[-1]
+        if inventory:
+            quantity = inventory["value"]
+            count_offsets = {inventory["start"]}
             if requested_quantities:
-                count_offsets.update(requested.start("qty") for requested in requested_quantities)
-                choices = {
-                    _matched_quantity(requested, text, "qty") for requested in requested_quantities
-                }
+                count_offsets.update(requested["start"] for requested in requested_quantities)
+                choices = {requested["value"] for requested in requested_quantities}
                 requested = requested_quantities[-1]
-                item_tokens = _product_tokens(requested.group("item"))
-                inventory_tokens = _product_tokens(quantities[-1].group("rest"))
+                item_tokens = requested["product"]
+                inventory_tokens = inventory["product"]
                 if (
                     len(choices) != 1
                     or next(iter(choices)) > quantity
@@ -679,7 +817,7 @@ def _amounts(
                         "operation": "quantity_times_unit_price",
                         "operands": [str(quantity), str(unit["value"])],
                         "result": quantity * unit["value"],
-                        "text": quantities[-1].group() + " ... " + unit["text"],
+                        "text": inventory["text"] + " ... " + unit["text"],
                         "currency": unit["currency"],
                     }
                 )
