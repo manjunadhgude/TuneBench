@@ -1,0 +1,1073 @@
+{
+  "evaluation_version": "0.2.0",
+  "task_schema_version": "3.0.0",
+  "total_examples": 40,
+  "prediction_records": 40,
+  "missing_predictions": 0,
+  "invalid_predictions": 0,
+  "task_success": {
+    "correct": 33,
+    "total": 40,
+    "accuracy": 0.825
+  },
+  "outcome_accuracy": {
+    "correct": 40,
+    "total": 40,
+    "accuracy": 1.0
+  },
+  "outcome_classification": {
+    "labels": [
+      "tool_call",
+      "clarification",
+      "no_tool"
+    ],
+    "confusion_matrix": {
+      "tool_call": {
+        "tool_call": 16,
+        "clarification": 0,
+        "no_tool": 0,
+        "invalid": 0
+      },
+      "clarification": {
+        "tool_call": 0,
+        "clarification": 12,
+        "no_tool": 0,
+        "invalid": 0
+      },
+      "no_tool": {
+        "tool_call": 0,
+        "clarification": 0,
+        "no_tool": 12,
+        "invalid": 0
+      }
+    },
+    "per_class": {
+      "tool_call": {
+        "support": 16,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "clarification": {
+        "support": 12,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "no_tool": {
+        "support": 12,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 1.0
+  },
+  "tool_call": {
+    "total": 16,
+    "tool_selection": {
+      "correct": 16,
+      "denominator": 16,
+      "accuracy": 1.0
+    },
+    "arguments_given_correct_tool": {
+      "correct": 12,
+      "denominator": 16,
+      "accuracy": 0.75
+    },
+    "joint_exact_match": {
+      "correct": 12,
+      "denominator": 16,
+      "accuracy": 0.75
+    }
+  },
+  "clarification": {
+    "total": 12,
+    "intended_tool_accuracy": {
+      "correct": 10,
+      "denominator": 10,
+      "accuracy": 1.0
+    },
+    "missing_fields_exact_accuracy": {
+      "correct": 10,
+      "denominator": 11,
+      "accuracy": 0.9090909090909091
+    },
+    "missing_fields_micro": {
+      "precision": 0.9411764705882353,
+      "recall": 1.0,
+      "f1": 0.9696969696969697,
+      "denominator": 11
+    },
+    "joint_exact_match": {
+      "correct": 9,
+      "denominator": 12,
+      "accuracy": 0.75
+    },
+    "reason_code_accuracy": {
+      "correct": 10,
+      "denominator": 12,
+      "accuracy": 0.8333333333333334
+    }
+  },
+  "no_tool": {
+    "total": 12,
+    "recall": 1.0,
+    "reason_code_accuracy": {
+      "correct": 12,
+      "denominator": 12,
+      "accuracy": 1.0
+    }
+  },
+  "error_categories": {},
+  "breakdown": {
+    "family_id": {
+      "PV4_CLARIFY_ALTERNATIVE_CLAIM_RECORDS": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_INACCESSIBLE_PRIOR_CHAT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_LIST_VERSUS_PAID_PRICE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_OPAQUE_ASSISTANCE_ACTION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_PARTIAL_RECEIPT_REFERENCE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_PERCENT_WITHOUT_BASE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_PRONOUN_ACROSS_DIFFERENT_ISSUES": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_TIED_TEMPORAL_SELECTOR": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_UNAVAILABLE_RECEIPT_ATTACHMENT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_UNRESOLVED_ACTION_BRANCH": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_UNSELECTED_AFFECTED_LINE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV4_CLARIFY_UNSPECIFIED_UNSATISFACTORY_REASON": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV4_ELIGIBILITY_CORRECTED_PACKAGE_OWNERSHIP": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_ELIGIBILITY_DELIVERY_LOG_SELECTION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_ELIGIBILITY_HANDEDNESS_MISMATCH": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_ELIGIBILITY_SURPLUS_GIFT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_INFORMATION_ITEMIZED_RECEIPT_QUANTITY": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_INFORMATION_LABELLED_REFERENCE_FIELD": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_INFORMATION_MULTI_ORDER_MESSAGE_FORMAT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_INFORMATION_PREPARING_NONRECEIPT_REPORT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_NO_ACTION_AGENT_SUGGESTION_DEFERRED": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_NO_ACTION_DETAILS_BEFORE_LATER_REQUEST": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_NO_ACTION_PREFERENCE_NOTE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_NO_ACTION_TRANSCRIPT_WORD_CORRECTION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_PROPOSAL_AGREED_KEEP_ITEM_AMOUNT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_PROPOSAL_COUNT_COMPLEMENT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_PROPOSAL_CUSTOMER_DEFINED_CAP": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_PROPOSAL_DISCOUNT_THEN_FRACTION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV4_PROPOSAL_EQUAL_BUNDLE_ALLOCATION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV4_PROPOSAL_ITEMIZED_MISMATCH_SELECTION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_PROPOSAL_MIXED_DAMAGED_LINES": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV4_PROPOSAL_UNPROPOSED_REMAINDER": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_STATUS_ATTRIBUTE_JOIN": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_STATUS_PENDING_ROW_FILTER": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_STATUS_REORDER_RELATION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_STATUS_TRANSPOSED_ITEM_MAPPING": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "PV4_UNSUPPORTED_CHANGE_PAYMENT_INSTRUMENT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_UNSUPPORTED_COMBINE_SEPARATE_SHIPMENTS": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_UNSUPPORTED_REMOVE_ONE_ORDER_LINE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV4_UNSUPPORTED_RETURN_LABEL_CREATION": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      }
+    },
+    "difficulty": {
+      "easy": {
+        "total": 9,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.8888888888888888,
+        "invalid_predictions": 0
+      },
+      "hard": {
+        "total": 11,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.45454545454545453,
+        "invalid_predictions": 0
+      },
+      "medium": {
+        "total": 20,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      }
+    },
+    "gold_outcome": {
+      "clarification": {
+        "total": 12,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.75,
+        "invalid_predictions": 0
+      },
+      "no_tool": {
+        "total": 12,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "tool_call": {
+        "total": 16,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.75,
+        "invalid_predictions": 0
+      }
+    },
+    "split": {
+      "validation": {
+        "total": 40,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.825,
+        "invalid_predictions": 0
+      }
+    }
+  },
+  "per_example": [
+    {
+      "example_id": "portfolio-v4-holdout-28",
+      "family_id": "PV4_CLARIFY_UNRESOLVED_ACTION_BRANCH",
+      "scenario_id": "portfolio-v4-scenario-28",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": null,
+      "clarification_missing_fields_exact": null,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v4-holdout-19",
+      "family_id": "PV4_CLARIFY_LIST_VERSUS_PAID_PRICE",
+      "scenario_id": "portfolio-v4-scenario-19",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-09",
+      "family_id": "PV4_PROPOSAL_AGREED_KEEP_ITEM_AMOUNT",
+      "scenario_id": "portfolio-v4-scenario-09",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-20",
+      "family_id": "PV4_CLARIFY_UNSPECIFIED_UNSATISFACTORY_REASON",
+      "scenario_id": "portfolio-v4-scenario-20",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v4-holdout-27",
+      "family_id": "PV4_CLARIFY_OPAQUE_ASSISTANCE_ACTION",
+      "scenario_id": "portfolio-v4-scenario-27",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": null,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-32",
+      "family_id": "PV4_INFORMATION_ITEMIZED_RECEIPT_QUANTITY",
+      "scenario_id": "portfolio-v4-scenario-32",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-02",
+      "family_id": "PV4_STATUS_ATTRIBUTE_JOIN",
+      "scenario_id": "portfolio-v4-scenario-02",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-07",
+      "family_id": "PV4_ELIGIBILITY_DELIVERY_LOG_SELECTION",
+      "scenario_id": "portfolio-v4-scenario-07",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-21",
+      "family_id": "PV4_CLARIFY_UNAVAILABLE_RECEIPT_ATTACHMENT",
+      "scenario_id": "portfolio-v4-scenario-21",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-08",
+      "family_id": "PV4_ELIGIBILITY_CORRECTED_PACKAGE_OWNERSHIP",
+      "scenario_id": "portfolio-v4-scenario-08",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-37",
+      "family_id": "PV4_NO_ACTION_PREFERENCE_NOTE",
+      "scenario_id": "portfolio-v4-scenario-37",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-11",
+      "family_id": "PV4_PROPOSAL_MIXED_DAMAGED_LINES",
+      "scenario_id": "portfolio-v4-scenario-11",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v4-holdout-05",
+      "family_id": "PV4_ELIGIBILITY_SURPLUS_GIFT",
+      "scenario_id": "portfolio-v4-scenario-05",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-03",
+      "family_id": "PV4_STATUS_TRANSPOSED_ITEM_MAPPING",
+      "scenario_id": "portfolio-v4-scenario-03",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v4-holdout-24",
+      "family_id": "PV4_CLARIFY_TIED_TEMPORAL_SELECTOR",
+      "scenario_id": "portfolio-v4-scenario-24",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-01",
+      "family_id": "PV4_STATUS_REORDER_RELATION",
+      "scenario_id": "portfolio-v4-scenario-01",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-40",
+      "family_id": "PV4_NO_ACTION_AGENT_SUGGESTION_DEFERRED",
+      "scenario_id": "portfolio-v4-scenario-40",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-38",
+      "family_id": "PV4_NO_ACTION_DETAILS_BEFORE_LATER_REQUEST",
+      "scenario_id": "portfolio-v4-scenario-38",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-14",
+      "family_id": "PV4_PROPOSAL_CUSTOMER_DEFINED_CAP",
+      "scenario_id": "portfolio-v4-scenario-14",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-36",
+      "family_id": "PV4_UNSUPPORTED_CHANGE_PAYMENT_INSTRUMENT",
+      "scenario_id": "portfolio-v4-scenario-36",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-34",
+      "family_id": "PV4_UNSUPPORTED_RETURN_LABEL_CREATION",
+      "scenario_id": "portfolio-v4-scenario-34",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-15",
+      "family_id": "PV4_PROPOSAL_EQUAL_BUNDLE_ALLOCATION",
+      "scenario_id": "portfolio-v4-scenario-15",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v4-holdout-30",
+      "family_id": "PV4_INFORMATION_MULTI_ORDER_MESSAGE_FORMAT",
+      "scenario_id": "portfolio-v4-scenario-30",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-10",
+      "family_id": "PV4_PROPOSAL_UNPROPOSED_REMAINDER",
+      "scenario_id": "portfolio-v4-scenario-10",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-33",
+      "family_id": "PV4_UNSUPPORTED_REMOVE_ONE_ORDER_LINE",
+      "scenario_id": "portfolio-v4-scenario-33",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-12",
+      "family_id": "PV4_PROPOSAL_DISCOUNT_THEN_FRACTION",
+      "scenario_id": "portfolio-v4-scenario-12",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v4-holdout-13",
+      "family_id": "PV4_PROPOSAL_COUNT_COMPLEMENT",
+      "scenario_id": "portfolio-v4-scenario-13",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-39",
+      "family_id": "PV4_NO_ACTION_TRANSCRIPT_WORD_CORRECTION",
+      "scenario_id": "portfolio-v4-scenario-39",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-25",
+      "family_id": "PV4_CLARIFY_PRONOUN_ACROSS_DIFFERENT_ISSUES",
+      "scenario_id": "portfolio-v4-scenario-25",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-04",
+      "family_id": "PV4_STATUS_PENDING_ROW_FILTER",
+      "scenario_id": "portfolio-v4-scenario-04",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-26",
+      "family_id": "PV4_CLARIFY_UNSELECTED_AFFECTED_LINE",
+      "scenario_id": "portfolio-v4-scenario-26",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": false,
+      "clarification_reason_correct": true,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "portfolio-v4-holdout-35",
+      "family_id": "PV4_UNSUPPORTED_COMBINE_SEPARATE_SHIPMENTS",
+      "scenario_id": "portfolio-v4-scenario-35",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-16",
+      "family_id": "PV4_PROPOSAL_ITEMIZED_MISMATCH_SELECTION",
+      "scenario_id": "portfolio-v4-scenario-16",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-22",
+      "family_id": "PV4_CLARIFY_INACCESSIBLE_PRIOR_CHAT",
+      "scenario_id": "portfolio-v4-scenario-22",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-17",
+      "family_id": "PV4_CLARIFY_PARTIAL_RECEIPT_REFERENCE",
+      "scenario_id": "portfolio-v4-scenario-17",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-31",
+      "family_id": "PV4_INFORMATION_LABELLED_REFERENCE_FIELD",
+      "scenario_id": "portfolio-v4-scenario-31",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-18",
+      "family_id": "PV4_CLARIFY_PERCENT_WITHOUT_BASE",
+      "scenario_id": "portfolio-v4-scenario-18",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-06",
+      "family_id": "PV4_ELIGIBILITY_HANDEDNESS_MISMATCH",
+      "scenario_id": "portfolio-v4-scenario-06",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-29",
+      "family_id": "PV4_INFORMATION_PREPARING_NONRECEIPT_REPORT",
+      "scenario_id": "portfolio-v4-scenario-29",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v4-holdout-23",
+      "family_id": "PV4_CLARIFY_ALTERNATIVE_CLAIM_RECORDS",
+      "scenario_id": "portfolio-v4-scenario-23",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    }
+  ]
+}

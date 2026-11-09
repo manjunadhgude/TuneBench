@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tunebench"
-version = "0.6.0"
+version = "0.7.0"
 description = "A CPU-friendly tool-calling workbench with guarded mock execution and evaluation."
 readme = "README.md"
 requires-python = ">=3.11"

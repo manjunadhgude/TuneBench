@@ -150,6 +150,16 @@ def show_result(result: dict, mode: str) -> None:
                 st.json(advisory)
         st.caption("Submitted request")
         st.code(result.get("input", ""), language=None, wrap_lines=True)
+        for review in result.get("semantic_verifications", []):
+            st.markdown(f"**Model review · attempt {review['primary_attempt']}**")
+            st.caption("Fallible model judgement; refund arithmetic is checked separately.")
+            st.code(review.get("raw_output", ""), language="json", wrap_lines=True)
+            st.json(
+                {
+                    key: review.get(key)
+                    for key in ("verdict", "calculation_result", "calculation_error", "usage")
+                }
+            )
 
 
 def metric_row(summary: dict) -> None:
@@ -341,6 +351,14 @@ with evaluation:
     st.subheader("Evidence, with the context attached")
     st.write("Actual saved model runs. Deterministic demo scores are kept separate.")
     comparisons = [
+        (
+            "artifacts/semantic-comparison-v7",
+            "Semantic review comparison · the same 40 fresh test questions",
+            ("v0.6 · evidence rules", "v0.7 · model review + calculator"),
+            "Same primary model and prompt. v0.7 adds up to two model reviews, "
+            "a bounded retry using their feedback, and refund arithmetic checks. "
+            "The extra model calls add latency; total compute is not matched.",
+        ),
         (
             "artifacts/guard-comparison-v6",
             "Guard comparison · the same 40 new test questions",
