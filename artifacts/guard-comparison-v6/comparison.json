@@ -1,0 +1,52 @@
+{
+  "comparison_type": "guard_only_ablation_same_model_runtime_and_prompt",
+  "examples": 40,
+  "protocol_sha256": "3c15c2406bfd918c5e415297fbd336f6fb9ea622551176d598736afbeaa8c9d1",
+  "results": {
+    "raw-first": {
+      "legacy": {
+        "correct": 33,
+        "total": 40,
+        "accuracy": 0.825
+      },
+      "candidate": {
+        "correct": 33,
+        "total": 40,
+        "accuracy": 0.825
+      },
+      "improvements": [],
+      "regressions": [],
+      "schema_valid_decisions": {
+        "legacy": 40,
+        "candidate": 40
+      }
+    },
+    "final": {
+      "legacy": {
+        "correct": 22,
+        "total": 40,
+        "accuracy": 0.55
+      },
+      "candidate": {
+        "correct": 22,
+        "total": 40,
+        "accuracy": 0.55
+      },
+      "improvements": [],
+      "regressions": [],
+      "schema_valid_decisions": {
+        "legacy": 36,
+        "candidate": 35
+      }
+    }
+  },
+  "limitations": [
+    "Only guard evidence extraction and policy metadata change.",
+    "Same pinned weights, runtime, prompt and generation settings.",
+    "Small assistant-authored holdout; no production reliability claim.",
+    "Execution disabled; execution safety checked separately."
+  ],
+  "shared_first_request_hashes_verified": true,
+  "raw_first_outcomes_identical": 40,
+  "quality_claims_validated": true
+}
