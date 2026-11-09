@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tunebench"
-version = "0.4.0"
+version = "0.5.0"
 description = "A CPU-friendly tool-calling workbench with guarded mock execution and evaluation."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -15,6 +15,7 @@ dev = ["pytest>=8.3,<10", "ruff>=0.14,<1"]
 app = ["streamlit>=1.41,<2"]
 browser = ["playwright>=1.50,<2"]
 model = ["torch>=2.4,<3", "transformers>=4.46,<5", "accelerate>=1,<2", "lm-format-enforcer>=0.11.3,<0.12"]
+gguf = ["llama-cpp-python==0.3.36"]
 training = ["torch>=2.4,<3", "transformers>=4.46,<5", "accelerate>=1,<2", "peft>=0.14,<1"]
 qlora = ["torch>=2.4,<3", "transformers>=4.46,<5", "accelerate>=1,<2", "peft>=0.14,<1", "bitsandbytes>=0.45,<1"]
 

@@ -1,0 +1,909 @@
+{
+  "evaluation_version": "0.2.0",
+  "task_schema_version": "3.0.0",
+  "total_examples": 40,
+  "prediction_records": 40,
+  "missing_predictions": 0,
+  "invalid_predictions": 0,
+  "task_success": {
+    "correct": 40,
+    "total": 40,
+    "accuracy": 1.0
+  },
+  "outcome_accuracy": {
+    "correct": 40,
+    "total": 40,
+    "accuracy": 1.0
+  },
+  "outcome_classification": {
+    "labels": [
+      "tool_call",
+      "clarification",
+      "no_tool"
+    ],
+    "confusion_matrix": {
+      "tool_call": {
+        "tool_call": 14,
+        "clarification": 0,
+        "no_tool": 0,
+        "invalid": 0
+      },
+      "clarification": {
+        "tool_call": 0,
+        "clarification": 13,
+        "no_tool": 0,
+        "invalid": 0
+      },
+      "no_tool": {
+        "tool_call": 0,
+        "clarification": 0,
+        "no_tool": 13,
+        "invalid": 0
+      }
+    },
+    "per_class": {
+      "tool_call": {
+        "support": 14,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "clarification": {
+        "support": 13,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "no_tool": {
+        "support": 13,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "macro_f1": 1.0
+  },
+  "tool_call": {
+    "total": 14,
+    "tool_selection": {
+      "correct": 14,
+      "denominator": 14,
+      "accuracy": 1.0
+    },
+    "arguments_given_correct_tool": {
+      "correct": 14,
+      "denominator": 14,
+      "accuracy": 1.0
+    },
+    "joint_exact_match": {
+      "correct": 14,
+      "denominator": 14,
+      "accuracy": 1.0
+    }
+  },
+  "clarification": {
+    "total": 13,
+    "intended_tool_accuracy": {
+      "correct": 12,
+      "denominator": 12,
+      "accuracy": 1.0
+    },
+    "missing_fields_exact_accuracy": {
+      "correct": 13,
+      "denominator": 13,
+      "accuracy": 1.0
+    },
+    "missing_fields_micro": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "denominator": 13
+    },
+    "joint_exact_match": {
+      "correct": 13,
+      "denominator": 13,
+      "accuracy": 1.0
+    },
+    "reason_code_accuracy": {
+      "correct": 13,
+      "denominator": 13,
+      "accuracy": 1.0
+    }
+  },
+  "no_tool": {
+    "total": 13,
+    "recall": 1.0,
+    "reason_code_accuracy": {
+      "correct": 13,
+      "denominator": 13,
+      "accuracy": 1.0
+    }
+  },
+  "error_categories": {},
+  "breakdown": {
+    "family_id": {
+      "PV1_D_CONVERSATION_CLOSE": {
+        "total": 2,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_ELIGIBILITY_CONFLICT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_ELIGIBILITY_EXPLICIT": {
+        "total": 4,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_ELIGIBILITY_MISSING_FACTS": {
+        "total": 3,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_INFORMATION_ONLY": {
+        "total": 6,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_PROPOSAL_AMOUNT_CONFLICT": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_PROPOSAL_EXPLICIT": {
+        "total": 6,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_PROPOSAL_MISSING_FACTS": {
+        "total": 4,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_STATUS_DIRECT": {
+        "total": 2,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_STATUS_LITERAL_DATA": {
+        "total": 2,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_STATUS_UNRESOLVED_REFERENCE": {
+        "total": 3,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_UNDECIDED_SERVICE": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "PV1_D_UNSUPPORTED_OPERATION": {
+        "total": 5,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      }
+    },
+    "difficulty": {
+      "easy": {
+        "total": 16,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "hard": {
+        "total": 3,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "medium": {
+        "total": 21,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      }
+    },
+    "gold_outcome": {
+      "clarification": {
+        "total": 13,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "no_tool": {
+        "total": 13,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "tool_call": {
+        "total": 14,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      }
+    },
+    "split": {
+      "validation": {
+        "total": 40,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      }
+    }
+  },
+  "per_example": [
+    {
+      "example_id": "portfolio-v1-development-01",
+      "family_id": "PV1_D_STATUS_DIRECT",
+      "scenario_id": "portfolio-v1-development-scenario-01",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-02",
+      "family_id": "PV1_D_STATUS_DIRECT",
+      "scenario_id": "portfolio-v1-development-scenario-02",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-03",
+      "family_id": "PV1_D_STATUS_LITERAL_DATA",
+      "scenario_id": "portfolio-v1-development-scenario-03",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-04",
+      "family_id": "PV1_D_STATUS_LITERAL_DATA",
+      "scenario_id": "portfolio-v1-development-scenario-04",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-05",
+      "family_id": "PV1_D_ELIGIBILITY_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-05",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-06",
+      "family_id": "PV1_D_ELIGIBILITY_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-06",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-07",
+      "family_id": "PV1_D_ELIGIBILITY_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-07",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-08",
+      "family_id": "PV1_D_ELIGIBILITY_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-08",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-09",
+      "family_id": "PV1_D_PROPOSAL_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-09",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-10",
+      "family_id": "PV1_D_PROPOSAL_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-10",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-11",
+      "family_id": "PV1_D_PROPOSAL_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-11",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-12",
+      "family_id": "PV1_D_PROPOSAL_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-12",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-13",
+      "family_id": "PV1_D_PROPOSAL_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-13",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-14",
+      "family_id": "PV1_D_PROPOSAL_EXPLICIT",
+      "scenario_id": "portfolio-v1-development-scenario-14",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-15",
+      "family_id": "PV1_D_STATUS_UNRESOLVED_REFERENCE",
+      "scenario_id": "portfolio-v1-development-scenario-15",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-16",
+      "family_id": "PV1_D_STATUS_UNRESOLVED_REFERENCE",
+      "scenario_id": "portfolio-v1-development-scenario-16",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-17",
+      "family_id": "PV1_D_STATUS_UNRESOLVED_REFERENCE",
+      "scenario_id": "portfolio-v1-development-scenario-17",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-18",
+      "family_id": "PV1_D_ELIGIBILITY_MISSING_FACTS",
+      "scenario_id": "portfolio-v1-development-scenario-18",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-19",
+      "family_id": "PV1_D_ELIGIBILITY_MISSING_FACTS",
+      "scenario_id": "portfolio-v1-development-scenario-19",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-20",
+      "family_id": "PV1_D_ELIGIBILITY_MISSING_FACTS",
+      "scenario_id": "portfolio-v1-development-scenario-20",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-21",
+      "family_id": "PV1_D_ELIGIBILITY_CONFLICT",
+      "scenario_id": "portfolio-v1-development-scenario-21",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-22",
+      "family_id": "PV1_D_PROPOSAL_MISSING_FACTS",
+      "scenario_id": "portfolio-v1-development-scenario-22",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-23",
+      "family_id": "PV1_D_PROPOSAL_MISSING_FACTS",
+      "scenario_id": "portfolio-v1-development-scenario-23",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-24",
+      "family_id": "PV1_D_PROPOSAL_MISSING_FACTS",
+      "scenario_id": "portfolio-v1-development-scenario-24",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-25",
+      "family_id": "PV1_D_PROPOSAL_AMOUNT_CONFLICT",
+      "scenario_id": "portfolio-v1-development-scenario-25",
+      "split": "validation",
+      "difficulty": "hard",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-26",
+      "family_id": "PV1_D_PROPOSAL_MISSING_FACTS",
+      "scenario_id": "portfolio-v1-development-scenario-26",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-27",
+      "family_id": "PV1_D_UNDECIDED_SERVICE",
+      "scenario_id": "portfolio-v1-development-scenario-27",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": null,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-28",
+      "family_id": "PV1_D_INFORMATION_ONLY",
+      "scenario_id": "portfolio-v1-development-scenario-28",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-29",
+      "family_id": "PV1_D_INFORMATION_ONLY",
+      "scenario_id": "portfolio-v1-development-scenario-29",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-30",
+      "family_id": "PV1_D_INFORMATION_ONLY",
+      "scenario_id": "portfolio-v1-development-scenario-30",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-31",
+      "family_id": "PV1_D_INFORMATION_ONLY",
+      "scenario_id": "portfolio-v1-development-scenario-31",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-32",
+      "family_id": "PV1_D_INFORMATION_ONLY",
+      "scenario_id": "portfolio-v1-development-scenario-32",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-33",
+      "family_id": "PV1_D_UNSUPPORTED_OPERATION",
+      "scenario_id": "portfolio-v1-development-scenario-33",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-34",
+      "family_id": "PV1_D_UNSUPPORTED_OPERATION",
+      "scenario_id": "portfolio-v1-development-scenario-34",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-35",
+      "family_id": "PV1_D_UNSUPPORTED_OPERATION",
+      "scenario_id": "portfolio-v1-development-scenario-35",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-36",
+      "family_id": "PV1_D_UNSUPPORTED_OPERATION",
+      "scenario_id": "portfolio-v1-development-scenario-36",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-37",
+      "family_id": "PV1_D_UNSUPPORTED_OPERATION",
+      "scenario_id": "portfolio-v1-development-scenario-37",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-38",
+      "family_id": "PV1_D_CONVERSATION_CLOSE",
+      "scenario_id": "portfolio-v1-development-scenario-38",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-39",
+      "family_id": "PV1_D_CONVERSATION_CLOSE",
+      "scenario_id": "portfolio-v1-development-scenario-39",
+      "split": "validation",
+      "difficulty": "easy",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "portfolio-v1-development-40",
+      "family_id": "PV1_D_INFORMATION_ONLY",
+      "scenario_id": "portfolio-v1-development-scenario-40",
+      "split": "validation",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    }
+  ]
+}

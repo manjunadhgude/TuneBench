@@ -1,0 +1,518 @@
+[
+  {
+    "example_id": "portfolio-v3-holdout-01",
+    "family_id": "PV3_ELIGIBILITY_DIFFERENT_DELIVERED_PRODUCT",
+    "difficulty": "medium",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "check_refund_eligibility",
+      "arguments": {
+        "order_id": "OR-2950",
+        "reason": "wrong_item"
+      }
+    },
+    "rationale": "The delivered item differs from the ordered product; the order identifier and eligibility request are explicit."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-02",
+    "family_id": "PV3_CLARIFY_PROPOSAL_REASON_NOT_GIVEN",
+    "difficulty": "medium",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "propose_refund",
+      "missing_fields": [
+        "reason"
+      ],
+      "reason_code": "missing_required_information"
+    },
+    "rationale": "An order and positive amount are supplied, but the customer has intentionally not supplied a refund reason."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-03",
+    "family_id": "PV3_NO_ACTION_WITHDRAWN_LOOKUP_IN_CONVERSATION",
+    "difficulty": "hard",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "no_action_requested"
+    },
+    "rationale": "The latest customer turn retracts the earlier lookup; this is neither an active lookup nor a request to cancel the purchase."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-04",
+    "family_id": "PV3_CLARIFY_UNSELECTED_SERVICE",
+    "difficulty": "hard",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": null,
+      "missing_fields": [],
+      "reason_code": "ambiguous_intent"
+    },
+    "rationale": "The customer has not selected an action between two supported services; null target and no guessed missing fields are appropriate."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-05",
+    "family_id": "PV3_CLARIFY_ELIGIBILITY_COMPETING_REASONS",
+    "difficulty": "medium",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "check_refund_eligibility",
+      "missing_fields": [
+        "reason"
+      ],
+      "reason_code": "ambiguous_reference"
+    },
+    "rationale": "The requested eligibility check and order are known, while damaged_item versus changed_mind is explicitly unresolved."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-06",
+    "family_id": "PV3_PROPOSAL_REVISED_REFERENCE_AND_AMOUNT",
+    "difficulty": "hard",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "SM-412",
+        "refund_amount": 47.2,
+        "reason": "changed_mind"
+      }
+    },
+    "rationale": "The customer explicitly supersedes both the old reference and old amount; the current changed-mind proposal is fully specified."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-07",
+    "family_id": "PV3_UNSUPPORTED_ADDRESS_CHANGE",
+    "difficulty": "medium",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "unsupported_request"
+    },
+    "rationale": "The requested address mutation is unsupported; a status lookup is explicitly excluded and no real address data is needed."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-08",
+    "family_id": "PV3_UNSUPPORTED_ACTUAL_REFUND_PAYMENT",
+    "difficulty": "medium",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "unsupported_request"
+    },
+    "rationale": "The user requires a real transfer, which propose_refund cannot perform; do not substitute a proposal despite complete-looking arguments."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-09",
+    "family_id": "PV3_CLARIFY_PROPOSAL_AMOUNT_NOT_DECIDED",
+    "difficulty": "medium",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "propose_refund",
+      "missing_fields": [
+        "refund_amount"
+      ],
+      "reason_code": "missing_required_information"
+    },
+    "rationale": "The proposal action, damaged-item reason and ID are known, but no positive requested amount or computable basis is supplied."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-10",
+    "family_id": "PV3_NO_ACTION_SHORT_ACKNOWLEDGMENT",
+    "difficulty": "easy",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "no_action_requested"
+    },
+    "rationale": "This is a closing acknowledgment without a question or requested operation."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-11",
+    "family_id": "PV3_NO_ACTION_HISTORICAL_UNTRUSTED_QUOTE",
+    "difficulty": "hard",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "no_action_requested"
+    },
+    "rationale": "The apparent instruction is explicitly quoted historical untrusted data; the actual current statement authorizes no tool action."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-12",
+    "family_id": "PV3_ELIGIBILITY_PARCEL_STILL_ABSENT",
+    "difficulty": "medium",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "check_refund_eligibility",
+      "arguments": {
+        "order_id": "NX-7506",
+        "reason": "not_received"
+      }
+    },
+    "rationale": "An explicit nonreceipt fact supports not_received; no actual delivery status or policy outcome must be invented."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-13",
+    "family_id": "PV3_ELIGIBILITY_BROKEN_LID",
+    "difficulty": "easy",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "check_refund_eligibility",
+      "arguments": {
+        "order_id": "JAR-6904",
+        "reason": "damaged_item"
+      }
+    },
+    "rationale": "Broken lid supports damaged_item; the requested action is eligibility checking rather than proposing or paying a refund."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-14",
+    "family_id": "PV3_UNSUPPORTED_ACCOUNT_ORDER_EXPORT",
+    "difficulty": "hard",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "unsupported_request"
+    },
+    "rationale": "Account-wide export is unavailable; the incidental reference does not change the requested unsupported action."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-15",
+    "family_id": "PV3_ELIGIBILITY_CORRECTED_CUSTOMER_REASON",
+    "difficulty": "hard",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "check_refund_eligibility",
+      "arguments": {
+        "order_id": "BL-6308",
+        "reason": "changed_mind"
+      }
+    },
+    "rationale": "The customer retracts the suspected defect and positively supplies changed_mind as the current refund reason."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-16",
+    "family_id": "PV3_CLARIFY_ELIGIBILITY_REFERENCE_NOT_GIVEN",
+    "difficulty": "medium",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "check_refund_eligibility",
+      "missing_fields": [
+        "order_id"
+      ],
+      "reason_code": "missing_required_information"
+    },
+    "rationale": "Nonreceipt and eligibility intent are explicit; the order reference is the sole missing argument."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-17",
+    "family_id": "PV3_INFORMATION_ELIGIBILITY_MEANING",
+    "difficulty": "easy",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "informational_request"
+    },
+    "rationale": "This requests a general definition rather than an order-specific operation."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-18",
+    "family_id": "PV3_PROPOSAL_UNWANTED_ITEM_WITH_PAYMENT_PROHIBITION",
+    "difficulty": "medium",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "DM-5529",
+        "refund_amount": 16.75,
+        "reason": "changed_mind"
+      }
+    },
+    "rationale": "A supported proposal is positively authorized while payment is separately prohibited; changed_mind and amount are explicit."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-19",
+    "family_id": "PV3_CLARIFY_STATUS_REFERENCE_NOT_AVAILABLE",
+    "difficulty": "easy",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "get_order_status",
+      "missing_fields": [
+        "order_id"
+      ],
+      "reason_code": "missing_required_information"
+    },
+    "rationale": "Tracking is clear but its required order_id is absent; no reference should be guessed."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-20",
+    "family_id": "PV3_INFORMATION_HYPOTHETICAL_UNIT_COST",
+    "difficulty": "hard",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "informational_request"
+    },
+    "rationale": "An explicit explanatory question about hypothetical arithmetic is informational; there is no authorized order-specific tool action."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-21",
+    "family_id": "PV3_INFORMATION_PROPOSAL_VERSUS_PAYMENT",
+    "difficulty": "medium",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "informational_request"
+    },
+    "rationale": "This asks about two concepts and does not request either action."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-22",
+    "family_id": "PV3_INFORMATION_KNOWN_STATUS_WORD",
+    "difficulty": "medium",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "informational_request"
+    },
+    "rationale": "The requested deliverable is an explanation of a supplied status word; mentioning an order ID does not authorize retrieval."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-23",
+    "family_id": "PV3_PROPOSAL_PERCENT_OF_PREVIOUS_SENTENCE_TOTAL",
+    "difficulty": "hard",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "PK-3864",
+        "refund_amount": 60,
+        "reason": "not_received"
+      }
+    },
+    "rationale": "The explicit earlier item-price base is 240.00; 25 percent is 60.00 and nonreceipt supplies the reason."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-24",
+    "family_id": "PV3_CLARIFY_ELIGIBILITY_REASON_NOT_SUPPLIED",
+    "difficulty": "easy",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "check_refund_eligibility",
+      "missing_fields": [
+        "reason"
+      ],
+      "reason_code": "missing_required_information"
+    },
+    "rationale": "The eligibility target and order are known; the required refund reason alone is absent."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-25",
+    "family_id": "PV3_CLARIFY_PROPOSAL_REASON_AND_AMOUNT",
+    "difficulty": "medium",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "propose_refund",
+      "missing_fields": [
+        "reason",
+        "refund_amount"
+      ],
+      "reason_code": "missing_required_information"
+    },
+    "rationale": "The proposal target and ID are known, while exactly reason and refund_amount remain unresolved."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-26",
+    "family_id": "PV3_UNSUPPORTED_ORDER_CANCELLATION",
+    "difficulty": "easy",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "unsupported_request"
+    },
+    "rationale": "Cancellation is an immediate requested action absent from all three available tools."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-27",
+    "family_id": "PV3_STATUS_POLITE_RECEIPT",
+    "difficulty": "easy",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "get_order_status",
+      "arguments": {
+        "order_id": "REC-801"
+      }
+    },
+    "rationale": "A current status lookup is requested and the only required order reference is explicit."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-28",
+    "family_id": "PV3_STATUS_CLEAR_CONVERSATIONAL_REFERENCE",
+    "difficulty": "hard",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "get_order_status",
+      "arguments": {
+        "order_id": "FC/2751"
+      }
+    },
+    "rationale": "The current request refers back to one unambiguous purchase reference supplied in the conversation; no field is missing."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-29",
+    "family_id": "PV3_NO_ACTION_RECORDED_ORDER_STATUS",
+    "difficulty": "medium",
+    "gold": {
+      "type": "no_tool",
+      "reason_code": "no_action_requested"
+    },
+    "rationale": "The customer supplies a background fact and explicitly requests no new action or explanation."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-30",
+    "family_id": "PV3_PROPOSAL_WRONG_ITEM_FULL_UNIT_COST",
+    "difficulty": "medium",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "FL-8642",
+        "refund_amount": 43.8,
+        "reason": "wrong_item"
+      }
+    },
+    "rationale": "All three wrong items are covered and the supplied unit price gives three times 14.60 equals 43.80; fees are explicitly excluded."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-31",
+    "family_id": "PV3_CLARIFY_PROPOSAL_COMPETING_ESTIMATES",
+    "difficulty": "hard",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "propose_refund",
+      "missing_fields": [
+        "refund_amount"
+      ],
+      "reason_code": "ambiguous_reference"
+    },
+    "rationale": "The order, proposal action and damaged reason are settled; two unconfirmed amount candidates require ambiguity clarification."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-32",
+    "family_id": "PV3_STATUS_RECEIPT_VERSUS_SUPPORT_CASE",
+    "difficulty": "medium",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "get_order_status",
+      "arguments": {
+        "order_id": "web/876A"
+      }
+    },
+    "rationale": "The support-case identifier is explicitly a different role; the receipt reference is the requested order identifier."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-33",
+    "family_id": "PV3_STATUS_AUTHORITATIVE_NEW_REFERENCE",
+    "difficulty": "medium",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "get_order_status",
+      "arguments": {
+        "order_id": "CL-4812"
+      }
+    },
+    "rationale": "The customer authoritatively replaces the old order reference with CL-4812 and requests tracking."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-34",
+    "family_id": "PV3_PROPOSAL_EXPLICIT_DAMAGED_BINDING",
+    "difficulty": "easy",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "BK-9416",
+        "refund_amount": 28.4,
+        "reason": "damaged_item"
+      }
+    },
+    "rationale": "The proposal action, order reference, positive exact amount and torn-binding damage are all supplied."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-35",
+    "family_id": "PV3_CLARIFY_PROPOSAL_REFERENCE_NOT_GIVEN",
+    "difficulty": "medium",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "propose_refund",
+      "missing_fields": [
+        "order_id"
+      ],
+      "reason_code": "missing_required_information"
+    },
+    "rationale": "The amount and wrong-item reason are explicit; only the required order identifier is missing."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-36",
+    "family_id": "PV3_CLARIFY_STATUS_TWO_UNRESOLVED_REFERENCES",
+    "difficulty": "medium",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "get_order_status",
+      "missing_fields": [
+        "order_id"
+      ],
+      "reason_code": "ambiguous_reference"
+    },
+    "rationale": "One status lookup is intended, but two authoritative candidate references remain unresolved; the action is not ambiguous."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-37",
+    "family_id": "PV3_PROPOSAL_DAMAGED_SUBSET_PRICE",
+    "difficulty": "hard",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "CU-1837",
+        "refund_amount": 19.5,
+        "reason": "damaged_item"
+      }
+    },
+    "rationale": "The authorized subset is two damaged cups, not all five; two times 9.75 equals 19.50 exactly."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-38",
+    "family_id": "PV3_CLARIFY_ELIGIBILITY_TWO_REQUIRED_VALUES",
+    "difficulty": "medium",
+    "gold": {
+      "type": "clarification",
+      "target_tool_name": "check_refund_eligibility",
+      "missing_fields": [
+        "order_id",
+        "reason"
+      ],
+      "reason_code": "missing_required_information"
+    },
+    "rationale": "Both required eligibility fields are absent; a proposal amount is irrelevant to this tool."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-39",
+    "family_id": "PV3_PROPOSAL_EXPLICIT_WRONG_DELIVERY",
+    "difficulty": "easy",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "AP-2703",
+        "refund_amount": 44.9,
+        "reason": "wrong_item"
+      }
+    },
+    "rationale": "An explicit proposal amount and wrong-item fact are available; this does not request a real payment."
+  },
+  {
+    "example_id": "portfolio-v3-holdout-40",
+    "family_id": "PV3_PROPOSAL_NONRECEIPT_WITH_IRRELEVANT_TOTAL",
+    "difficulty": "medium",
+    "gold": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "NP-8426",
+        "refund_amount": 72,
+        "reason": "not_received"
+      }
+    },
+    "rationale": "The requested proposal amount is 72 rather than the background total; the nonreceipt reason is explicit."
+  }
+]

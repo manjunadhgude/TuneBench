@@ -1,6 +1,6 @@
 {
   "project": "TuneBench",
-  "project_version": "0.4.0",
+  "project_version": "0.5.0",
   "research_question": "Can fine-tuning a small instruction model improve tool selection and argument generation over a strong prompting baseline enough to justify its added cost and complexity?",
   "candidate_model": "Qwen/Qwen2.5-1.5B-Instruct",
   "candidate_status": "smoke_verified_not_research_locked",
@@ -15,5 +15,7 @@
     "Do not interpret smoke tests as representative model-performance evidence."
   ],
   "last_verified_revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
-  "portfolio_scope": "CPU tool-calling workbench, guarded simulated execution, curated evaluation, interview demo"
+  "portfolio_scope": "CPU tool-calling workbench, guarded simulated execution, curated evaluation, interview demo",
+  "portfolio_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "portfolio_runtime": "llama.cpp CPU, Unsloth Q4_K_M GGUF conversion"
 }

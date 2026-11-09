@@ -15,7 +15,7 @@ from typing import Any
 from tunebench.contracts import load_tool_registry, validate_prediction
 from tunebench.mock_tools import load_demo_orders
 
-POLICY_VERSION = "structured-evidence-v2"
+POLICY_VERSION = "structured-evidence-v3"
 _NUM = r"-?\d+(?:,\d{3})*(?:\.\d+)?"
 _WORDS = {
     "one": 1,
@@ -42,7 +42,7 @@ _WORDS = {
     "ninety": 90,
     "hundred": 100,
 }
-_QTY = r"(?:\d+|" + "|".join(sorted(_WORDS, key=len, reverse=True)) + r")"
+_QTY = r"(?:" + _NUM + "|" + "|".join(sorted(_WORDS, key=len, reverse=True)) + r")"
 _QUOTE = re.compile(r'"([^"\n]+)"|“([^”\n]+)”|(?<!\w)\'([^\'\n]+)\'(?!\w)')
 _UNCERTAIN = re.compile(
     r"\b(?:unresolved|uncertain|unconfirmed|equally|alternatives?|undecided)\b|"
@@ -86,7 +86,9 @@ def _trusted(message: str) -> tuple[str, list[dict[str, Any]]]:
         prefix = message[max(0, match.start() - 130) : match.start()]
         suffix = message[match.end() : match.end() + 130]
         instruction = re.search(
-            r"\b(?:ignore|disregard|SYSTEM\s*:|call\s+\w+|get_order_status|propose_refund)\b",
+            r"\bSYSTEM\s*:|\b(?:ignore|disregard|call|check|fetch|retrieve|look up|"
+            r"lookup|show|get|track|create|prepare|make|propose|get_order_status|"
+            r"check_refund_eligibility|propose_refund)\b",
             content,
             re.I,
         )
@@ -171,14 +173,35 @@ def _intent(request: str) -> tuple[str, list[dict[str, Any]]]:
                 }
             )
     positive = {action["tool"] for action in actions if not action["negated"]}
-    closure = re.search(
-        r"\b(?:withdraw|withdrawn|take no action|leave everything|nothing else|"
-        r"for your records only|no action is (?:needed|required)|no reply)\b",
-        text,
+    closures = list(
+        re.finditer(
+            r"\b(?:withdraw(?:n|ing)?|retract(?:ed|ing)?|never mind|take no action|"
+            r"leave (?:everything|the order) (?:unchanged|untouched)|"
+            r"for your records only|no action is (?:needed|required)|no reply|"
+            r"no longer want (?:your )?help|do not want (?:another|any|a further) "
+            r"(?:answer|reply|lookup|action)|(?:cancel|forget) that request)\b",
+            text,
+        )
     )
+    if closures:
+        last_closure = closures[-1]
+        later_request = re.search(
+            r"(?:^|[.;\n]|\b(?:but|instead|now)\b)\s*(?:now\s+)?(?:please\s+)?"
+            r"(?:check|fetch|retrieve|look up|show|get|track|create|prepare|propose)\b",
+            text[last_closure.end() :],
+        )
+        if not later_request:
+            return "none", actions
+        # An explicit new request can follow withdrawal of an older request.
+        positive = {
+            action["tool"]
+            for action in actions
+            if not action["negated"] and action["start"] >= last_closure.end()
+        }
     information = re.search(
         r"\b(?:explain|define|meaning|mean|conceptually|terminology|in general|generally|"
-        r"typical|difference|features|advice|recommend)\b|\bhow\b.{0,30}\b(?:differ|work)\b",
+        r"typical|normally|usually|understand|difference|features|advice|recommend)\b|"
+        r"\bhow\b.{0,30}\b(?:differ|works?|function)\b",
         text,
     )
     explicit_action = re.search(
@@ -186,15 +209,14 @@ def _intent(request: str) -> tuple[str, list[dict[str, Any]]]:
         r"make|record|propose|requesting|want|need)\b",
         text,
     )
-    if closure:
-        return "none", actions
     if "unsupported" in positive and not information:
         return "unsupported", actions
     if information:
         # An explicit later imperative may follow an informational background clause.
         last_info = max(match.start() for match in re.finditer(information.re, text))
         later = re.search(
-            r"\b(?:but|and|then)\s+(?:please\s+)?(?:check|fetch|retrieve|create|prepare|propose)\b",
+            r"(?:[.;\n]|\b(?:but|and|then)\b)\s*(?:please\s+)?"
+            r"(?:check|fetch|retrieve|create|prepare|propose)\b",
             text[last_info:],
         )
         if not later:
@@ -212,9 +234,11 @@ def _intent(request: str) -> tuple[str, list[dict[str, Any]]]:
         return "none", actions
     if re.search(r"\b(?:thanks|thank you|that is all|that's all|no action)\b", text):
         return "none", actions
-    if re.search(r"\b(?:order|refund|action|help)\b", text):
+    if re.search(r"\b(?:order|refund|action|help)\b", text) and re.search(
+        r"\b(?:help|assist|need|want|request|please|action)\b|\?", text
+    ):
         return "ambiguous", actions
-    return "informational", actions
+    return ("informational" if "?" in text else "none"), actions
 
 
 def _references(text: str) -> list[dict[str, Any]]:
@@ -295,6 +319,70 @@ def _selected(records: list[dict[str, Any]], text: str) -> list[dict[str, Any]]:
     return [choices[-1]] if choices else active
 
 
+def _product_tokens(description: str) -> list[str]:
+    """Compare supplied product descriptions without order context or quantities."""
+    words = re.findall(r"[A-Za-z]+", description.casefold())
+    product = []
+    for word in words:
+        if word in {
+            "in",
+            "at",
+            "for",
+            "from",
+            "with",
+            "each",
+            "priced",
+            "costs",
+            "only",
+            "out",
+            "but",
+        }:
+            break
+        if word not in {"a", "an", "the", "of", "pair", "identical", *_WORDS}:
+            product.append(word.removesuffix("s"))
+    return product
+
+
+def _product_words(description: str) -> set[str]:
+    return set(_product_tokens(description))
+
+
+def _product_contrasts(text: str) -> list[dict[str, Any]]:
+    """Record explicit ordered-versus-delivered facts, not arbitrary product names."""
+    contrasts = []
+    patterns = (
+        r"\b(?:ordered|paid for|bought|purchased|expected)\s+(?P<ordered>[^.;\n]{2,85}?)"
+        r"\s*,?\s*(?:but|yet)\s+(?:I\s+)?(?:received|got)\s+"
+        r"(?P<received>[^.;\n]{2,85})",
+        r"\b(?:ordered|paid for|bought|purchased|expected)\s+(?P<ordered>[^.;\n]{2,85}?)"
+        r"\s*,?\s*(?:but|yet)\s+what\s+(?:actually\s+)?"
+        r"(?:arrived|was delivered|was supplied)\s+was\s+"
+        r"(?P<received>[^.;\n]{2,85})",
+    )
+    for pattern in patterns:
+        for match in re.finditer(pattern, text, re.I):
+            ordered = _product_words(match.group("ordered"))
+            received = _product_words(match.group("received"))
+            financial = {"refund", "money", "receipt", "confirmation", "status"}
+            # An expanded description of the same product is not a mismatch.
+            if (
+                ordered
+                and received
+                and not (ordered <= received or received <= ordered)
+                and not (received & financial)
+            ):
+                contrasts.append(
+                    {
+                        "value": "wrong_item",
+                        "text": match.group(),
+                        "start": match.start(),
+                        "end": match.end(),
+                        "excluded": False,
+                    }
+                )
+    return contrasts
+
+
 def _reasons(text: str) -> tuple[list[str], list[dict[str, Any]]]:
     records = []
     for reason, pattern in _REASON_PATTERNS.items():
@@ -320,21 +408,7 @@ def _reasons(text: str) -> tuple[list[str], list[dict[str, Any]]]:
             )
     # A contrast between the product ordered and the product delivered is explicit
     # wrong-item evidence; it does not require a phrase from the enum itself.
-    contrast = re.search(
-        r"\b(?:I\s+)?ordered\s+(.{2,65}?)\s+(?:but|yet)\s+(?:I\s+)?received\s+(.{2,65}?)(?:[.;\n]|$)",
-        text,
-        re.I,
-    )
-    if contrast and contrast.group(1).casefold() != contrast.group(2).casefold():
-        records.append(
-            {
-                "value": "wrong_item",
-                "text": contrast.group(),
-                "start": contrast.start(),
-                "end": contrast.end(),
-                "excluded": False,
-            }
-        )
+    records.extend(_product_contrasts(text))
     active = [record for record in records if not record["excluded"]]
     # Confirmed corrections supersede earlier descriptions; uncertain corrections do not.
     correction = list(
@@ -359,7 +433,20 @@ def _reasons(text: str) -> tuple[list[str], list[dict[str, Any]]]:
 
 
 def _quantity(value: str) -> Decimal:
-    return Decimal(_WORDS[value.casefold()]) if value.casefold() in _WORDS else Decimal(value)
+    return (
+        Decimal(_WORDS[value.casefold()])
+        if value.casefold() in _WORDS
+        else Decimal(value.replace(",", ""))
+    )
+
+
+def _matched_quantity(match: re.Match[str], text: str, group: str) -> Decimal:
+    value = _quantity(match.group(group))
+    if re.search(
+        r"\b(?:minus|negative)\s*$", text[max(0, match.start(group) - 20) : match.start(group)]
+    ):
+        return -value
+    return value
 
 
 def _currency(before: str, after: str) -> str | None:
@@ -401,11 +488,20 @@ def _amounts(
             re.I,
         ):
             role = "unit_price"
-        elif re.search(r"\b(?:shipping|tax|fee|fees|charge)\b[^.;\n]{0,30}$", before, re.I):
+        elif re.search(
+            r"\b(?:shipping|tax|fee|fees|charge)\b[^.;\n]{0,30}$", before, re.I
+        ) or re.match(
+            r"\s*(?:(?:delivery|shipping|handling|service)\s+)?(?:fees?|charge|tax)\b",
+            after,
+            re.I,
+        ):
             role = "excluded_charge"
         elif re.search(
-            r"\b(?:total|base|order price|item price)\s*(?:is|of|:)?\s*(?:INR|₹)?\s*$", before, re.I
-        ) or re.match(r"\s*(?:item |order )?total\b", after, re.I):
+            r"\b(?:subtotal|total|base|order price|item price)"
+            r"\s*(?:is|of|:|was)?\s*(?:INR|₹)?\s*$",
+            before,
+            re.I,
+        ) or re.match(r"\s*(?:(?:item|order)\s+)?(?:subtotal|total)\b", after, re.I):
             role = "base_total"
         elif re.search(
             r"\b(?:amounts?|refund|proposal|propose|requested)\b[^;\n]{0,85}$",
@@ -435,10 +531,10 @@ def _amounts(
         )
     calculations = []
     calculation_ambiguity = False
-    percent_pattern = rf"\b(?P<pct>{_QTY})(?:\s*%|\s+percent|\s+per cent)\s+of\b"
+    percent_pattern = rf"(?<![\w.-])(?P<pct>{_QTY})(?:\s*%|\s+percent|\s+per cent)\s+of\b"
     percentages = list(re.finditer(percent_pattern, text, re.I))
     for match in percentages:
-        percent = _quantity(match.group("pct"))
+        percent = _matched_quantity(match, text, "pct")
         # References have already been excluded from monetary records. Searching
         # those records prevents an order number from becoming the percent base.
         candidates = [
@@ -449,6 +545,24 @@ def _amounts(
             and record["role"] not in {"percentage", "unit_price", "excluded_charge"}
             and (record["currency"] or record["role"] == "base_total")
         ]
+        if not candidates and re.match(
+            r"\s+(?:that|the|its|this|the same|the above|the stated)\s+"
+            r"(?:(?:item|order)\s+)?(?:subtotal|total|base|price)\b",
+            text[match.end() :],
+            re.I,
+        ):
+            # An anaphoric base must name a supplied total/price. A previous
+            # requested refund is not a substitute for an unstated item price.
+            prior = [
+                record
+                for record in records
+                if max(0, match.start() - 400) <= record["start"] < match.start()
+                and record["role"] == "base_total"
+            ]
+            candidates = _selected(prior, text)
+        if len({record["value"] for record in candidates}) > 1:
+            calculation_ambiguity = True
+            continue
         if not candidates or not (0 < percent <= 100):
             calculation_ambiguity = True
             continue
@@ -463,12 +577,14 @@ def _amounts(
                 "operation": "percentage",
                 "operands": [str(percent), str(base)],
                 "result": result,
-                "text": text[match.start() : base_record["end"]],
+                "text": text[
+                    min(match.start(), base_record["start"]) : max(match.end(), base_record["end"])
+                ],
                 "currency": base_record["currency"],
             }
         )
         for record in records:
-            if match.start() <= record["start"] < base_record["end"]:
+            if match.start() <= record["start"] < base_record["end"] or record is base_record:
                 record["role"] = "calculation_operand"
     for unit in [record for record in records if record["role"] == "unit_price"]:
         beginning = max(0, unit["start"] - 150)
@@ -481,7 +597,8 @@ def _amounts(
         before = "".join(before_chars)
         quantities = list(
             re.finditer(
-                rf"\b(?P<qty>{_QTY})\s+(?P<rest>(?:[A-Za-z-]+\s+){{0,4}}[A-Za-z-]+)",
+                rf"(?<![\w.-])(?P<qty>{_QTY})\s+"
+                rf"(?P<rest>(?:[A-Za-z-]+\s+){{0,4}}[A-Za-z-]+)",
                 before,
                 re.I,
             )
@@ -496,7 +613,7 @@ def _amounts(
             )
         ]
         if quantities:
-            quantity = _quantity(quantities[-1].group("qty"))
+            quantity = _matched_quantity(quantities[-1], before, "qty")
             count_offsets = {beginning + quantities[-1].start("qty")}
             # The requested subset takes precedence over the inventory count.
             # If its product or quantity cannot be reconciled, ask rather than
@@ -504,8 +621,10 @@ def _amounts(
             requested_quantities = list(
                 re.finditer(
                     rf"\b(?:propos(?:e|al)|refund)\b[^.;\n]{{0,90}}?"
-                    rf"\b(?:for|cover(?:ing)?)\s+(?:only\s+)?(?:all\s+)?"
-                    rf"(?P<qty>{_QTY})\s+(?P<item>[A-Za-z-]+)",
+                    rf"\b(?:for|cover(?:ing)?)\s+"
+                    rf"(?:(?:only|all|the|these|those)\s+)*"
+                    rf"(?P<qty>{_QTY})\s+"
+                    rf"(?P<item>(?:[A-Za-z-]+\s+){{0,3}}[A-Za-z-]+)",
                     text,
                     re.I,
                 )
@@ -513,25 +632,41 @@ def _amounts(
             requested_quantities = [
                 requested
                 for requested in requested_quantities
-                if requested.group("item").casefold() not in {"inr", "rupees", "percent"}
+                if requested.group("item").split()[0].casefold()
+                not in {"inr", "rupees", "percent", "dollars", "usd", "eur", "gbp"}
             ]
             if requested_quantities:
                 count_offsets.update(requested.start("qty") for requested in requested_quantities)
-                choices = {_quantity(requested.group("qty")) for requested in requested_quantities}
-                requested = requested_quantities[-1]
-                item = requested.group("item").casefold().removesuffix("s")
-                inventory_words = {
-                    word.casefold().removesuffix("s")
-                    for word in re.findall(r"[A-Za-z-]+", quantities[-1].group("rest"))
+                choices = {
+                    _matched_quantity(requested, text, "qty") for requested in requested_quantities
                 }
+                requested = requested_quantities[-1]
+                item_tokens = _product_tokens(requested.group("item"))
+                inventory_tokens = _product_tokens(quantities[-1].group("rest"))
                 if (
                     len(choices) != 1
                     or next(iter(choices)) > quantity
-                    or (item not in inventory_words and item not in {"item", "unit", "piece"})
+                    or not item_tokens
+                    or not inventory_tokens
+                    or not (
+                        item_tokens[-1] == inventory_tokens[-1]
+                        or item_tokens[-1] in {"item", "unit", "piece"}
+                    )
                 ):
                     calculation_ambiguity = True
                     continue
                 quantity = next(iter(choices))
+            elif not re.search(
+                r"\b(?:combined|summed|aggregate|full)\s+(?:item\s+)?(?:price|cost|value)|"
+                r"\b(?:price|cost|value)\s+of\s+(?:all|both)\b|"
+                r"\b(?:sum|multiply|quantity\s*[×*])\b",
+                text,
+                re.I,
+            ):
+                # Inventory and price facts alone do not authorize refunding
+                # every unit. Require a requested subset or explicit total.
+                calculation_ambiguity = True
+                continue
             if quantity > 0:
                 # Counts in an explicitly requested calculation are operands,
                 # even when an adjective separates the number from its noun.
@@ -548,6 +683,8 @@ def _amounts(
                         "currency": unit["currency"],
                     }
                 )
+            else:
+                calculation_ambiguity = True
     requested = [record for record in records if record["role"] == "requested"]
     selected = _selected(requested, text)
     values = {record["value"] for record in selected}
@@ -751,6 +888,6 @@ def ground_outcome(
             or analysis["ambiguities"].get("refund_amount")
         ):
             errors.append("refund_amount must match explicit or exactly derived monetary evidence")
-        if analysis["foreign_currency"]:
+        if execute_tools and analysis["foreign_currency"]:
             errors.append("Demo proposals use INR only; currency conversion is unsupported")
     return errors

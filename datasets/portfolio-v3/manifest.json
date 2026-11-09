@@ -1,0 +1,147 @@
+{
+  "dataset_id": "tunebench-portfolio-v3",
+  "dataset_version": "3.0.0",
+  "task_schema_version": "3.0.0",
+  "status": "frozen_before_portfolio_v3_inference",
+  "frozen_at_utc": "2026-11-09T15:31:35.715203+00:00",
+  "source": "40 individually authored fictional customer-support decision scenarios",
+  "author": "Codex assistant",
+  "review": "Author semantic review, separate blind assistant review, and additional no-parent-history semantic review accept all 40 gold outcomes; not human annotation.",
+  "blindness": "Author and second reviewer did not inspect revised v0.5 implementation, prompt instructions, model outputs or final-model selection. Historical inputs and broad failure categories were known. Implementers must not inspect this holdout or review ledger before source/model/settings freeze.",
+  "predefined_composition": {
+    "outcomes": {
+      "tool_call": 16,
+      "clarification": 12,
+      "no_tool": 12
+    },
+    "difficulty": {
+      "easy": 9,
+      "medium": 20,
+      "hard": 11
+    },
+    "ordering": "Deterministic shuffle, seed 503, independent of model behavior."
+  },
+  "usage": "Compare the frozen prior v0.4 and revised CPU systems once each on all 40 unchanged cases, with documented matched settings and intentional model/backend differences. Keep original and accepted-final decisions separate.",
+  "holdout_policy": "No prompt, model-selection, grounding or unit-test tuning on these cases. Preserve every failure and original raw output. After evaluation this set is seen. Further tuning requires development data and a new final test set.",
+  "isolation": "Disjoint exact and reference/number-normalized templates from 112 earlier smoke, practice, portfolio-v1 and portfolio-v2 inputs; unique example/family/scenario IDs. Structural checks do not establish semantic independence.",
+  "limitations": [
+    "Small targeted English-only fictional set; not sampled production traffic.",
+    "Two assistant review passes are not independent human annotation.",
+    "Difficulty is descriptive assistant judgment rather than empirical calibration.",
+    "Known broad reasoning concepts recur despite new prompts and identifiers.",
+    "Gold uses canonical tool contracts only; no order-store membership, ID regex, refund cap, eligibility policy, payment execution or currency conversion.",
+    "Clarification-question helpfulness is not human graded by canonical strict scoring."
+  ],
+  "files": {
+    "holdout": {
+      "path": "holdout.jsonl",
+      "sha256": "eb0dd97d0a15308415a9537e33020d387801b8b426d78192f6cf2a81fcd900a9",
+      "bytes": 72611,
+      "examples": 40,
+      "split": "test",
+      "outcomes": {
+        "clarification": 12,
+        "no_tool": 12,
+        "tool_call": 16
+      },
+      "difficulty": {
+        "easy": 9,
+        "hard": 11,
+        "medium": 20
+      },
+      "tools": {
+        "check_refund_eligibility": 4,
+        "get_order_status": 4,
+        "propose_refund": 8
+      },
+      "refund_reasons": {
+        "changed_mind": 3,
+        "damaged_item": 3,
+        "not_received": 3,
+        "wrong_item": 3
+      },
+      "families": {
+        "PV3_CLARIFY_ELIGIBILITY_COMPETING_REASONS": 1,
+        "PV3_CLARIFY_ELIGIBILITY_REASON_NOT_SUPPLIED": 1,
+        "PV3_CLARIFY_ELIGIBILITY_REFERENCE_NOT_GIVEN": 1,
+        "PV3_CLARIFY_ELIGIBILITY_TWO_REQUIRED_VALUES": 1,
+        "PV3_CLARIFY_PROPOSAL_AMOUNT_NOT_DECIDED": 1,
+        "PV3_CLARIFY_PROPOSAL_COMPETING_ESTIMATES": 1,
+        "PV3_CLARIFY_PROPOSAL_REASON_AND_AMOUNT": 1,
+        "PV3_CLARIFY_PROPOSAL_REASON_NOT_GIVEN": 1,
+        "PV3_CLARIFY_PROPOSAL_REFERENCE_NOT_GIVEN": 1,
+        "PV3_CLARIFY_STATUS_REFERENCE_NOT_AVAILABLE": 1,
+        "PV3_CLARIFY_STATUS_TWO_UNRESOLVED_REFERENCES": 1,
+        "PV3_CLARIFY_UNSELECTED_SERVICE": 1,
+        "PV3_ELIGIBILITY_BROKEN_LID": 1,
+        "PV3_ELIGIBILITY_CORRECTED_CUSTOMER_REASON": 1,
+        "PV3_ELIGIBILITY_DIFFERENT_DELIVERED_PRODUCT": 1,
+        "PV3_ELIGIBILITY_PARCEL_STILL_ABSENT": 1,
+        "PV3_INFORMATION_ELIGIBILITY_MEANING": 1,
+        "PV3_INFORMATION_HYPOTHETICAL_UNIT_COST": 1,
+        "PV3_INFORMATION_KNOWN_STATUS_WORD": 1,
+        "PV3_INFORMATION_PROPOSAL_VERSUS_PAYMENT": 1,
+        "PV3_NO_ACTION_HISTORICAL_UNTRUSTED_QUOTE": 1,
+        "PV3_NO_ACTION_RECORDED_ORDER_STATUS": 1,
+        "PV3_NO_ACTION_SHORT_ACKNOWLEDGMENT": 1,
+        "PV3_NO_ACTION_WITHDRAWN_LOOKUP_IN_CONVERSATION": 1,
+        "PV3_PROPOSAL_DAMAGED_SUBSET_PRICE": 1,
+        "PV3_PROPOSAL_EXPLICIT_DAMAGED_BINDING": 1,
+        "PV3_PROPOSAL_EXPLICIT_WRONG_DELIVERY": 1,
+        "PV3_PROPOSAL_NONRECEIPT_WITH_IRRELEVANT_TOTAL": 1,
+        "PV3_PROPOSAL_PERCENT_OF_PREVIOUS_SENTENCE_TOTAL": 1,
+        "PV3_PROPOSAL_REVISED_REFERENCE_AND_AMOUNT": 1,
+        "PV3_PROPOSAL_UNWANTED_ITEM_WITH_PAYMENT_PROHIBITION": 1,
+        "PV3_PROPOSAL_WRONG_ITEM_FULL_UNIT_COST": 1,
+        "PV3_STATUS_AUTHORITATIVE_NEW_REFERENCE": 1,
+        "PV3_STATUS_CLEAR_CONVERSATIONAL_REFERENCE": 1,
+        "PV3_STATUS_POLITE_RECEIPT": 1,
+        "PV3_STATUS_RECEIPT_VERSUS_SUPPORT_CASE": 1,
+        "PV3_UNSUPPORTED_ACCOUNT_ORDER_EXPORT": 1,
+        "PV3_UNSUPPORTED_ACTUAL_REFUND_PAYMENT": 1,
+        "PV3_UNSUPPORTED_ADDRESS_CHANGE": 1,
+        "PV3_UNSUPPORTED_ORDER_CANCELLATION": 1
+      }
+    }
+  },
+  "supporting_files": {
+    "secondary-review.json": {
+      "path": "secondary-review.json",
+      "sha256": "4bc936a8b65e7371b20166ba3f9c14591c2daab6cec3cb17bafd44e3a23d44ed",
+      "bytes": 13775
+    },
+    "validation.json": {
+      "path": "validation.json",
+      "sha256": "c55835de8f95d7e1c117ce13d5df214227e9d83b692d0c9fc70674d968d6dc6a",
+      "bytes": 2068
+    },
+    "review-draft.json": {
+      "path": "review-draft.json",
+      "sha256": "2fde802fb287fac064b3c4a386dcec92dca66b36125c4675bc047b45f07ce3a4",
+      "bytes": 17215
+    },
+    "README.md": {
+      "path": "README.md",
+      "sha256": "f180d41ebdf059a4464a87b6eff309148527c6c9e57b36708679c2c04d7bbcdf",
+      "bytes": 3772
+    },
+    "additional-blind-review.json": {
+      "path": "additional-blind-review.json",
+      "sha256": "81fe6b1dbcba62ba62374a4897f0cc4ba33da2e6153a8a9cfb5ec63ec4c3658b",
+      "bytes": 6828
+    }
+  },
+  "semantic_review_ledger": {
+    "path": "../../docs/portfolio-v3-review.md",
+    "sha256": "997682cd63413282d9f4ef18975f7a10f6b0b012b109c6e26442d68eac76d2ef",
+    "bytes": 12369
+  },
+  "initial_frozen_at_utc": "2026-11-09T11:17:51.139007+00:00",
+  "additional_review_provenance": {
+    "semantic_reviewer_context": "fork_turns=none; canonical contracts and data only; no revised implementation or outputs inspected",
+    "coordinator_role": "Inherited implementation context; structural/hash checks only",
+    "review_file": "additional-blind-review.json",
+    "holdout_changed": false,
+    "gold_corrections": 0
+  }
+}

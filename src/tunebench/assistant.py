@@ -7,6 +7,7 @@ import json
 import time
 from collections.abc import Callable
 from copy import deepcopy
+from pathlib import Path
 from typing import Any
 
 from tunebench.contracts import load_tool_registry, validate_prediction
@@ -21,6 +22,15 @@ from tunebench.grounding import (
 )
 from tunebench.inference import build_messages, parse_output
 from tunebench.mock_tools import execute_tool
+
+
+def _uses_gguf(model_path: str | None) -> bool:
+    if not model_path:
+        return False
+    from tunebench.gguf_model import MODEL_FILENAME
+
+    path = Path(model_path).expanduser()
+    return path.suffix.lower() == ".gguf" or (path.is_dir() and (path / MODEL_FILENAME).is_file())
 
 
 def _executed_message(tool_name: str, result: dict[str, Any]) -> str:
@@ -51,9 +61,13 @@ def respond(
     ``generate`` is an injected test backend and is always labelled as such.
     ``execute_tools=False`` validates without looking up fictional demo orders.
     Interactive schema/evidence repair is separate from the single-attempt research API.
+    Grounding diagnostics for non-executing decisions are advisory: heuristic
+    disagreements cannot turn a safe refusal or clarification into an action.
     """
     start = time.perf_counter()
     used_backend = "injected" if generate is not None else backend
+    gguf = used_backend != "rules" and _uses_gguf(model_path)
+    prompt_style = "strong-v4" if gguf else "strong-v3"
     result: dict[str, Any] = {
         "status": "error",
         "backend": used_backend,
@@ -63,7 +77,10 @@ def respond(
             "model": "Actual local Qwen model",
             "injected": "Injected test backend",
         }.get(used_backend, "Unknown backend"),
-        "prompt": "strong-v3" if used_backend != "rules" else "rules-v2",
+        "prompt": prompt_style if used_backend != "rules" else "rules-v3",
+        "model_profile": (
+            None if used_backend == "rules" else "qwen3-4b-gguf" if gguf else "qwen2.5-1.5b"
+        ),
         "input": message,
         "outcome": None,
         "accepted_outcome": None,
@@ -73,7 +90,9 @@ def respond(
         "elapsed_ms": 0,
         "execution_mode": "simulated_tools" if execute_tools else "validation_only",
         "execute_tools": execute_tools,
-        "execution_guard_policy": "evidence-grounding-v2",
+        "execution_guard_policy": "evidence-grounding-v3",
+        "non_execution_grounding_policy": "advisory_only_no_evidence_repair",
+        "advisory_grounding_warnings": [],
         "policy_override": False,
         "user_message": "",
         "simulated": True,
@@ -95,7 +114,7 @@ def respond(
     tools = load_tool_registry()
     analysis = _analysis(message)
     result["grounding_evidence"] = json.loads(json.dumps(analysis, default=str))
-    messages = build_messages({"prompt": message, "tools": tools}, "strong-v3")
+    messages = build_messages({"prompt": message, "tools": tools}, prompt_style)
     result["prompt_sha256"] = (
         hashlib.sha256(
             json.dumps(messages, sort_keys=True, ensure_ascii=False).encode()
@@ -109,7 +128,10 @@ def respond(
                 "Select a verified local Qwen snapshot; no download is started."
             )
             return finish()
-        from tunebench.live_model import generate_local
+        if gguf:
+            from tunebench.gguf_model import generate_local, model_status
+        else:
+            from tunebench.live_model import generate_local, model_status
 
         def generate(messages):
             return generate_local(messages, model_path)
@@ -133,11 +155,14 @@ def respond(
         if prediction["outcome"] is None:
             errors.append(prediction["metadata"].get("parse_error", "No JSON outcome returned"))
         schema_errors = list(errors)
-        semantic_errors = (
+        grounding_diagnostics = (
             _grounding_errors(prediction["outcome"], analysis, execute_tools=False)
             if not schema_errors
             else []
         )
+        is_call = not schema_errors and prediction["outcome"]["type"] == "tool_call"
+        semantic_errors = grounding_diagnostics if is_call else []
+        advisory = grounding_diagnostics if not is_call else []
         errors.extend(semantic_errors)
         attempt = {
             "attempt": index + 1,
@@ -148,11 +173,13 @@ def respond(
             "schema_valid": not schema_errors,
             "schema_errors": schema_errors,
             "grounding_errors": semantic_errors,
+            "advisory_grounding_warnings": advisory,
             "latency_ms": (time.perf_counter() - attempt_start) * 1000,
         }
         result["attempts"].append(attempt)
         result["outcome"] = prediction["outcome"]
         result["validation_errors"] = list(errors)
+        result["advisory_grounding_warnings"] = list(advisory)
         if not errors:
             break
         if index + 1 < attempts_allowed:
@@ -176,10 +203,11 @@ def respond(
             ]
     result["repair_attempted"] = len(result["attempts"]) > 1
     result["raw_first_attempt_valid"] = result["attempts"][0]["schema_valid"]
-    result["repair_policy"] = "at most one schema or explicit-evidence repair; no output rewriting"
+    result["repair_policy"] = (
+        "at most one schema or tool-call evidence repair; "
+        "non-executing grounding is advisory; no output rewriting"
+    )
     if used_backend == "model":
-        from tunebench.live_model import model_status
-
         result["model_metadata"] = model_status()
     if result["validation_errors"]:
         result["policy_override"] = bool(result["attempts"][-1].get("grounding_errors"))
@@ -187,7 +215,11 @@ def respond(
         result["user_message"] = "No tool ran: the returned decision failed validation."
         return finish()
     outcome = result["outcome"]
-    errors = _grounding_errors(outcome, analysis, execute_tools=execute_tools)
+    errors = (
+        _grounding_errors(outcome, analysis, execute_tools=execute_tools)
+        if outcome["type"] == "tool_call"
+        else []
+    )
     if errors:
         result["status"] = "blocked"
         result["policy_override"] = True

@@ -1,0 +1,321 @@
+{
+  "review_type": "Independent second-assistant blind semantic review; not human annotation",
+  "scope": {
+    "scenario_files": [
+      "datasets/portfolio-v3/holdout.jsonl",
+      "datasets/portfolio-v3/review-draft.json"
+    ],
+    "validation_references": [
+      "src/tunebench/resources/schemas/task.schema.json",
+      "src/tunebench/resources/configs/tool_registry.json",
+      "src/tunebench/contracts.py"
+    ],
+    "implementation_or_model_output_inspection": false,
+    "fresh_model_runs": false,
+    "holdout_modified": false
+  },
+  "counts": {
+    "reviewed": 40,
+    "accepted": 40,
+    "material_semantic_issues": 0,
+    "schema_or_contract_issues": 0,
+    "draft_mismatches": 0,
+    "outcomes": {
+      "tool_call": 16,
+      "clarification": 12,
+      "no_tool": 12
+    },
+    "difficulties": {
+      "easy": 9,
+      "medium": 20,
+      "hard": 11
+    }
+  },
+  "overall_verdict": "Accept all recorded gold outcomes. No material semantic correction is required.",
+  "difficulty_assessment": "The stated 9/20/11 difficulty distribution is intact. Labels are defensible as design categories: explicit single-action cases are easy, extra field or action-boundary decisions are generally medium, and contextual correction, distractor rejection, or arithmetic with scoped bases are generally hard. No empirical difficulty claim can be established by this blind semantic review alone.",
+  "validation": "All 40 tasks pass Draft 2020-12 task-schema validation, canonical embedded-tool equality, gold tool-argument validation, and clarification target/required-field checks. IDs are unique, and review-draft gold, family, and difficulty fields match the holdout.",
+  "clarification_question_omission": "Accepted as intentional canonical gold representation; question wording is not a required gold field.",
+  "issues": [],
+  "per_example": [
+    {
+      "example_id": "portfolio-v3-holdout-01",
+      "verdict": "accept",
+      "reason": "The explicit eligibility request, order reference, and delivered-product mismatch uniquely support the recorded check with wrong_item.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-02",
+      "verdict": "accept",
+      "reason": "The proposal and positive amount are explicit; the customer deliberately withholds the only missing required field, reason.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-03",
+      "verdict": "accept",
+      "reason": "The latest customer turn expressly withdraws the earlier lookup and requests no action. This does not ask to cancel the purchase.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-04",
+      "verdict": "accept",
+      "reason": "The customer has not selected between two supported actions and explicitly asks to resolve that choice. A null target with no guessed fields is appropriate.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-05",
+      "verdict": "accept",
+      "reason": "Eligibility and the order are established, but two competing refund reasons remain unresolved. The reason field needs ambiguity clarification.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-06",
+      "verdict": "accept",
+      "reason": "The customer authoritatively replaces both prior reference and amount. The corrected order, positive amount, and changed-mind reason fully specify the proposal.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-07",
+      "verdict": "accept",
+      "reason": "The requested address change is absent from the tool set; the customer also explicitly rules out tracking as a substitute.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-08",
+      "verdict": "accept",
+      "reason": "Only an actual payment is requested, and a simulated proposal is explicitly insufficient. None of the available tools performs that action.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-09",
+      "verdict": "accept",
+      "reason": "Damage, order, and proposal intent are clear; neither an amount nor a computable amount basis is supplied.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-10",
+      "verdict": "accept",
+      "reason": "The closing acknowledgment includes no requested action or informational question.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-11",
+      "verdict": "accept",
+      "reason": "The apparent tool instruction is identified as a historical untrusted quotation. The current request expressly authorizes no action.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-12",
+      "verdict": "accept",
+      "reason": "The eligibility request and order are explicit, and nonreceipt supplies not_received without requiring an invented delivery status or policy judgment.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-13",
+      "verdict": "accept",
+      "reason": "The requested eligibility check has an explicit order reference and physical damage fact, supporting damaged_item.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-14",
+      "verdict": "accept",
+      "reason": "The requested deliverable is an account-wide CSV export, which is unsupported. The incidental single reference does not authorize a status lookup.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-15",
+      "verdict": "accept",
+      "reason": "The customer retracts the suspected fault and supplies changed_mind as the current reason for the requested eligibility check.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-16",
+      "verdict": "accept",
+      "reason": "Eligibility intent and nonreceipt are supplied; order_id alone remains missing.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-17",
+      "verdict": "accept",
+      "reason": "A general definition is requested rather than any order-specific operation, supporting informational_request.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-18",
+      "verdict": "accept",
+      "reason": "The customer positively authorizes a simulated proposal with all required arguments and separately prohibits payment, which the proposal tool never executes.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-19",
+      "verdict": "accept",
+      "reason": "A delivery-status lookup is clearly intended, but its required order reference is absent.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-20",
+      "verdict": "accept",
+      "reason": "The task is explicitly a hypothetical explanation, with order lookup and proposal creation excluded. Arithmetic content does not make this a tool request.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-21",
+      "verdict": "accept",
+      "reason": "The customer requests a conceptual explanation of proposal versus payment and authorizes neither operation.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-22",
+      "verdict": "accept",
+      "reason": "The customer asks for the usual meaning of an already supplied status word and excludes fresh retrieval. The order reference is incidental.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-23",
+      "verdict": "accept",
+      "reason": "The authorized basis is the supplied item price, excluding delivery fees. Twenty-five percent of 240.00 is 60.00; nonreceipt supplies the reason.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-24",
+      "verdict": "accept",
+      "reason": "The order and eligibility action are clear; the required refund reason is expressly absent.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-25",
+      "verdict": "accept",
+      "reason": "Proposal intent and order are supplied, while exactly reason and refund_amount remain missing.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-26",
+      "verdict": "accept",
+      "reason": "Order cancellation is an immediate unsupported action; no listed tool can perform it.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-27",
+      "verdict": "accept",
+      "reason": "A current delivery-status lookup and its sole required reference are explicit.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-28",
+      "verdict": "accept",
+      "reason": "The conversation contains one unambiguous purchase reference, and the current delivery-status request refers to it. Its slash is valid under the schema.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-29",
+      "verdict": "accept",
+      "reason": "The customer provides a background status fact and explicitly requests neither action nor explanation, supporting no_action_requested.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-30",
+      "verdict": "accept",
+      "reason": "All three wrong deliveries are covered by the authorized proposal. Three times 14.60 is 43.80, and fees are excluded.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-31",
+      "verdict": "accept",
+      "reason": "Proposal intent, order, and damage are established; two unconfirmed amount candidates require clarification of refund_amount rather than an arbitrary selection.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-32",
+      "verdict": "accept",
+      "reason": "The support-case identifier and receipt purchase reference have explicitly distinct roles. The requested lookup uses the receipt reference, preserving its punctuation.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-33",
+      "verdict": "accept",
+      "reason": "The customer explicitly replaces the incorrect prior reference with the current correct reference and requests tracking.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-34",
+      "verdict": "accept",
+      "reason": "The requested proposal has an explicit order, positive exact amount, and physical damage reason.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-35",
+      "verdict": "accept",
+      "reason": "The positive amount, wrong-item reason, and proposal action are supplied; only order_id is missing.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-36",
+      "verdict": "accept",
+      "reason": "One lookup action is intended, but two unresolved order references compete. The ambiguity concerns order_id rather than the action.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-37",
+      "verdict": "accept",
+      "reason": "The proposal is explicitly limited to two damaged cups, not all five. Two times 9.75 is 19.50 with no other charges included.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-38",
+      "verdict": "accept",
+      "reason": "The eligibility target is explicit; both required fields, order_id and reason, are absent. A proposal amount is irrelevant.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-39",
+      "verdict": "accept",
+      "reason": "The order, positive exact proposal amount, and wrong-item reason are all supplied. No actual payment is requested.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-40",
+      "verdict": "accept",
+      "reason": "The customer explicitly requests a proposal for 72.00; the original total is background. The nonreceipt fact supports not_received.",
+      "difficulty_verdict": "defensible",
+      "correction": null
+    }
+  ]
+}

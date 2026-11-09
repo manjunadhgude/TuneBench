@@ -31,7 +31,7 @@ from tunebench.io import parse_json, read_jsonl, write_json, write_jsonl
 from tunebench.structured import generation_schema
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL_VERSION = "portfolio-decision-evaluation-v2"
+PROTOCOL_VERSION = "portfolio-decision-evaluation-v3"
 LABELS = {
     "rules": "Deterministic rules baseline (not an LLM)",
     "model": "Local Qwen with validation and bounded repair",
@@ -284,7 +284,7 @@ def run_evaluation(
         "source_package_version": __version__,
         "source_worktree_dirty": bool(_git("status", "--porcelain")),
         "source_files_sha256": source_hashes,
-        "prompt_style": "strong-v3" if backend == "model" else "rules-v2",
+        "prompt_style": "strong-v3" if backend == "model" else "rules-v3",
         "first_attempt_messages_sha256": _json_hash(messages),
         "structured_output": {
             "enabled": backend == "model",
@@ -296,7 +296,8 @@ def run_evaluation(
             else None,
             "post_validation_required": True,
         },
-        "execution_guard_policy": "evidence-grounding-v2",
+        "execution_guard_policy": "evidence-grounding-v3",
+        "non_execution_grounding_policy": "advisory_only_no_evidence_repair",
         "evidence_policy_version": POLICY_VERSION,
         "libraries": _versions(),
         "model_id": manifest["model_id"] if manifest else None,
@@ -320,14 +321,14 @@ def run_evaluation(
         ),
         "max_repairs": max_repairs,
         "retry_policy": (
-            "At most one parse/schema or explicit-evidence repair; no output rewriting "
+            "At most one parse/schema or tool-call evidence repair; no output rewriting "
             "and no case reruns"
             if backend == "model"
             else "No generation or repair: deterministic rules baseline"
         ),
         "repair_policy": {
             "max_repairs": max_repairs if backend == "model" else 0,
-            "triggers": ["parse_error", "schema_error", "explicit_evidence_error"]
+            "triggers": ["parse_error", "schema_error", "tool_call_evidence_error"]
             if backend == "model"
             else [],
             "feedback": "Validation errors and evidence extracted only from the request",

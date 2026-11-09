@@ -28,6 +28,7 @@ PROMPT_VERSIONS = {
     "strong": "strong-v1",
     "strong-v2": "strong-v2",
     "strong-v3": "strong-v3",
+    "strong-v4": "strong-v4",
 }
 STRONG_V2_EXAMPLES = (
     (
@@ -90,7 +91,11 @@ amounts, and the exact reason enum. Examples illustrate the policy; available to
 
 def _instruction(prompt_style: str) -> str:
     if prompt_style not in PROMPT_VERSIONS:
-        raise ValueError("prompt_style must be 'minimal', 'strong', 'strong-v2', or 'strong-v3'")
+        raise ValueError("Unknown prompt_style; choose one of " + ", ".join(PROMPT_VERSIONS))
+    if prompt_style == "strong-v4":
+        from tunebench.prompts_v4 import instruction_v4
+
+        return instruction_v4()
     if prompt_style == "strong-v3":
         from tunebench.prompts_v3 import instruction_v3
 

@@ -1,0 +1,63 @@
+{
+  "canonical_contract_validation": "pass",
+  "records": 40,
+  "historical_records_checked": 112,
+  "historical_files": [
+    "datasets/portfolio-v1/development.jsonl",
+    "datasets/portfolio-v1/holdout.jsonl",
+    "datasets/portfolio-v2/holdout.jsonl",
+    "artifacts/baseline-smoke/strong/smoke.jsonl",
+    "artifacts/prompt-development-v2/development.jsonl"
+  ],
+  "normalizations": {
+    "exact": "case-fold and collapse whitespace",
+    "reference_number_template": "replace alphanumeric hyphen/slash/underscore/colon identifiers and numeric literals, then case-fold/collapse whitespace"
+  },
+  "overlap_checks": {
+    "exact": {
+      "prior_overlap": 0,
+      "within_dataset_duplicates": 0
+    },
+    "reference_number_template": {
+      "prior_overlap": 0,
+      "within_dataset_duplicates": 0
+    }
+  },
+  "identifier_family_scenario_overlap": 0,
+  "outcomes": {
+    "tool_call": 16,
+    "clarification": 12,
+    "no_tool": 12
+  },
+  "difficulty": {
+    "medium": 20,
+    "hard": 11,
+    "easy": 9
+  },
+  "limitations": [
+    "Structural normalization does not establish semantic novelty or independence.",
+    "Broad tool concepts and known error categories recur intentionally."
+  ],
+  "holdout_sha256": "eb0dd97d0a15308415a9537e33020d387801b8b426d78192f6cf2a81fcd900a9",
+  "holdout_bytes": 72611,
+  "normalization_regexes": {
+    "reference": "\\b[a-zA-Z][a-zA-Z0-9]*(?:[-/_:][a-zA-Z0-9]+)+\\b",
+    "number": "\\b\\d+(?:[,.]\\d+)*\\b",
+    "whitespace": "\\s+"
+  },
+  "semantic_review": {
+    "author_pass": "all 40 accepted",
+    "separate_assistant_pass": "all 40 accepted, no material issues",
+    "human_annotation": false
+  },
+  "additional_pre_inference_revalidation": {
+    "reviewed_at_utc": "2026-11-09T15:31:35.715203+00:00",
+    "canonical_contract_records": 40,
+    "all_prior_manifest_hashes_verified": true,
+    "historical_inputs": 112,
+    "exact_and_normalized_overlap": 0,
+    "holdout_unchanged": true,
+    "separate_context_semantic_review": "40/40 accepted; no corrections",
+    "review_file": "additional-blind-review.json"
+  }
+}

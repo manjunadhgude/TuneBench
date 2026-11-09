@@ -32,6 +32,12 @@ def default_model_path() -> str:
     configured = os.environ.get("TUNEBENCH_MODEL_PATH")
     if configured:
         return configured
+    from tunebench.gguf_model import MODEL_FILENAME
+    from tunebench.gguf_model import MODEL_REVISION as GGUF_REVISION
+
+    gguf = Path("/workspace/models/Qwen3-4B-Instruct-2507-GGUF") / GGUF_REVISION / MODEL_FILENAME
+    if gguf.is_file():
+        return str(gguf)
     candidate = Path("/workspace/models/Qwen2.5-1.5B-Instruct") / MODEL_REVISION
     return str(candidate) if candidate.is_dir() else ""
 

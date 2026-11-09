@@ -1,0 +1,21 @@
+{
+  "purpose": "Development only; no claim of unseen accuracy",
+  "examples": 40,
+  "raw_strict": {
+    "correct": 40,
+    "total": 40,
+    "accuracy": 1.0
+  },
+  "final_strict": {
+    "correct": 40,
+    "total": 40,
+    "accuracy": 1.0
+  },
+  "statuses": {
+    "validated": 14,
+    "clarification": 13,
+    "no_tool": 13
+  },
+  "generations": 40,
+  "active_seconds": 195.68737220199546
+}

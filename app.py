@@ -132,12 +132,22 @@ def show_result(result: dict, mode: str) -> None:
         st.json(result["tool_result"], expanded=True)
     with st.expander("Raw responses & validation trace", expanded=False):
         st.caption("Original response text is preserved. Each attempt and its errors are visible.")
+        metadata = result.get("model_metadata") or {}
+        if metadata.get("loaded"):
+            st.caption(
+                f"{metadata.get('base_model_id', metadata.get('model_id'))} · "
+                f"{metadata.get('device')} · {metadata.get('dtype')}"
+            )
         for index, attempt in enumerate(result.get("attempts") or [], 1):
             st.markdown(f"**Attempt {index}**")
             st.code(attempt.get("raw_output", ""), language="json", wrap_lines=True)
             attempt_errors = attempt.get("validation_errors") or attempt.get("errors") or []
             if attempt_errors:
                 st.json(attempt_errors)
+            advisory = attempt.get("advisory_grounding_warnings") or []
+            if advisory:
+                st.caption("Advisory review for a non-executing decision; no retry or tool action.")
+                st.json(advisory)
         st.caption("Submitted request")
         st.code(result.get("input", ""), language=None, wrap_lines=True)
 
@@ -247,11 +257,9 @@ with playground:
                     "Real Qwen model · CPU · constrained JSON · at most one validation retry"
                 )
                 model_path = st.text_input(
-                    "Local model directory", value=default_model_path(), key="model_path"
+                    "Local model path", value=default_model_path(), key="model_path"
                 )
-                st.caption(
-                    "An existing downloaded snapshot is required. This app never downloads models."
-                )
+                st.caption("Choose a downloaded Qwen3 GGUF file or legacy Qwen snapshot directory.")
             st.selectbox(
                 "Start with an example", list(PRESETS), key="preset", on_change=choose_preset
             )
@@ -267,9 +275,9 @@ with playground:
         invalid = not request.strip() or len(request) > 4000
         if len(request) > 4000:
             st.error("Please keep the request within 4,000 characters.")
-        missing_model = mode == "Live local Qwen" and not Path(model_path).is_dir()
+        missing_model = mode == "Live local Qwen" and not Path(model_path).exists()
         if mode == "Live local Qwen" and (not model_path or missing_model):
-            st.warning("Choose an existing local model directory before running Qwen.")
+            st.warning("Choose an existing local model path before running Qwen.")
             missing_model = True
         run = st.button(
             "View recorded response" if mode == "Saved model replay" else "Run request →",
@@ -332,21 +340,34 @@ with evaluation:
     st.write("")
     st.subheader("Evidence, with the context attached")
     st.write("Actual saved model runs. Deterministic demo scores are kept separate.")
-    versions = read_artifact("artifacts/portfolio-version-comparison/comparison.json")
-    if versions:
-        st.markdown("**System comparison · the same 20 fresh test questions**")
-        st.caption(
-            "Both versions use the same Qwen weights on CPU. v0.4 changes the prompt, "
-            "JSON constraints, grounding checks and repair feedback."
-        )
+    comparisons = [
+        (
+            "artifacts/quality-comparison-v5",
+            "System comparison · the same 40 test questions",
+            ("v0.4 · Qwen2.5 1.5B", "v0.5 · Qwen3 4B"),
+            "The CPU systems use different models, quantization, prompts and validation. "
+            "This measures their combined effect; no fine-tuning was performed.",
+        ),
+        (
+            "artifacts/portfolio-version-comparison",
+            "Earlier system comparison · 20 different test questions",
+            ("v0.3", "v0.4"),
+            "Both versions use the same Qwen2.5 weights. v0.4 changed its prompt, "
+            "JSON constraints, grounding checks and repair feedback.",
+        ),
+    ]
+    for directory, heading, labels, explanation in comparisons:
+        versions = read_artifact(f"{directory}/comparison.json")
+        if not versions:
+            continue
+        st.markdown(f"**{heading}**")
+        st.caption(explanation)
         for stage, label in (("raw-first", "Raw first answer"), ("final", "Accepted final answer")):
             st.markdown(f"**{label}**")
             for column, (key, title) in zip(
-                st.columns(2), [("legacy", "v0.3"), ("candidate", "v0.4")], strict=True
+                st.columns(2), zip(("legacy", "candidate"), labels, strict=True), strict=True
             ):
-                report = read_artifact(
-                    f"artifacts/portfolio-version-comparison/{key}/{stage}.report.json"
-                )
+                report = read_artifact(f"{directory}/{key}/{stage}.report.json")
                 if report:
                     with column, st.container(border=True):
                         st.markdown(f"**{title}**")

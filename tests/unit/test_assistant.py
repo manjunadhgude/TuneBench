@@ -204,6 +204,57 @@ def test_grounding_repair_can_be_disabled_and_does_not_execute_a_wrong_id():
     assert result["tool_result"] is None
 
 
+@pytest.mark.parametrize(
+    "outcome",
+    [
+        {"type": "no_tool", "reason_code": "no_action_requested"},
+        {
+            "type": "clarification",
+            "target_tool_name": "get_order_status",
+            "missing_fields": ["order_id"],
+            "reason_code": "missing_required_information",
+            "question": "What order do you mean?",
+        },
+    ],
+)
+def test_nonexecuting_model_decision_is_not_repaired_into_an_action(outcome):
+    calls = []
+
+    def generate(messages):
+        calls.append(messages)
+        return json.dumps(outcome)
+
+    result = assistant.respond("Check the status of order TB-1001.", generate=generate)
+    assert result["status"] in {"no_tool", "clarification"}
+    assert result["accepted_outcome"] == outcome
+    assert len(calls) == 1
+    assert result["repair_attempted"] is False
+    assert result["advisory_grounding_warnings"]
+    assert result["validation_errors"] == []
+    assert result["tool_result"] is None
+
+
+def test_gguf_profile_uses_its_own_prompt_without_loading_a_model():
+    messages_seen = []
+
+    def generate(messages):
+        messages_seen.append(messages)
+        return json.dumps(_call(order_id="TB-1001"))
+
+    result = assistant.respond(
+        "Check the status of order TB-1001.",
+        model_path="/missing/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+        generate=generate,
+        execute_tools=False,
+    )
+    assert result["backend"] == "injected"
+    assert result["model_profile"] == "qwen3-4b-gguf"
+    assert result["prompt"] == "strong-v4"
+    assert "DECISION PROCEDURE" in messages_seen[0][0]["content"]
+    assert result["status"] == "validated"
+    assert result["tool_result"] is None
+
+
 def test_rule_backend_does_not_treat_support_reference_as_order_id():
     result = assistant.respond(
         "Check the order status; support reference TB-1001 is not an order ID."

@@ -1,0 +1,257 @@
+{
+  "review_type": "Additional separate-context blind assistant semantic review; not human annotation",
+  "reviewed_at_utc": "2026-11-09T15:31:35.715203+00:00",
+  "reviewer_context": "Spawned with fork_turns=none; no parent implementation or prompt history inherited.",
+  "coordinator_context": "The coordinating assistant inherited implementation context and performed structural/hash checks only. Semantic judgments in this record are the separate-context reviewer result.",
+  "scope": {
+    "scenario_files": [
+      "datasets/portfolio-v3/holdout.jsonl",
+      "datasets/portfolio-v3/manifest.json",
+      "datasets/portfolio-v3/README.md",
+      "docs/portfolio-v3-review.md"
+    ],
+    "validation_references": [
+      "src/tunebench/contracts.py",
+      "src/tunebench/resources/schemas/task.schema.json",
+      "src/tunebench/resources/configs/tool_registry.json"
+    ],
+    "implementation_or_model_output_inspection": false,
+    "fresh_model_runs": false,
+    "installs": false,
+    "holdout_modified": false
+  },
+  "holdout_sha256": "eb0dd97d0a15308415a9537e33020d387801b8b426d78192f6cf2a81fcd900a9",
+  "counts": {
+    "reviewed": 40,
+    "accepted": 40,
+    "material_semantic_issues": 0,
+    "schema_or_contract_issues": 0,
+    "outcomes": {
+      "clarification": 12,
+      "no_tool": 12,
+      "tool_call": 16
+    },
+    "difficulty": {
+      "easy": 9,
+      "hard": 11,
+      "medium": 20
+    }
+  },
+  "overall_verdict": "All 40 gold outcomes are supported by the requests and canonical contracts; no semantic correction is needed before inference.",
+  "checks": [
+    "All required tool-call facts are explicitly provided or exactly derivable.",
+    "Clarification targets, all missing fields and missing-versus-ambiguous reason codes are supported.",
+    "Current requests are separated from statements, unsupported actions and informational questions.",
+    "Quantity and percentage calculations, requested subsets, corrections and conversational references checked.",
+    "No gold requires business policy, demo-order membership, an ID pattern, external prices, lookup results or currency conversion."
+  ],
+  "per_example": [
+    {
+      "example_id": "portfolio-v3-holdout-01",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-02",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-03",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-04",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-05",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-06",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-07",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-08",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-09",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-10",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-11",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-12",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-13",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-14",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-15",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-16",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-17",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-18",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-19",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-20",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-21",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-22",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-23",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-24",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-25",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-26",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-27",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-28",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-29",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-30",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-31",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-32",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-33",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-34",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-35",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-36",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-37",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-38",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-39",
+      "verdict": "pass",
+      "correction": null
+    },
+    {
+      "example_id": "portfolio-v3-holdout-40",
+      "verdict": "pass",
+      "correction": null
+    }
+  ],
+  "issues": [],
+  "changes": [],
+  "limitations": [
+    "Assistant review is not independent human annotation.",
+    "Difficulty remains descriptive assistant judgment.",
+    "Structural novelty does not establish semantic independence or production representativeness."
+  ]
+}
