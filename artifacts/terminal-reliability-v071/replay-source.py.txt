@@ -1,0 +1,13 @@
+import sys,json
+from pathlib import Path
+root=Path(sys.argv[1]);sys.path.insert(0,str(root/'src'))
+import tunebench
+from tunebench import assistant
+case=next(json.loads(x) for x in (root/'artifacts/semantic-comparison-v7/candidate/cases.partial.jsonl').read_text().splitlines() if json.loads(x)['example_id']=='portfolio-v5-holdout-40')['response']
+outputs=iter(a['raw_output'] for a in case['attempts']);reviews=iter(case['semantic_verifications']);calls=[]
+def spy(name,args):
+ calls.append({'tool_name':name,'arguments':args})
+ return {'status':'blocked','error':{'message':'Replay spy: no actual tool executed'}}
+assistant.execute_tool=spy
+r=assistant.respond(case['input'],model_path='/missing/replay.gguf',generate=lambda _:next(outputs),verify=lambda *_:next(reviews),execute_tools=True)
+print(json.dumps({'source_version':tunebench.__version__,'kind':'Replay of already observed raw model/review text; no fresh generation','primary_attempts':len(r['attempts']),'review_calls':len(r['semantic_verifications']),'tool_execution_attempts':calls,'outcome':r['outcome'],'status':r['status'],'first_output_preserved':r['attempts'][0]['raw_output']==case['attempts'][0]['raw_output']}))

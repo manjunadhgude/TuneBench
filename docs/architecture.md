@@ -3,14 +3,17 @@
 The CLI and Streamlit app use the same Python package. They preserve the model's
 original answer separately from review, retry, acceptance, and mock execution.
 
-## Qwen3 live pipeline in v0.7
+## Qwen3 live pipeline in v0.7.1
 
 ```mermaid
 flowchart TD
     Request[Customer message and tool registry] --> Primary[Qwen3 primary decision with JSON grammar]
     Primary --> Contract[Strict parsing and full schema validation]
-    Contract --> Literal[Tool order ID must occur literally in message]
-    Literal --> Review[Same-model review of decision against customer facts]
+    Contract --> Kind{Decision kind}
+    Kind -->|tool call| Literal[Tool order ID must occur literally in message]
+    Literal --> Review[Same-model review of call against customer facts]
+    Kind -->|valid no tool or clarification| Terminal[Terminal non-executing answer]
+    Terminal --> Trace
     Review --> Amount{Refund proposal?}
     Amount -->|yes| Calc[Restricted AST and Decimal calculation]
     Amount -->|no| Verdict[Review verdict]
@@ -52,7 +55,9 @@ arguments for exactly three mock tools. JSON grammar guides syntax; neither it
 nor schema validation proves semantic correctness.
 
 The reviewer produces reasoning first, then a calculation and a verdict. It
-checks all decision kinds, including clarification fields and no-tool reasons.
+reviews tool calls only. Valid clarification and no-tool decisions are terminal;
+review feedback cannot reopen them or induce tool execution. Their schema and
+required fields are still validated. Schema-invalid output remains repairable.
 It is the same model as the proposer, so correlated mistakes remain possible.
 A rejected review can trigger one primary retry; it never rewrites an accepted
 answer. Feedback includes model judgement and arithmetic errors, not test gold.
@@ -90,7 +95,7 @@ Only customer text and tool definitions reach the primary model. Only customer
 text and the primary decision reach the reviewer. Gold, case identifiers,
 splits, difficulty labels, and annotation rationales are used only for scoring.
 
-The latest paired comparison uses archived v0.6 source `5559e30` and v0.7 source
+The historical v0.7 paired comparison uses archived v0.6 source `5559e30` and v0.7 source
 frozen at `eb4e227`, with identical primary weights, prompt, and decoding.
 Forty new author-reviewed cases were frozen before either generation. Source,
 model, dataset, prompt, selected library, and runner hashes are checked; sequential
@@ -103,7 +108,11 @@ first-answer accuracy from accepted-final accuracy, and reports each outcome
 kind. A separate computational audit reparses original model text and recomputes
 scores; it is not independent human annotation or an external research audit.
 
-See [current evidence](../artifacts/semantic-comparison-v7/README.md) and
+The v0.7.1 fix was frozen at `09dd1bc` before 12 new targeted cases were authored.
+It preserves the old benchmark and separately checks the no-escalation invariant,
+new CPU requests, and legitimate tool calls. See [focused reliability evidence](../artifacts/terminal-reliability-v071/README.md).
+
+See [historical evidence](../artifacts/semantic-comparison-v7/README.md) and
 [status](status.md). The earlier 7/20 and unsuccessful guard experiment remain
 visible. No model fine-tuning, production reliability claim, or real payment
 integration follows from these small synthetic tests.

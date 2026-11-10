@@ -1,43 +1,41 @@
 # Portfolio completion and evidence
 
-The v0.7 software is implemented and verified for a fictional interview demo.
-Model quality, user understanding, and production readiness are separate matters.
+The planned portfolio app and the approved focused reliability fix are implemented.
+The current release is v0.7.1. Broader model research and production deployment
+remain outside this interview-level project.
 
-## Completed verification
+## Current patch verification
 
-- [x] Three explicitly labeled modes: rules demo, live CPU Qwen, and saved replay.
-- [x] Schema-validated decisions, same-model review, restricted Decimal calculator, bounded retry, and preserved original outputs.
-- [x] Three nonmutating mock tools with fixed fictional order/policy gates.
-- [x] Full check workflow: 553 tests, lint, formatting, CLI, data audit and training export.
-- [x] Core-only validation: 543 passed, 5 optional skips.
-- [x] Fresh locked app installation: 549 passed, 4 optional skips; successful health response.
-- [x] Standalone wheel imports outside the checkout and runs mock tools without optional model packages.
-- [x] Chromium/Playwright: 11 checks, including actual Qwen3 execution and visible review trace, replay, and mobile layout.
-- [x] Completed frozen 40-case same-test comparison, preserved failures, and score/review computational audit.
+- [x] Correct no-tool/clarification decisions are terminal; review cannot retry them into actions.
+- [x] The original captured failure is reproduced with an execution spy and fixed.
+- [x] Full offline workflow passes 559 tests, lint, formatting, CLI/data checks and training export.
+- [x] Frozen paired native CPU check completes on all 12 new targeted requests.
+- [x] Original outputs, remaining failure, freeze protocol and computational audit are retained.
 
-See [release evidence](assets/release-checks-v0.7.json),
-[browser checks](assets/browser-checks.json), [current model results](../artifacts/semantic-comparison-v7/README.md),
-and [remaining model failures](../artifacts/semantic-comparison-v7/error-analysis.md).
-The current screenshots/recording show this release; prior v0.3/v0.4 media and
-experiment results remain archived with their original identity. Earlier release
-records retain their checkpoint status, including work that was pending then.
+Current package/browser evidence is recorded in [the patch release record](assets/release-checks-v0.7.1.json).
+See [targeted model results](../artifacts/terminal-reliability-v071/README.md).
+The native candidate scores 11/12, including all six no-tool/clarification cases
+and five of six tool-call cases. This small targeted result is not a general
+accuracy estimate. One legitimate tool request still receives an incorrect no-tool
+answer; that failure remains visible and was not used for another round of tuning.
 
-## Before using it in an interview
+## Earlier completed foundation
 
-- Run the app and explain a primary answer, model review, retry, and calculator check.
-- Discuss one remaining failure and why schema-valid JSON can still be wrong.
-- State that quick demo uses rules, replay is recorded, and live mode uses an LLM.
-- Explain your own contribution and development assistance accurately.
+The original v0.7 app has three explicitly labeled modes, local CPU Qwen3,
+strict schemas, reviewed tool calls, a restricted Decimal calculator, mock policy,
+CLI, evaluation reports, and original-response traces. Its full clean-install,
+minimal-install, wheel and 11-browser-check evidence is preserved in
+[the v0.7 record](assets/release-checks-v0.7.json). Historical media remains labeled
+as v0.7 or archived v0.3/v0.4. Those old records are not relabeled as new patch runs.
 
-## Remaining research and production work
+## Outside this portfolio scope
 
-Independent human evaluation and broader representative/adversarial data are still
-needed for stronger quality claims. The same-model reviewer can repeat mistakes;
-correct arithmetic does not prove correct fact selection. CPU review adds latency
-and memory. These are known limits of the current portfolio, not hidden completed
-features.
+Initial model decisions can still be wrong; same-model tool review can also make
+mistakes. Independent human evaluation, broad representative/adversarial data,
+and operational monitoring would be needed for stronger reliability claims.
 
 No adapter was trained. The larger synthetic research dataset remains unreviewed;
 LoRA/QLoRA runners are future experiment support. Real authentication, customer
-integrations, payments, monitoring, and production deployment are outside this
-simulation. Do not present it as a production refund agent.
+integrations, payments and production deployment are outside the simulation.
+These limitations do not imply that those production features must be added to
+complete the agreed portfolio project.

@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "kind": "Actual local Qwen3 CPU browser regression; not replay",
+  "input": "Yesterday a representative proposed INR 60 for damaged order NP-902. I am telling you what happened, without requesting another check or proposal.",
+  "checks": [
+    "No-action message remains no_tool",
+    "One primary attempt only",
+    "No semantic review or retry for terminal decision",
+    "No simulated tool result",
+    "Original raw output and live model identity visible"
+  ],
+  "browser_errors": [],
+  "screenshot": "docs/assets/terminal-decision-v0.7.1.png"
+}

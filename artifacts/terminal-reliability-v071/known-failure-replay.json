@@ -1,0 +1,42 @@
+{
+  "legacy": {
+    "source_version": "0.7.0",
+    "kind": "Replay of already observed raw model/review text; no fresh generation",
+    "primary_attempts": 2,
+    "review_calls": 2,
+    "tool_execution_attempts": [
+      {
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "NP-902",
+          "refund_amount": 60,
+          "reason": "damaged_item"
+        }
+      }
+    ],
+    "outcome": {
+      "type": "tool_call",
+      "tool_name": "propose_refund",
+      "arguments": {
+        "order_id": "NP-902",
+        "refund_amount": 60,
+        "reason": "damaged_item"
+      }
+    },
+    "status": "blocked",
+    "first_output_preserved": true
+  },
+  "candidate": {
+    "source_version": "0.7.1",
+    "kind": "Replay of already observed raw model/review text; no fresh generation",
+    "primary_attempts": 1,
+    "review_calls": 0,
+    "tool_execution_attempts": [],
+    "outcome": {
+      "type": "no_tool",
+      "reason_code": "no_action_requested"
+    },
+    "status": "no_tool",
+    "first_output_preserved": true
+  }
+}

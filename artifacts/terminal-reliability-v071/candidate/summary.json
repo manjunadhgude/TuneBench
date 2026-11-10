@@ -1,0 +1,10 @@
+{
+  "source_version": "0.7.1",
+  "examples": 12,
+  "primary_generations": 13,
+  "review_generations": 6,
+  "active_seconds": 151.88153810799986,
+  "runtime_errors": 0,
+  "review_escalations": [],
+  "journal_sha256": "03830d1b1394856fef4fbfb1d0570904323e07d0b2774d2c7d35e29234fb1c92"
+}

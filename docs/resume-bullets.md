@@ -20,8 +20,8 @@ For a measured bullet, quote the actual same-cohort counts and limitations from
 scores from different test sets. The earlier 7/20 result remains historical
 failure evidence, not a hidden result. Model review adds compute and latency.
 
-For software tests, the completed source suite passes 553 checks. Link the
-[release record](assets/release-checks-v0.7.json) and re-run checks before applying.
+For software tests, the completed source suite passes 559 checks. Link the
+[release record](assets/release-checks-v0.7.1.json) and re-run checks before applying.
 Test count is not model accuracy. Perfect gold-derived evaluator fixtures are
 software tests only.
 

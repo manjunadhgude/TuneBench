@@ -1,0 +1,59 @@
+import json,sys,hashlib,importlib.util,shutil
+from pathlib import Path
+root=Path('/workspace/TuneBench');sys.path.insert(0,str(root/'src'))
+from tunebench.inference import parse_output,build_messages
+from tunebench.evaluator import evaluate
+from tunebench.contracts import load_tool_registry
+out=root/'artifacts/terminal-reliability-v071'
+spec=importlib.util.spec_from_file_location('terminal_runner',root/'scripts/check_terminal_reliability.py');runner=importlib.util.module_from_spec(spec);spec.loader.exec_module(runner)
+p=json.loads((out/'protocol.json').read_text());runner.verify(p,out)
+assert runner.digest(p['model'])==p['model_sha256']=='3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597'
+assert json.loads((out/'completed.json').read_text())['status']=='complete'
+tasks=[json.loads(x) for x in (out/'tasks.jsonl').read_text().splitlines()]
+audit={'status':'pass','method':'Same assistant separately reparsed raw outputs, recomputed scores, verified terminal invariants and frozen inputs; not independent external review.','examples':12,'generation_reruns':0,'versions':{}}
+first_hashes={}
+for v in ['legacy','candidate']:
+ folder=out/v;rows=[json.loads(x) for x in (folder/'cases.jsonl').read_text().splitlines()]
+ summary=json.loads((folder/'summary.json').read_text());assert len(rows)==12 and not (folder/'inflight.json').exists()
+ assert runner.digest(folder/'cases.jsonl')==summary['journal_sha256']
+ raw=[];final=[];hashes=[];nonexec_checks=0
+ for task,row in zip(tasks,rows,strict=True):
+  assert task['example_id']==row['example_id'];r=row['response'];assert r['input']==task['prompt']
+  assert r['backend']=='model' and r['execute_tools'] is False and r['tool_result'] is None
+  expected=hashlib.sha256(json.dumps(build_messages({'prompt':task['prompt'],'tools':load_tool_registry()},'strong-v4'),sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+  assert r['prompt_sha256']==expected;hashes.append(expected)
+  attempts=r['attempts'];assert len(attempts)<=2 and len(r['semantic_verifications'])<=2
+  for index,attempt in enumerate(attempts):
+   assert parse_output(task['example_id'],attempt['raw_output'])['outcome']==attempt['parsed_outcome']
+   if v=='candidate' and attempt['schema_valid'] and attempt['parsed_outcome']['type']!='tool_call':
+    assert index==len(attempts)-1
+    assert r['accepted_outcome']==attempt['parsed_outcome']
+    assert not any(review['primary_attempt']==index+1 for review in r['semantic_verifications'])
+    nonexec_checks+=1
+  if r['accepted_outcome'] is not None:assert r['accepted_outcome']==attempts[-1]['parsed_outcome']
+  else:assert r['status'] in ['blocked','error']
+  raw.append({'example_id':task['example_id'],'outcome':parse_output(task['example_id'],attempts[0]['raw_output'])['outcome'] if attempts else None})
+  final.append({'example_id':task['example_id'],'outcome':r['accepted_outcome']})
+  for review in r['semantic_verifications']:
+   decision=attempts[review['primary_attempt']-1]['parsed_outcome']
+   if v=='candidate':assert decision['type']=='tool_call'
+   if review['verdict']!='invalid':
+    parsed=json.loads(review['raw_output'])
+    for key in ['reason','verdict','calculation']:assert parsed[key]==review[key]
+   assert review['weights_sha256']==p['model_sha256']
+ result={}
+ for stage,predictions in [('raw-first',raw),('final',final)]:
+  score=evaluate(tasks,predictions);assert score==json.loads((folder/(stage+'.report.json')).read_text())
+  result[stage]={'correct':score['task_success']['correct'],'total':12,'correct_tool_calls':score['tool_call']['joint_exact_match']['correct'],'tool_call_cases':6,'correct_clarifications':score['clarification']['joint_exact_match']['correct'],'clarification_cases':2,'correct_no_tool':score['no_tool']['reason_code_accuracy']['correct'],'no_tool_cases':4}
+ result['pipeline']=summary;result['terminal_invariants_checked']=nonexec_checks
+ final_score=evaluate(tasks,final);correct={x['example_id']:x['task_success'] for x in final_score['per_example']}
+ result['incorrect_accepted_calls']=[row['example_id'] for row in rows if (row['response']['accepted_outcome'] or {}).get('type')=='tool_call' and not correct[row['example_id']]]
+ result['remaining_failures']=[x['example_id'] for x in json.loads((folder/'final.report.json').read_text())['per_example'] if not x['task_success']]
+ audit['versions'][v]=result;first_hashes[v]=hashes
+assert first_hashes['legacy']==first_hashes['candidate']
+audit['first_prompts_identical']=True
+manifest=json.loads((root/'datasets/terminal-v1/manifest.json').read_text())
+for name,entry in manifest['files'].items():assert runner.digest(root/'datasets/terminal-v1'/name)==entry['sha256']
+for name in ['manifest.json','annotation-ledger.json']:shutil.copyfile(root/'datasets/terminal-v1'/name,out/name)
+(out/'audit.json').write_text(json.dumps(audit,indent=2)+'\n')
+print(json.dumps(audit,indent=2))

@@ -11,6 +11,14 @@ retry. It uses fictional data and does not make real payments.”
 Adapt that wording to your actual contribution. Explain AI assistance honestly;
 only claim work you can explain and demonstrate.
 
+## The focused v0.7.1 reliability fix
+
+A reviewer previously misread a historical statement as a request, then induced a
+correct no-tool answer to become a tool call. The fix makes schema-valid no-tool
+and clarification decisions terminal. Review and arithmetic checks still protect
+tool calls. This bounds one failure mode; an incorrect initial call can still
+pass a fallible review. The historical failure and new evidence remain visible.
+
 ## Why keep the 7/20 result?
 
 It is a real historical failure, on a different 20-question cohort. The early
@@ -34,8 +42,9 @@ are stronger evidence than hiding an early result.
   checks the result. Valid JSON can still name the wrong tool or amount.
 - **Clarification:** request missing required facts instead of inventing them.
   An unclear action uses a null target; missing arguments use the chosen tool.
-- **Model review:** a second call checks the first decision against customer facts.
-  The same model can repeat its own mistakes. It is not a safety guarantee.
+- **Model review:** a second call checks a proposed tool call against customer facts.
+  Valid no-tool and clarification decisions are terminal and cannot be escalated
+  by review feedback. The same model can repeat its mistakes; it is not a guarantee.
 - **Calculator:** restricted AST plus Decimal verifies arithmetic independently.
   The model must still choose the correct source numbers and requested scope.
 - **Bounded retry:** at most one primary retry; preserve the first answer and
@@ -69,9 +78,9 @@ wrong scope. Inspect the actual failures rather than claiming perfect safety.
 but by the implementing assistant. No independent blind or human annotation was
 performed. This limits the strength of the result.
 
-**What do 553 passing tests establish?** Software behavior under tested scenarios:
+**What do 559 passing tests establish?** Software behavior under tested scenarios:
 contracts, scoring, calculator boundaries, mock policy, CLI and UI. They are not
-553 model questions or a production reliability guarantee.
+559 model questions or a production reliability guarantee.
 
 ## Practice before applying
 

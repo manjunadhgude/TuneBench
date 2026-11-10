@@ -1,0 +1,435 @@
+{
+  "evaluation_version": "0.2.0",
+  "task_schema_version": "3.0.0",
+  "total_examples": 12,
+  "prediction_records": 12,
+  "missing_predictions": 0,
+  "invalid_predictions": 0,
+  "task_success": {
+    "correct": 10,
+    "total": 12,
+    "accuracy": 0.8333333333333334
+  },
+  "outcome_accuracy": {
+    "correct": 11,
+    "total": 12,
+    "accuracy": 0.9166666666666666
+  },
+  "outcome_classification": {
+    "labels": [
+      "tool_call",
+      "clarification",
+      "no_tool"
+    ],
+    "confusion_matrix": {
+      "tool_call": {
+        "tool_call": 5,
+        "clarification": 0,
+        "no_tool": 1,
+        "invalid": 0
+      },
+      "clarification": {
+        "tool_call": 0,
+        "clarification": 2,
+        "no_tool": 0,
+        "invalid": 0
+      },
+      "no_tool": {
+        "tool_call": 0,
+        "clarification": 0,
+        "no_tool": 4,
+        "invalid": 0
+      }
+    },
+    "per_class": {
+      "tool_call": {
+        "support": 6,
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091
+      },
+      "clarification": {
+        "support": 2,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "no_tool": {
+        "support": 4,
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889
+      }
+    },
+    "macro_f1": 0.9326599326599326
+  },
+  "tool_call": {
+    "total": 6,
+    "tool_selection": {
+      "correct": 5,
+      "denominator": 6,
+      "accuracy": 0.8333333333333334
+    },
+    "arguments_given_correct_tool": {
+      "correct": 4,
+      "denominator": 5,
+      "accuracy": 0.8
+    },
+    "joint_exact_match": {
+      "correct": 4,
+      "denominator": 6,
+      "accuracy": 0.6666666666666666
+    }
+  },
+  "clarification": {
+    "total": 2,
+    "intended_tool_accuracy": {
+      "correct": 2,
+      "denominator": 2,
+      "accuracy": 1.0
+    },
+    "missing_fields_exact_accuracy": {
+      "correct": 2,
+      "denominator": 2,
+      "accuracy": 1.0
+    },
+    "missing_fields_micro": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "denominator": 2
+    },
+    "joint_exact_match": {
+      "correct": 2,
+      "denominator": 2,
+      "accuracy": 1.0
+    },
+    "reason_code_accuracy": {
+      "correct": 2,
+      "denominator": 2,
+      "accuracy": 1.0
+    }
+  },
+  "no_tool": {
+    "total": 4,
+    "recall": 1.0,
+    "reason_code_accuracy": {
+      "correct": 4,
+      "denominator": 4,
+      "accuracy": 1.0
+    }
+  },
+  "error_categories": {
+    "wrong_outcome": 1
+  },
+  "breakdown": {
+    "family_id": {
+      "TERMINAL_V1_01": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_02": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_03": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_04": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_05": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_06": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_07": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_08": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_09": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_10": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_11": {
+        "total": 1,
+        "outcome_accuracy": 0.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      },
+      "TERMINAL_V1_12": {
+        "total": 1,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 0.0,
+        "invalid_predictions": 0
+      }
+    },
+    "difficulty": {
+      "medium": {
+        "total": 12,
+        "outcome_accuracy": 0.9166666666666666,
+        "task_success_accuracy": 0.8333333333333334,
+        "invalid_predictions": 0
+      }
+    },
+    "gold_outcome": {
+      "clarification": {
+        "total": 2,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "no_tool": {
+        "total": 4,
+        "outcome_accuracy": 1.0,
+        "task_success_accuracy": 1.0,
+        "invalid_predictions": 0
+      },
+      "tool_call": {
+        "total": 6,
+        "outcome_accuracy": 0.8333333333333334,
+        "task_success_accuracy": 0.6666666666666666,
+        "invalid_predictions": 0
+      }
+    },
+    "split": {
+      "test": {
+        "total": 12,
+        "outcome_accuracy": 0.9166666666666666,
+        "task_success_accuracy": 0.8333333333333334,
+        "invalid_predictions": 0
+      }
+    }
+  },
+  "per_example": [
+    {
+      "example_id": "terminal-v1-04",
+      "family_id": "TERMINAL_V1_04",
+      "scenario_id": "terminal-v1-case-04",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-09",
+      "family_id": "TERMINAL_V1_09",
+      "scenario_id": "terminal-v1-case-09",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-01",
+      "family_id": "TERMINAL_V1_01",
+      "scenario_id": "terminal-v1-case-01",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-07",
+      "family_id": "TERMINAL_V1_07",
+      "scenario_id": "terminal-v1-case-07",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-12",
+      "family_id": "TERMINAL_V1_12",
+      "scenario_id": "terminal-v1-case-12",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "terminal-v1-02",
+      "family_id": "TERMINAL_V1_02",
+      "scenario_id": "terminal-v1-case-02",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-10",
+      "family_id": "TERMINAL_V1_10",
+      "scenario_id": "terminal-v1-case-10",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-06",
+      "family_id": "TERMINAL_V1_06",
+      "scenario_id": "terminal-v1-case-06",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-08",
+      "family_id": "TERMINAL_V1_08",
+      "scenario_id": "terminal-v1-case-08",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "tool_call",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": true,
+      "arguments_correct": true,
+      "tool_call_joint_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-03",
+      "family_id": "TERMINAL_V1_03",
+      "scenario_id": "terminal-v1-case-03",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "no_tool",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "no_tool_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    },
+    {
+      "example_id": "terminal-v1-11",
+      "family_id": "TERMINAL_V1_11",
+      "scenario_id": "terminal-v1-case-11",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "tool_call",
+      "predicted_outcome": "no_tool",
+      "outcome_correct": false,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "tool_correct": false,
+      "arguments_correct": false,
+      "tool_call_joint_correct": false,
+      "task_success": false,
+      "end_to_end_correct": false
+    },
+    {
+      "example_id": "terminal-v1-05",
+      "family_id": "TERMINAL_V1_05",
+      "scenario_id": "terminal-v1-case-05",
+      "split": "test",
+      "difficulty": "medium",
+      "gold_outcome": "clarification",
+      "predicted_outcome": "clarification",
+      "outcome_correct": true,
+      "prediction_valid": true,
+      "prediction_errors": [],
+      "clarification_target_correct": true,
+      "clarification_missing_fields_exact": true,
+      "clarification_reason_correct": true,
+      "task_success": true,
+      "end_to_end_correct": true
+    }
+  ]
+}

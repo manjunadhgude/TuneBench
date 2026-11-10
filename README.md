@@ -11,6 +11,9 @@ and the simulated result. No GPU, paid API, or real customer account is needed.
 [Demo recording](docs/assets/tunebench-demo.webm) · [Architecture](docs/architecture.md) ·
 [Interview guide](docs/interview-guide.md)
 
+The recording shows v0.7. The v0.7.1 patch changes decision review policy; its
+live regression evidence is recorded separately below.
+
 ## Start the app
 
 Use Python 3.12 for the tested, hash-locked Linux setup. Windows users can use WSL.
@@ -48,13 +51,14 @@ the design and limitations.
 
 1. Qwen generates one of three structured decisions using a JSON grammar.
 2. Python strictly parses the output and checks its complete JSON Schema.
-3. For Qwen3, a separate call to the same model reviews the decision against the
-   customer message. This review is probabilistic and can make mistakes.
+3. Valid no-tool and clarification decisions finish immediately, without review
+   or retry. For Qwen3 tool calls, the same model separately reviews the call
+   against the customer message. This review is probabilistic and can make mistakes.
 4. Refund proposals additionally require a bounded arithmetic expression. A Python
    AST interpreter computes it using Decimal and compares it with the proposed
    amount. It accepts only supplied numeric operands and restricted operators;
    the model still has to select the correct facts and scope.
-5. A rejected decision can receive one primary retry. Every primary answer and
+5. A schema error or rejected tool call can receive one primary retry. Every primary answer and
    review remains visible; application code never substitutes a rules answer.
 6. Accepted tool calls pass the fictional store's policy checks before simulation.
 
@@ -68,11 +72,24 @@ request. The reviewer uses the same pinned weights in a separate cached session.
 It adds CPU latency and memory. The legacy model and quick rules mode retain their
 older evidence guards. A schema-valid decision is not necessarily correct.
 
+## Current focused reliability fix: v0.7.1
+
+A valid no-tool or clarification answer is now terminal. A mistaken reviewer can
+no longer reject that answer and induce a retry into a tool call. Tool-call review,
+refund arithmetic, full schema checks, and mock business policy remain in place.
+This does not guarantee that the model's initial decision is correct.
+
+The original false escalation is covered by a regression test using its preserved
+raw response and review. New targeted CPU model checks are documented in
+[terminal reliability evidence](artifacts/terminal-reliability-v071/README.md).
+The 40-case v0.7 scores below remain historical; they have not been relabeled as
+v0.7.1 accuracy. The focused change adds no new application features.
+
 ## Measured results
 
-On the latest matched 40-question test, accepted final correctness changed from **23/40 to 30/40**, and correct final tool calls from **3/16 to 15/16**. Original first answers scored 34/40 and 34/40 respectively.
+On the recorded v0.6/v0.7 matched 40-question test, accepted final correctness changed from **23/40 to 30/40**, and correct final tool calls from **3/16 to 15/16**. Original first answers scored 34/40 and 34/40 respectively.
 
-The latest comparison is recorded in
+That historical comparison is recorded in
 [semantic comparison](artifacts/semantic-comparison-v7/README.md), including all
 40 first answers, reviews, retries and final outcomes. It compares the same
 Qwen3 primary model and prompt, with and without the new review pipeline.
@@ -145,10 +162,10 @@ experiment support.
 bash scripts/check.sh
 ```
 
-The completed source checks pass **553 tests**, lint, formatting, CLI execution,
+The completed source checks pass **559 tests**, lint, formatting, CLI execution,
 synthetic-data auditing, and completion-only training export. Unit tests check
 software behavior; their count is not model accuracy. See the
-[v0.7 release evidence](docs/assets/release-checks-v0.7.json) for package and browser checks.
+[v0.7 release evidence](docs/assets/release-checks-v0.7.1.json) for package and browser checks.
 CI runs without model downloads or a GPU. Native llama.cpp inference is optional.
 
 ## Explore the project

@@ -1,0 +1,134 @@
+{
+  "source_freeze_commit": "09dd1bc52283e59ebeae0d427586fe8d43b26438",
+  "review": "Same assistant author review; no independent blind or human annotation",
+  "cases": [
+    {
+      "example_id": "terminal-v1-01",
+      "expected": {
+        "type": "no_tool",
+        "reason_code": "no_action_requested"
+      },
+      "rationale": "Reported past action and explicit prohibition do not authorize a present action."
+    },
+    {
+      "example_id": "terminal-v1-02",
+      "expected": {
+        "type": "no_tool",
+        "reason_code": "no_action_requested"
+      },
+      "rationale": "Hypothetical future action, not a present request."
+    },
+    {
+      "example_id": "terminal-v1-03",
+      "expected": {
+        "type": "no_tool",
+        "reason_code": "unsupported_request"
+      },
+      "rationale": "Actual payment transfer is unavailable; do not substitute a proposal."
+    },
+    {
+      "example_id": "terminal-v1-04",
+      "expected": {
+        "type": "no_tool",
+        "reason_code": "informational_request"
+      },
+      "rationale": "General comparison, without an order action."
+    },
+    {
+      "example_id": "terminal-v1-05",
+      "expected": {
+        "type": "clarification",
+        "target_tool_name": "get_order_status",
+        "missing_fields": [
+          "order_id"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Status is requested but order identifier is absent."
+    },
+    {
+      "example_id": "terminal-v1-06",
+      "expected": {
+        "type": "clarification",
+        "target_tool_name": "propose_refund",
+        "missing_fields": [
+          "refund_amount"
+        ],
+        "reason_code": "missing_required_information"
+      },
+      "rationale": "Known proposal, order and damage reason; amount is explicitly unresolved."
+    },
+    {
+      "example_id": "terminal-v1-07",
+      "expected": {
+        "type": "tool_call",
+        "tool_name": "get_order_status",
+        "arguments": {
+          "order_id": "TB-1004"
+        }
+      },
+      "rationale": "Direct authorized lookup with literal identifier."
+    },
+    {
+      "example_id": "terminal-v1-08",
+      "expected": {
+        "type": "tool_call",
+        "tool_name": "get_order_status",
+        "arguments": {
+          "order_id": "TB-1004"
+        }
+      },
+      "rationale": "Requested current purchase uniquely maps to the second identifier."
+    },
+    {
+      "example_id": "terminal-v1-09",
+      "expected": {
+        "type": "tool_call",
+        "tool_name": "check_refund_eligibility",
+        "arguments": {
+          "order_id": "TB-1002",
+          "reason": "wrong_item"
+        }
+      },
+      "rationale": "Eligibility requested for delivered wrong variant."
+    },
+    {
+      "example_id": "terminal-v1-10",
+      "expected": {
+        "type": "tool_call",
+        "tool_name": "check_refund_eligibility",
+        "arguments": {
+          "order_id": "TB-1003",
+          "reason": "changed_mind"
+        }
+      },
+      "rationale": "Explicit eligibility-only request and changed preference."
+    },
+    {
+      "example_id": "terminal-v1-11",
+      "expected": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "TB-1002",
+          "reason": "damaged_item",
+          "refund_amount": 150
+        }
+      },
+      "rationale": "185-35=150; item-level discount and requested scope supplied."
+    },
+    {
+      "example_id": "terminal-v1-12",
+      "expected": {
+        "type": "tool_call",
+        "tool_name": "propose_refund",
+        "arguments": {
+          "order_id": "TB-1005",
+          "reason": "not_received",
+          "refund_amount": 48
+        }
+      },
+      "rationale": "144/6*2=48; reason and requested scope supplied."
+    }
+  ]
+}

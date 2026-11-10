@@ -132,6 +132,11 @@ def show_result(result: dict, mode: str) -> None:
         st.json(result["tool_result"], expanded=True)
     with st.expander("Raw responses & validation trace", expanded=False):
         st.caption("Original response text is preserved. Each attempt and its errors are visible.")
+        if (
+            result.get("non_execution_grounding_policy")
+            == "terminal_schema_valid_no_review_no_retry"
+        ):
+            st.caption("Valid no-tool and clarification decisions finish without review or retry.")
         metadata = result.get("model_metadata") or {}
         if metadata.get("loaded"):
             st.caption(
@@ -354,6 +359,10 @@ with evaluation:
     st.write("")
     st.subheader("Evidence, with the context attached")
     st.write("Actual saved model runs. Deterministic demo scores are kept separate.")
+    st.caption(
+        "Current v0.7.1 keeps valid no-tool and clarification decisions terminal. "
+        "The v0.7 comparisons below were recorded before this reliability fix."
+    )
     comparisons = [
         (
             "artifacts/semantic-comparison-v7",

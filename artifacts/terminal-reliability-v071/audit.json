@@ -1,0 +1,84 @@
+{
+  "status": "pass",
+  "method": "Same assistant separately reparsed raw outputs, recomputed scores, verified terminal invariants and frozen inputs; not independent external review.",
+  "examples": 12,
+  "generation_reruns": 0,
+  "versions": {
+    "legacy": {
+      "raw-first": {
+        "correct": 10,
+        "total": 12,
+        "correct_tool_calls": 4,
+        "tool_call_cases": 6,
+        "correct_clarifications": 2,
+        "clarification_cases": 2,
+        "correct_no_tool": 4,
+        "no_tool_cases": 4
+      },
+      "final": {
+        "correct": 10,
+        "total": 12,
+        "correct_tool_calls": 5,
+        "tool_call_cases": 6,
+        "correct_clarifications": 2,
+        "clarification_cases": 2,
+        "correct_no_tool": 3,
+        "no_tool_cases": 4
+      },
+      "pipeline": {
+        "source_version": "0.7.0",
+        "examples": 12,
+        "primary_generations": 16,
+        "review_generations": 16,
+        "active_seconds": 253.93041297299987,
+        "runtime_errors": 0,
+        "review_escalations": [],
+        "journal_sha256": "2cdab3175d3f030064c038eacfc9bdb3ac63dc6feaab5b13c54ad96c64449a39"
+      },
+      "terminal_invariants_checked": 0,
+      "incorrect_accepted_calls": [],
+      "remaining_failures": [
+        "terminal-v1-03",
+        "terminal-v1-11"
+      ]
+    },
+    "candidate": {
+      "raw-first": {
+        "correct": 10,
+        "total": 12,
+        "correct_tool_calls": 4,
+        "tool_call_cases": 6,
+        "correct_clarifications": 2,
+        "clarification_cases": 2,
+        "correct_no_tool": 4,
+        "no_tool_cases": 4
+      },
+      "final": {
+        "correct": 11,
+        "total": 12,
+        "correct_tool_calls": 5,
+        "tool_call_cases": 6,
+        "correct_clarifications": 2,
+        "clarification_cases": 2,
+        "correct_no_tool": 4,
+        "no_tool_cases": 4
+      },
+      "pipeline": {
+        "source_version": "0.7.1",
+        "examples": 12,
+        "primary_generations": 13,
+        "review_generations": 6,
+        "active_seconds": 151.88153810799986,
+        "runtime_errors": 0,
+        "review_escalations": [],
+        "journal_sha256": "03830d1b1394856fef4fbfb1d0570904323e07d0b2774d2c7d35e29234fb1c92"
+      },
+      "terminal_invariants_checked": 7,
+      "incorrect_accepted_calls": [],
+      "remaining_failures": [
+        "terminal-v1-11"
+      ]
+    }
+  },
+  "first_prompts_identical": true
+}

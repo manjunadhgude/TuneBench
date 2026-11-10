@@ -1,11 +1,24 @@
-# Current project status: v0.7
+# Current project status: v0.7.1
 
 The CPU application is implemented: rules demo, real local Qwen3 inference,
 historical replay, structured decisions, bounded model review/retry, refund
 arithmetic validation, and three nonmutating mock tools. It is a portfolio
 simulation, not a production support or payment system.
 
-## Latest measured result
+## Focused reliability fix
+
+Valid no-tool and clarification decisions now finish without model review or
+retry. This prevents the known false-review escalation into a tool call. The
+recorded failure is reproduced by a regression test with a tool-execution spy;
+full schema validation, reviewed tool calls, calculator checks, and mock policy
+remain intact. This is a bounded fix, not a guarantee of perfect initial decisions.
+
+See [new targeted evidence](../artifacts/terminal-reliability-v071/README.md) and
+[current release checks](assets/release-checks-v0.7.1.json). The source was frozen
+before the 12 new targeted cases were authored; the same assistant authored and
+reviewed them, with no independent human or blind review.
+
+## Historical v0.7 measured result
 
 Both versions answered the same 40 fresh portfolio-v5 cases:
 
@@ -27,8 +40,8 @@ See [scores, cost and original captures](../artifacts/semantic-comparison-v7/REA
 
 The same implementing assistant authored/reviewed the fresh test after code
 freeze. There is no independent blind or human annotation. Small synthetic
-results do not establish broad generalization. Same-model review can wrongly
-accept or reject a decision. Correct arithmetic does not prove correct scope.
+results do not establish broad generalization. Same-model tool review can wrongly
+accept or reject a call. Valid non-executing decisions are no longer reviewed. Correct arithmetic does not prove correct scope.
 Clarification prose has no human helpfulness grade. Live inference consumes CPU
 time and additional memory; the instant demo is explicitly deterministic rules.
 
@@ -39,7 +52,7 @@ Optional LoRA/QLoRA runners are future experiment support, not a completed run.
 
 ## Verification and history
 
-See [current release checks](assets/release-checks-v0.7.json) and the
+See [current release checks](assets/release-checks-v0.7.1.json) and the
 [completion record](portfolio-completion.md). Software tests check implementation
 behavior; they are separate from model accuracy.
 
