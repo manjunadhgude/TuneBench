@@ -14,6 +14,17 @@ and the simulated result. No GPU, paid API, or real customer account is needed.
 The recording shows v0.7. The v0.7.1 patch changes decision review policy; its
 live regression evidence is recorded separately below.
 
+## Publish a public demo
+
+[Deploy on Streamlit Community Cloud](https://share.streamlit.io/deploy?repository=manjunadhgude%2FTuneBench&branch=main&mainModule=streamlit_app.py)
+using GitHub sign-in. Select Python **3.12** in Advanced settings and click Deploy.
+The prepared entry point is `streamlit_app.py`. No model, GPU, or API key is needed.
+
+The public profile provides the rules simulation, saved Qwen replay, and evaluation
+reports. Optional live Qwen remains available through the full local `app.py`.
+See [deployment steps](docs/deployment/streamlit-cloud.md). A hosting sign-in and
+completed deployment are still required before a public website URL exists.
+
 ## Start the app
 
 Use Python 3.12 for the tested, hash-locked Linux setup. Windows users can use WSL.
@@ -162,10 +173,12 @@ experiment support.
 bash scripts/check.sh
 ```
 
-The completed source checks pass **559 tests**, lint, formatting, CLI execution,
+The current source checks pass **561 tests**, lint, formatting, CLI execution,
 synthetic-data auditing, and completion-only training export. Unit tests check
 software behavior; their count is not model accuracy. See the
 [v0.7 release evidence](docs/assets/release-checks-v0.7.1.json) for package and browser checks.
+The public-hosting profile and its two additional UI checks are recorded in
+[deployment verification](docs/deployment/verification.json).
 CI runs without model downloads or a GPU. Native llama.cpp inference is optional.
 
 ## Explore the project

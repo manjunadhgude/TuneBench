@@ -1,0 +1,61 @@
+{
+  "recorded_at_utc": "2026-11-10T09:43:28.943666+00:00",
+  "hosting_provider": "Streamlit Community Cloud",
+  "deployment_status": "awaiting_owner_hosting_sign_in",
+  "public_url": null,
+  "entrypoint": "streamlit_app.py",
+  "python_version": "3.12",
+  "checks": {
+    "full_workflow": {
+      "result": "pass",
+      "software_tests_passed": 561,
+      "includes": [
+        "pytest",
+        "lint",
+        "format",
+        "CLI/data checks"
+      ]
+    },
+    "clean_public_requirements_install": {
+      "result": "pass",
+      "command": "uv pip install --python CLEAN_VENV/bin/python -r requirements.txt",
+      "native_model_dependencies_installed": false,
+      "replay_cases_available": 20,
+      "evaluation_data_available": true
+    },
+    "browser": {
+      "checks_passed": [
+        "Actual simulated order lookup in quick rules mode",
+        "Missing amount clarifies with a full-request follow-up instruction",
+        "Nonmutating INR250 mock refund proposal",
+        "Actual-payment request returns no tool",
+        "Unknown fictional order blocked before execution",
+        "Blank input cannot run",
+        "Recorded replay is labelled and performs no new tool execution",
+        "Evaluation distinguishes historical datasets and backend identities",
+        "Architecture and honest scope visible",
+        "390px viewport has no horizontal overflow"
+      ],
+      "browser_errors": [],
+      "live_model_checked": false
+    },
+    "local_public_profile_health": "ok"
+  },
+  "public_modes": [
+    "Quick demo",
+    "Saved model replay"
+  ],
+  "local_live_model_entrypoint": "app.py",
+  "files_sha256": {
+    "streamlit_app.py": "064dbf38c4ed84503bf645eb2f85bc08d690e7b1f087dfbf3fae0430b52ce4ac",
+    "app.py": "86304f61d7b84bfd831e3eab1dd63999ad5192fdf0ae4715116d8d6ff380783f",
+    "requirements.txt": "59558af65dcaf358342072e1e53085f2bd3718b158d443007af9976c1961cd77",
+    "requirements-public.lock": "3555c3f2cc02e0733230d24de1962915564eb703eec8b7febf7ba3ceb2442afb"
+  },
+  "publication_blocker": "No signed-in hosting account or usable hosting credential in this workspace. Repository owner must sign in and submit the prepared deployment.",
+  "notes": [
+    "These are local deployment-profile checks, not evidence of a live public deployment.",
+    "No GPU, model weights or API keys are required for the public demo.",
+    "The public demo does not provide live LLM inference."
+  ]
+}

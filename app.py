@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from html import escape
 from pathlib import Path
 
@@ -16,6 +17,11 @@ from tunebench.dashboard import (
     replay_records,
     replay_result,
     report_summary,
+)
+
+PUBLIC_DEMO = os.environ.get("TUNEBENCH_PUBLIC_DEMO") == "1"
+AVAILABLE_MODES = (
+    tuple(mode for mode in MODES if mode != "Live local Qwen") if PUBLIC_DEMO else MODES
 )
 
 st.set_page_config(
@@ -214,8 +220,11 @@ with st.sidebar:
     except ImportError:
         st.caption("The mock tool module is not installed in this checkout.")
     st.divider()
-    st.caption("LOCAL-FIRST · ONE DECISION PER REQUEST")
-    st.caption("Live Qwen runs on your machine. CPU responses can take a minute or longer.")
+    st.caption("ONE DECISION PER REQUEST")
+    if PUBLIC_DEMO:
+        st.caption("Public demo · rules and recorded AI responses · fictional orders only.")
+    else:
+        st.caption("Live Qwen runs on your machine. CPU responses can take a minute or longer.")
 
 hero, note = st.columns([2.1, 1], gap="large")
 with hero:
@@ -239,10 +248,15 @@ playground, evaluation, project = st.tabs(["Playground", "Evaluation", "Project"
 
 with playground:
     st.write("")
+    if PUBLIC_DEMO:
+        st.info(
+            "Public demo: Quick demo uses Python rules. Saved model replay shows recorded "
+            "AI answers. Live Qwen inference is available when you run the project locally."
+        )
     left, right = st.columns([1.08, 1], gap="large")
     with left:
         st.subheader("Try a request")
-        mode = st.selectbox("Run mode", MODES, key="run_mode")
+        mode = st.selectbox("Run mode", AVAILABLE_MODES, key="run_mode")
         model_path = ""
         selected_record = None
         if mode == "Saved model replay":

@@ -1,0 +1,4 @@
+# Streamlit Community Cloud detects this file automatically.
+-c requirements-public.lock
+# Editable install keeps the bundled replay/evaluation artifacts in the repo.
+-e .[app]

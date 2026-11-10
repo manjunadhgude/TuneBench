@@ -98,3 +98,32 @@ def test_blank_request_is_not_submitted():
     app.text_area(key="request_text").set_value("   ").run()
     assert app.button(key="run_request").disabled
     assert "last_result" not in app.session_state
+
+
+def test_public_entrypoint_has_working_demo_without_native_model_mode(monkeypatch):
+    # Restore the process environment after the public entry point sets its flag.
+    monkeypatch.setenv("TUNEBENCH_PUBLIC_DEMO", "0")
+    app = AppTest.from_file(str(APP.with_name("streamlit_app.py"))).run(timeout=15)
+    assert not app.exception
+    assert app.selectbox(key="run_mode").options == ["Quick demo", "Saved model replay"]
+    assert not any(widget.label == "Local model path" for widget in app.text_input)
+    app.button(key="run_request").click().run()
+    assert not app.exception
+    assert app.session_state["last_result"]["status"] == "executed"
+    assert app.session_state["last_result"]["backend"] == "rules"
+
+
+def test_public_replay_never_invokes_local_inference(monkeypatch):
+    from tunebench import assistant
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("Public replay must never invoke inference or execute tools")
+
+    monkeypatch.setenv("TUNEBENCH_PUBLIC_DEMO", "0")
+    monkeypatch.setattr(assistant, "respond", forbidden)
+    app = AppTest.from_file(str(APP.with_name("streamlit_app.py"))).run(timeout=15)
+    app.selectbox(key="run_mode").select("Saved model replay").run()
+    app.button(key="run_request").click().run()
+    assert not app.exception
+    assert app.session_state["last_result"]["status"] == "recorded"
+    assert app.session_state["last_result"]["tool_result"] is None
