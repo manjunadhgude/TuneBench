@@ -1,0 +1,22 @@
+{
+  "purpose": "12 targeted reliability cases; not broad production accuracy",
+  "source_freeze_commit": "09dd1bc52283e59ebeae0d427586fe8d43b26438",
+  "examples": 12,
+  "outcomes": {
+    "tool_call": 6,
+    "clarification": 2,
+    "no_tool": 4
+  },
+  "exact_prior_prompt_overlap": 0,
+  "files": {
+    "annotation-ledger.json": {
+      "sha256": "fa0e96492e2ac1ceef69f47ee6b7fb80f3ddf51f87bb974ce3048c1db7943361",
+      "bytes": 3808
+    },
+    "holdout.jsonl": {
+      "sha256": "2f0e745c6d00a6fd6df0f202ccf7c1b48610ed05ec9d6025027d2a407eb01a31",
+      "bytes": 22112
+    }
+  },
+  "authorship": "Implementing assistant authored/reviewed after code freeze; no independent blind/human review"
+}
