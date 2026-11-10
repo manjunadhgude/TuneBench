@@ -64,8 +64,9 @@ def respond(
     ``execute_tools=False`` validates without looking up fictional demo orders.
     Interactive schema/evidence repair is separate from the single-attempt research API.
     Regex diagnostics remain advisory for non-executing decisions. The GGUF
-    profile separately reviews every decision with the model and checks refund
-    arithmetic with Decimal; rejected reviews can trigger one primary retry.
+    profile reviews tool calls with the model and checks refund arithmetic with
+    Decimal. Schema-valid no-tool and clarification decisions are terminal: review
+    feedback cannot escalate them into actions. Schema errors remain repairable.
     """
     start = time.perf_counter()
     used_backend = "injected" if generate is not None else backend
@@ -95,10 +96,10 @@ def respond(
         "execution_mode": "simulated_tools" if execute_tools else "validation_only",
         "execute_tools": execute_tools,
         "execution_guard_policy": (
-            "schema-literal-and-semantic-review-v1" if semantic_review else "evidence-grounding-v4"
+            "schema-literal-and-tool-review-v2" if semantic_review else "evidence-grounding-v4"
         ),
         "non_execution_grounding_policy": (
-            "heuristic_advisory; separate_model_review"
+            "terminal_schema_valid_no_review_no_retry"
             if semantic_review
             else "advisory_only_no_evidence_repair"
         ),
@@ -182,7 +183,7 @@ def respond(
             )
         advisory = grounding_diagnostics if not is_call else []
         review_failure = None
-        if semantic_review and not schema_errors and not semantic_errors:
+        if semantic_review and is_call and not semantic_errors:
             try:
                 if verify is None:
                     from tunebench.semantic_guard import verify_decision
@@ -244,7 +245,7 @@ def respond(
     result["repair_attempted"] = len(result["attempts"]) > 1
     result["raw_first_attempt_valid"] = result["attempts"][0]["schema_valid"]
     result["repair_policy"] = (
-        "At most one primary retry and two recorded semantic reviews; no output rewriting"
+        "At most one schema/tool-call retry; valid non-executing decisions are terminal"
         if semantic_review
         else "At most one schema/tool-call evidence retry; non-executing heuristics are advisory"
     )

@@ -1,6 +1,6 @@
 {
   "project": "TuneBench",
-  "project_version": "0.7.0",
+  "project_version": "0.7.1",
   "research_question": "Can fine-tuning a small instruction model improve tool selection and argument generation over a strong prompting baseline enough to justify its added cost and complexity?",
   "candidate_model": "Qwen/Qwen2.5-1.5B-Instruct",
   "candidate_status": "smoke_verified_not_research_locked",
